@@ -3,6 +3,8 @@
 ini_set( 'session.save_path', realpath( dirname( $_SERVER[ 'DOCUMENT_ROOT' ] ) . '/../session' ) ); // Start sessions, specify path because this caused an issue in the past
 session_start();
 
+$id = $_SESSION['user_id'];
+
 $db = mysqli_connect("localhost");
 
 // error_reporting(E_ALL);
@@ -107,10 +109,21 @@ function folderArray( $folder ) {
 	$folder_array = array();
 	if ( $handle = opendir( $folder ) ) {
 		while ( false !== ( $entry = readdir( $handle ) ) ) {
-			if ( $entry != "." && $entry != ".." )array_push( $folder_array, $entry );
+			if ( $entry != "." && $entry != ".." ) {
+				if(pathinfo($entry,PATHINFO_EXTENSION))array_push_key( $folder_array, "file", $entry );
+				else array_push( $folder_array, "folder", $entry );
+			}
 		}
 		closedir( $handle );
 	}
 	if ( empty( $folder_array ) ) return false;
 	else return $folder_array;
+}
+
+// Global array functions
+
+function array_push_key( & $array, $key, $value, $valuetwo, $inarray ) {
+	if ( $valuetwo )$array[ $key ] = array( $value, $valuetwo );
+	else if ( $inarray )$array[ $key ] = array( $value );
+	else $array[ $key ] = $value;
 }
