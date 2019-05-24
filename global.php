@@ -2,14 +2,16 @@
 
 // Global variables, functions, etc.
 
-ini_set( 'session.save_path', realpath( dirname( $_SERVER[ 'DOCUMENT_ROOT' ] ) . '/../session' ) ); // Start sessions, specify path because this caused an issue in the past
-session_start();
-
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 
-if($_SESSION)$id = $_SESSION['user_id'];
-else $id = null;
+if($api !== true) {
+	ini_set( 'session.save_path', realpath( dirname( $_SERVER[ 'DOCUMENT_ROOT' ] ) . '/../session' ) ); // Start sessions, specify path because this caused an issue in the past
+	session_start();
+	if($_SESSION)$id = $_SESSION['user_id'];
+	else $id = null;
+}
+
 $connect = mysqli_connect("localhost");
 $action = $_POST['action'];
 $page = $_GET['page'];

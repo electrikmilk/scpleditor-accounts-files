@@ -1,4 +1,5 @@
 <?php
+require("api.php");
 require("global.php");
 
 // File management backend
@@ -32,11 +33,13 @@ function getFiles( $path ) {
     return "[$files]";
 }
 
+if($id === null) {
+  echo "User is not logged in.";
+  exit;
+} else {
+
 if ( $action === "filelist" ) { // return filelist json for logged in user
-    if(!$_SESSION) {
-      echo "No account is logged in.";
-      exit;
-    } else echo getFiles( "scpl-files/$id" ); // return json from function
+    echo getFiles( "scpl-files/$id" ); // return json from function
 }
 
 if ( $action === "getfile" ) {
@@ -69,4 +72,6 @@ if($action === "deletefile") {
 
 if($action === "deletefolder") {
   $folder_id = $_POST[ 'id' ];
+}
+
 }
