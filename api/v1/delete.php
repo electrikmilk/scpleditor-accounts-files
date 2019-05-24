@@ -2,7 +2,7 @@
 // Delete folder or .scpl file
 require("../request.php");
 if($auth === true) {
-  $file_id = $_POST['file_id'];
+  $file_id = $_POST['id'];
   $type = $_POST['type'];
   if(!$file_id) {
     echo json_response("error","No item id was recieved.");
@@ -14,7 +14,7 @@ if($auth === true) {
       if(unlink($path)) echo json_response("error","No file id was recieved.");
       else echo json_response("error","No file id was recieved.");
     } else {
-      if(unlink($path)) echo json_response("error","No file id was recieved.");
+      if(deleteDir($path)) echo json_response("error","No file id was recieved.");
       else echo json_response("error","No file id was recieved.");
     }
   }

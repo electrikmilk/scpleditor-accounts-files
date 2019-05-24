@@ -2,7 +2,7 @@
 // Retrieve .scpl file contents
 require("../request.php");
 if($auth === true) {
-  $file_id = $_POST['file_id'];
+  $file_id = $_POST['id'];
   if(!$file_id) {
     echo json_response("error","No file id was recieved.");
   } else {

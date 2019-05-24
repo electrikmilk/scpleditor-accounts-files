@@ -2,8 +2,8 @@
 // Save .scpl file with new contents
 require("../request.php");
 if($auth === true) {
-  $file_id = $_POST['file_id'];
-  $content = $_POST[ 'content' ];
+  $file_id = $_POST['id'];
+  $content = $_POST[ 'contents' ];
   if(!$file_id || !$content) {
     if(!$file_id)echo json_response("error","No file id was recieved.");
     else echo json_response("error","No new file contents were recieved.");

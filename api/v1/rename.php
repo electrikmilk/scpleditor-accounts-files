@@ -2,8 +2,8 @@
 // Rename folder or .scpl file
 require("../request.php");
 if($auth === true) {
-  $item_id = $_POST[ 'item_id' ];
-  $new_name = $_POST['new'];
+  $item_id = $_POST[ 'id' ];
+  $new_name = $_POST['name'];
   if(!$item_id || !$new_name) {
     if(!$item_id)echo json_response("error","No item id was recieved.");
     else echo json_response("error","No new name for the file was recieved.");
