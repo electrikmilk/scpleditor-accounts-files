@@ -39,6 +39,9 @@
 .editor-title {
 	margin-left: 50px !important;
 }
+.nav-menu {
+	display: inline-block !important;
+}
 }
 /* General */
 @media screen and (min-width: 120px) and (max-width: 1260px) {
@@ -238,7 +241,7 @@ div.spinner div.bar12 {
 	height: 50px;
 	width: 50px;
 	background: url(img/menu.svg) center / 23px no-repeat;
-	display: inline-block;
+	display: none;
 	position: absolute;
 }
 .nav-menu.close-btn {
@@ -271,7 +274,7 @@ div.spinner div.bar12 {
 }
 .main-container {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: 0fr 1fr;
   height: -webkit-fill-available;
 }
 .side-navigation {
@@ -280,6 +283,7 @@ div.spinner div.bar12 {
   border-right: 0.5px solid #c7c7cc;
   padding-right: 1px;
 	transition: 0.3s all;
+	width: 300px;
 }
 .page-container {
   padding: 50px;
