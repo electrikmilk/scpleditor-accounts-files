@@ -15,11 +15,11 @@ $account = dataArray("users",$id,"id");
   <table class="width-full">
   <tr>
     <td class="setting-label-td"><label for="username">Username:</label></td>
-    <td><input type="text" id="username" name="username" spellcheck="false" placeholder="Username" value="<?php echo $account['username']; ?>"/></td>
+    <td><input type="text" id="username" name="username" spellcheck="false" placeholder="Username" value="<?php echo $account['username']; ?>"/><div class="require-error">Username is required</div></td>
   </tr>
   <tr>
     <td class="setting-label-td"><label for="email">Email:</label></td>
-    <td><input type="emal" id="email" name="email" spellcheck="false" placeholder="Email Address" value="<?php echo $account['email']; ?>"/></td>
+    <td><input type="emal" id="email" name="email" spellcheck="false" placeholder="Email Address" value="<?php echo $account['email']; ?>"/><div class="require-error">Email address is required</div></td>
   </tr>
   <tr>
     <td class="setting-label-td"><br/><label for="password">Password:</label></td>

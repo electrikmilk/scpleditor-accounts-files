@@ -3,6 +3,14 @@ $(function () {
     $(".side-navigation").toggleClass("open-menu");
     $(this).toggleClass("close-btn");
   		});
+      $(".mask-btn").on('click', function (e) {
+        if($("#password").prop("type") === "password") {
+          $("#password").prop("type","text");
+        } else {
+          $("#password").prop("type","password");
+        }
+        $(this).toggleClass("show-pw");
+      		});
 });
 
 function confirmLogout() {

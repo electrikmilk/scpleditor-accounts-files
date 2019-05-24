@@ -10,7 +10,7 @@ if(!$_GET['token'] || !$token) {
     <input type="hidden" name="action" value="resetpassword"/>
     <input type="hidden" name="action" value="user_id" value="<?php echo $token['user_id']; ?>"/>
     <input type="hidden" name="action" value="token" value="<?php echo $_GET['token']; ?>"/>
-    <input type="text" placeholder="New Password" />
+    <input type="text"  id="password" placeholder="New Password" />
     <div class="mask-btn"></div>
     <br/>
     <button type="submit" class="primary-btn">Set New Password</button>

@@ -149,6 +149,19 @@ button:active {
 button.primary-btn {
 	font-weight: bold;
 }
+/* show/hide password button */
+.mask-btn {
+	background: url(img/invisible.svg) center / contain no-repeat;
+	height: 18px;
+	width: 18px;
+	margin-top: 20px;
+	margin-left: -30px;
+	position: absolute;
+	display: inline-block;
+}
+.mask-btn.show-pw {
+	background-image: url(img/visible.svg);
+}
 /* required field errors */
 .require-error {
 	background: url(img/error.svg) left center / 16px no-repeat;
@@ -156,6 +169,7 @@ button.primary-btn {
 	color: #d74c39;
 	margin-top: 10px;
 	font-size: 14px;
+	display: none;
 }
 /* loading indicator */
 .result-pane.loading .loading-result-progress {
