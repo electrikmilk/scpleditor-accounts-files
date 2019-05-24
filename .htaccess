@@ -26,8 +26,8 @@ AddOutputFilterByType DEFLATE application/x-javascript
     ExpiresByType image/gif "access plus 1 month"
     ExpiresByType image/png "access plus 1 month"
     ExpiresByType image/jpeg "access plus 1 month"
-	ExpiresByType image/webp "access plus 1 month"
-	ExpiresByType image/svg+xml "access plus 1 month"
+	  ExpiresByType image/webp "access plus 1 month"
+	  ExpiresByType image/svg+xml "access plus 1 month"
     ExpiresByType application/x-javascript "access plus 1 hour"
     ExpiresByType application/javascript "access plus 1 hour"
     ExpiresByType application/x-icon "access plus 1 year"
@@ -45,6 +45,11 @@ RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php [QSA,L]
 
 # reset password url at some point, mostly here as a template for URL rewrites
-# RewriteRule ^reset/([^/\.]+) login.php?token=$1 [L]
+
 RewriteRule ^login index.php?page=login [L]
 RewriteRule ^sign-up index.php?page=sign-up [L]
+RewriteRule ^account index.php?page=account [L]
+RewriteRule ^settings index.php?page=settings [L]
+RewriteRule ^forgot-password index.php?page=forgot [L]
+RewriteRule ^reset-password/([^/\.]+) index.php?page=reset&token=$1 [L]
+RewriteRule ^email-confirm index.php?page=confirm [L]
