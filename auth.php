@@ -1,6 +1,6 @@
 <?php
 require( "global.php" );
-$session_token = randString( 20 );
+$session_token = randString( 10 );
 
 // Account management backend
 
@@ -15,12 +15,14 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
 		$password = sha1($email.$raw_password);
 		if(mysqli_query($connect,"insert into data.users (username,email,password) values ('".$username."','".$email."','".$password."')")) {
 			$user_id = mysqli_insert_id($connect);
-			if(mysqli_query($connect,"insert into data.token (user_id,token) values ('".$user_id."','".$session_token."')")) {
+			if(mysqli_query($connect,"insert into data.tokens (user_id,token) values ('".$user_id."','".$session_token."')")) {
 				$_SESSION['user_id'] = $user_id;
         $token_id = mysqli_insert_id($connect);
 				header( "Location: https://editor.scpl.dev/?login_key=$token_id" );
-			}
-		} else echo "error";
+			} else {
+        echo "error creating user token: ".mysqli_error($connect);
+      }
+		} else echo "error creating account";
 	}
 	if ( $action === "startsession" ) {
 		$email = $_POST['email'];
