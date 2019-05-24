@@ -72,6 +72,17 @@ a:focus {
 	color: #007aff;
 	cursor: pointer !important;
 }
+.subtext {
+	font-size: 15px;
+	color: #777;
+}
+.setting-label-td {
+	width: 150px;
+}
+.width-full {
+	width: 100%;
+	width: -webkit-fill-available;
+}
 
 /* UI */
 input,
@@ -286,7 +297,7 @@ div.spinner div.bar12 {
 	width: 300px;
 }
 .page-container {
-  padding: 50px;
+  padding: 20px 50px;
 }
 /* side menu */
 .navigation-subhead {
