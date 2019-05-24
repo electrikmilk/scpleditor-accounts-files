@@ -43,14 +43,14 @@ if ( $action === "filelist" ) { // return filelist json for logged in user
 }
 
 if ( $action === "getfile" ) {
-  $file_id = $_POST['id'];
+  $file_id = $_POST['file_id'];
   $itemdata = dataArray("files",$file_id,"id");
   $contents = file_get_contents();
     //echo $contents;
 }
 
 if ( $action === "savefile" ) {
-    $file_id = $_POST[ 'id' ];
+    $file_id = $_POST[ 'file_id' ];
     $content = $_POST[ 'content' ];
     $itemdata = dataArray("files",$file_id,"id");
     $name = $itemdata['name'];
@@ -60,22 +60,22 @@ if ( $action === "savefile" ) {
 }
 
 if($action === "renamefile") {
-  $file_id = $_POST[ 'id' ];
+  $file_id = $_POST[ 'file_id' ];
   $new_name = $_POST['name'];
 
 }
 
 if($action === "renamefolder") {
-  $file_id = $_POST[ 'id' ];
+  $file_id = $_POST[ 'file_id' ];
   $new_name = $_POST['name'];
 }
 
 if($action === "deletefile") {
-  $file_id = $_POST[ 'id' ];
+  $file_id = $_POST[ 'file_id' ];
 }
 
 if($action === "deletefolder") {
-  $folder_id = $_POST[ 'id' ];
+  $folder_id = $_POST[ 'file_id' ];
 }
 
 }
