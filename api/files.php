@@ -1,6 +1,7 @@
 <?php
-require("requests.php");
+$api = true;
 require("../global.php");
+require("requests.php");
 
 // File management backend
 
@@ -34,7 +35,7 @@ function getFiles( $path ) {
 }
 
 if($id === null) {
-  echo "User is not logged in.";
+   echo jsonResponse("error","User is not logged in.");
   exit;
 } else {
 
@@ -48,7 +49,7 @@ if ( $action === "getfile" ) {
   $name = $itemdata['name'];
   $path = dirname(__FILE__) . "/$name";
   $contents = file_get_contents($path);
-  $file = array("file"=>$name,"contents"=>$contents);
+  $file = array("contents"=>$contents);
   echo json_encode($file);
 }
 
@@ -64,8 +65,13 @@ if ( $action === "savefile" ) {
 
 if($action === "renamefile") {
   $file_id = $_POST[ 'file_id' ];
-  $new_name = $_POST['name'];
-
+  $new_name = $_POST['new'];
+  $itemdata = dataArray("files",$file_id,"id");
+  $name = $itemdata['name'];
+  $path = dirname(__FILE__) . "/$name";
+  $newpath = str_replace($name,$new_name,$path);
+  if ( rename($path,$newpath) )echo jsonResponse("success","$name has been renamed to $new_name.");
+  else echo jsonResponse("error","There was an internal error renaming $name.");
 }
 
 if($action === "renamefolder") {
