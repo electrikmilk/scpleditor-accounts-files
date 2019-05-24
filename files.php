@@ -45,17 +45,20 @@ if ( $action === "savefile" ) {
 }
 
 if($action === "renamefile") {
+  $file_id = $_POST[ 'id' ];
+  $new_name = $_POST['name'];
 
 }
 
 if($action === "renamefolder") {
-
+  $file_id = $_POST[ 'id' ];
+  $new_name = $_POST['name'];
 }
 
 if($action === "deletefile") {
-
+  $file_id = $_POST[ 'id' ];
 }
 
 if($action === "deletefolder") {
-
+  $folder_id = $_POST[ 'id' ];
 }
