@@ -44,13 +44,7 @@ if ( $action === "filelist" ) { // return filelist json for logged in user
 }
 
 if ( $action === "createfile" ) {
-  $file_id = $_POST['file_id'];
-  $itemdata = dataArray("files",$file_id,"id");
-  $name = $itemdata['name'];
-  $path = dirname(__FILE__) . "/$name";
-  $contents = file_get_contents($path);
-  $file = array("contents"=>$contents);
-  echo json_encode($file);
+
 }
 
 if ( $action === "getfile" ) {

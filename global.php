@@ -6,7 +6,7 @@
 // ini_set('display_errors', 1);
 
 if($api !== true) {
-	ini_set( 'session.save_path', realpath( dirname( $_SERVER[ 'DOCUMENT_ROOT' ] ) . '/../session' ) ); // Start sessions, specify path because this caused an issue in the past
+	// ini_set( 'session.save_path', realpath( dirname( $_SERVER[ 'DOCUMENT_ROOT' ] ) . '/../session' ) ); // Start sessions, specify path because this caused an issue in the past
 	session_start();
 	if($_SESSION)$id = $_SESSION['user_id'];
 	else $id = null;
