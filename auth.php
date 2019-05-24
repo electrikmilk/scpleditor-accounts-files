@@ -31,11 +31,13 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
 		$account = dataArray("users",$email,"email");
 		if($password === $account['password']) {
 			$user_id = $account['id'];
-			if(mysqli_query($connect,"insert into data.token (user_id,token) values ('".$user_id."','".$session_token."')")) {
+			if(mysqli_query($connect,"insert into data.tokens (user_id,token) values ('".$user_id."','".$session_token."')")) {
 				$_SESSION['user_id'] = $user_id;
         $token_id = mysqli_insert_id($connect);
 				header( "Location: https://editor.scpl.dev/?login_key=$token_id" );
-			}
+			} else {
+        echo "error creating user token: ".mysqli_error($connect);
+      }
 		}
 	}
 }

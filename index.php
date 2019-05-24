@@ -27,6 +27,12 @@
 <body>
 
 <?php
+// No page redirect
+if(!$page) {
+  if(!$_SESSION)header("Location: /login");
+  else header("Location: /settings");
+}
+
 if($_SESSION) {
 ?>
 <div class="config-container">
@@ -41,15 +47,14 @@ if($_SESSION) {
       <div class="menu-container">
         <ul>
           <a href="/settings"><li class="gear-icon"><div>Account Settings</div></li></a>
-          <a href="javascript:;" onclick="confirmLogout();"><li class="exit-icon"><div>Sign Out</div></li></a>
-        </ul>
-      </div>
-      <div class="navigation-subhead">Help Pages</div>
-      <div class="menu-container">
-        <ul>
-          <a href="https://scpl.dev/" target="_blank" rel="noopener"><li class="web-icon"><div>Homepage</div></li></a>
           <a href="https://docs.scpl.dev/gettingstarted.html" target="_blank" rel="noopener"><li class="web-icon"><div>Getting Started</div></li></a>
           <a href="https://docs.scpl.dev/" target="_blank" rel="noopener"><li class="web-icon"><div>Documentation</div></li></a>
+        </ul>
+      </div>
+      <div class="menu-container">
+        <ul>
+          <a href="https://editor.scpl.dev/" target="_blank" rel="noopener"><li class="editor-icon"><div>Back to Editor</div></li></a>
+          <a href="javascript:;" onclick="confirmLogout();"><li class="exit-icon"><div>Sign Out</div></li></a>
         </ul>
       </div>
   </div>
@@ -60,6 +65,9 @@ if($_SESSION) {
     } else if($_SESSION) {
       if(!$page)require("pages/settings.php");
       else require("pages/$page.php");
+      if($page === "login" || $page === "sign-up" || $page === "forgot") {
+        header("Location: /settings");
+      }
     } else {
       require("pages/$page.php");
     }
