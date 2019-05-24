@@ -1,6 +1,6 @@
 <?php
 
-// ScPL Editor Files API
+// ScPL Editor API
 
 header( "Access-Control-Allow-Origin: *" );
 header( "Access-Control-Allow-Headers: access" );
