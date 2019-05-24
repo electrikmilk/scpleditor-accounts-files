@@ -28,10 +28,10 @@ function getFiles( $path ) {
               $files .= '{"id":"'.$fid.'","type":"file","name":"'.$file.'","size":"'.$size.'","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
             } else {
               $folderfiles = getFiles( "$path/$file" );
-              $files .= '{"id":"'.$fid.'","type":"folder","name":"'.$file.'","size":"'.$size.'","content":'.$folderfiles.',"timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
+              $files .= '{"id":"'.$fid.'","type":"folder","name":"'.$file.'","size":"'.$size.'","content":['.$folderfiles.'],"timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
             }
     }
-    return "[$files]";
+    return $files;
 }
 
 if($id === null) {
@@ -41,6 +41,16 @@ if($id === null) {
 
 if ( $action === "filelist" ) { // return filelist json for logged in user
     echo getFiles( "scpl-files/$id" ); // return json from function
+}
+
+if ( $action === "createfile" ) {
+  $file_id = $_POST['file_id'];
+  $itemdata = dataArray("files",$file_id,"id");
+  $name = $itemdata['name'];
+  $path = dirname(__FILE__) . "/$name";
+  $contents = file_get_contents($path);
+  $file = array("contents"=>$contents);
+  echo json_encode($file);
 }
 
 if ( $action === "getfile" ) {
@@ -63,20 +73,15 @@ if ( $action === "savefile" ) {
     else echo jsonResponse("error","There was an internal error saving $name.");
 }
 
-if($action === "renamefile") {
-  $file_id = $_POST[ 'file_id' ];
+if($action === "rename") {
+  $item_id = $_POST[ 'item_id' ];
   $new_name = $_POST['new'];
-  $itemdata = dataArray("files",$file_id,"id");
+  $itemdata = dataArray("files",$item_id,"id");
   $name = $itemdata['name'];
   $path = dirname(__FILE__) . "/$name";
   $newpath = str_replace($name,$new_name,$path);
   if ( rename($path,$newpath) )echo jsonResponse("success","$name has been renamed to $new_name.");
   else echo jsonResponse("error","There was an internal error renaming $name.");
-}
-
-if($action === "renamefolder") {
-  $file_id = $_POST[ 'file_id' ];
-  $new_name = $_POST['name'];
 }
 
 if($action === "deletefile") {
