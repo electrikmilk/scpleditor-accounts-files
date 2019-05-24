@@ -37,7 +37,7 @@ if($_SESSION) {
 ?>
 <div class="config-container">
 <div class="main-navigation">
-  <div class='page-menu'></div>
+  <div class="nav-menu"></div>
   <div class="editor-title">ScPL Editor</div>
   <div class="nav-title"><?php echo $nav_title; ?></div>
 </div>
@@ -47,14 +47,16 @@ if($_SESSION) {
       <div class="menu-container">
         <ul>
           <a href="/settings"><li class="gear-icon"><div>Account Settings</div></li></a>
-          <a href="https://docs.scpl.dev/gettingstarted.html" target="_blank" rel="noopener"><li class="web-icon"><div>Getting Started</div></li></a>
-          <a href="https://docs.scpl.dev/" target="_blank" rel="noopener"><li class="web-icon"><div>Documentation</div></li></a>
-        </ul>
-      </div>
-      <div class="menu-container">
-        <ul>
           <a href="https://editor.scpl.dev/" target="_blank" rel="noopener"><li class="editor-icon"><div>Back to Editor</div></li></a>
           <a href="javascript:;" onclick="confirmLogout();"><li class="exit-icon"><div>Sign Out</div></li></a>
+        </ul>
+      </div>
+
+      <div class="navigation-subhead"><div>Documentation</div></div>
+      <div class="menu-container">
+        <ul>
+          <a href="https://docs.scpl.dev/gettingstarted.html" target="_blank" rel="noopener"><li class="web-icon"><div>Getting Started with ScPL</div></li></a>
+          <a href="https://docs.scpl.dev/" target="_blank" rel="noopener"><li class="web-icon"><div>ScPL Documentation</div></li></a>
         </ul>
       </div>
   </div>

@@ -25,6 +25,20 @@
 	padding: 20px !important;
 	border: none !important;
 }
+.main-container {
+	display: block !important;
+}
+.side-navigation {
+	position: absolute;
+	width: 100%;
+	left: -200%;
+}
+.side-navigation.open-menu {
+	left: 0 !important;
+}
+.editor-title {
+	margin-left: 50px !important;
+}
 }
 /* General */
 @media screen and (min-width: 120px) and (max-width: 1260px) {
@@ -220,6 +234,16 @@ div.spinner div.bar12 {
 }
 
 /* page structure */
+.nav-menu {
+	height: 50px;
+	width: 50px;
+	background: url(img/menu.svg) center / 23px no-repeat;
+	display: inline-block;
+	position: absolute;
+}
+.nav-menu.close-btn {
+	background-image: url(img/close.svg);
+}
 .editor-title {
 	padding: 15px;
 	font-weight: bold;
@@ -227,6 +251,12 @@ div.spinner div.bar12 {
 	background: url(img/icon.png) left center / 30px no-repeat;
 	padding-left: 37px;
 	margin-left: 10px;
+}
+.nav-title {
+	border-left: 0.5px solid #c7c7cc;
+	padding-left: 20px;
+	font-size: 16px;
+	display: inline-block;
 }
 .config-container {
   position: fixed;
@@ -249,6 +279,7 @@ div.spinner div.bar12 {
   height: -webkit-fill-available;
   border-right: 0.5px solid #c7c7cc;
   padding-right: 1px;
+	transition: 0.3s all;
 }
 .page-container {
   padding: 50px;
