@@ -386,6 +386,9 @@ background: url(img/bg.jpg) center / cover no-repeat;
 text-align: center;
 width: 500px;
 }
+.external-form > div p {
+	line-height: 22px;
+}
 .login-icon {
 	width: 100px;
 	height: 100px;
