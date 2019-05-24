@@ -47,7 +47,9 @@ if ( $action === "getfile" ) {
   $itemdata = dataArray("files",$file_id,"id");
   $name = $itemdata['name'];
   $path = dirname(__FILE__) . "/$name";
-
+  $contents = file_get_contents($path);
+  $file = array("file"=>$name,"contents"=>$contents);
+  echo json_encode($file);
 }
 
 if ( $action === "savefile" ) {
