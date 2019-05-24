@@ -24,7 +24,7 @@ function getFiles( $path ) {
           }
             if ( is_dir( "$path/$file" ) === false ) {
               $content = file_get_contents("$path/$file");
-              $files .= '{"id":"'.$fid.'","type":"file","name":"'.$file.'","size":"'.$size.'","content":"'.$content.'","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
+              $files .= '{"id":"'.$fid.'","type":"file","name":"'.$file.'","size":"'.$size.'","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
             } else {
               $folderfiles = getFiles( "$path/$file" );
               $files .= '{"id":"'.$fid.'","type":"folder","name":"'.$file.'","size":"'.$size.'","content":'.$folderfiles.',"timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
@@ -44,15 +44,19 @@ if ( $action === "filelist" ) { // return filelist json for logged in user
 
 if ( $action === "getfile" ) {
   $file_id = $_POST['id'];
-    //$contents = file_get_contents();
+  $itemdata = dataArray("files",$file_id,"id");
+  $contents = file_get_contents();
     //echo $contents;
 }
 
 if ( $action === "savefile" ) {
     $file_id = $_POST[ 'id' ];
     $content = $_POST[ 'content' ];
-    //if ( file_put_contents( "$path", $html ) )echo "saved";
-    //else echo "error";
+    $itemdata = dataArray("files",$file_id,"id");
+    $name = $itemdata['name'];
+    $path = dirname(__FILE__) . "/$name";
+    if ( file_put_contents( "$path", $content ) )echo jsonResponse("success","$name has been saved.");
+    else echo jsonResponse("error","There was an internal error saving $name.");
 }
 
 if($action === "renamefile") {
