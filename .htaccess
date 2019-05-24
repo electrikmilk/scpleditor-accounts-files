@@ -46,3 +46,4 @@ RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php [QSA,L]
 
 # reset password url at some point, mostly here as a template for URL rewrites
 # RewriteRule ^reset/([^/\.]+) login.php?token=$1 [L]
+RewriteRule ^login index.php?page=login [L]
