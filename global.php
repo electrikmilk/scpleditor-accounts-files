@@ -12,7 +12,7 @@ if($api !== true) {
 	else $id = null;
 }
 
-$connect = mysqli_connect("localhost");
+$connect = mysqli_connect("localhost","root","root");
 $action = $_POST['action'];
 $page = $_GET['page'];
 $folder = $_GET[ 'folder' ];

@@ -36,4 +36,3 @@ if(!$token) {
     json_response("error","Invalid authentication token.");
   }
 }
-?>
