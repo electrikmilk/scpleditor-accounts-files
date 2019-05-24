@@ -12,5 +12,3 @@ if($action === "createuser") {
 if($action === "startsession") {
   header("Location: https://editor.scpl.dev/?token=$session_token");
 }
-
-?>
