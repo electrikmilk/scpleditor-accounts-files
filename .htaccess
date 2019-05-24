@@ -4,3 +4,45 @@ CheckSpelling On
 Options +FollowSymlinks -Indexes
 DirectoryIndex index.php
 RewriteOptions inherit
+
+# Compress text, html, javascript, css, xml:
+AddOutputFilterByType DEFLATE text/plain
+AddOutputFilterByType DEFLATE text/html
+AddOutputFilterByType DEFLATE text/xml
+AddOutputFilterByType DEFLATE text/css
+AddOutputFilterByType DEFLATE application/xml
+AddOutputFilterByType DEFLATE application/xhtml+xml
+AddOutputFilterByType DEFLATE application/rss+xml
+AddOutputFilterByType DEFLATE image/svg+xml
+AddOutputFilterByType DEFLATE application/javascript
+AddOutputFilterByType DEFLATE application/x-javascript
+
+# Expires
+<IfModule mod_expires.c>
+    ExpiresActive On
+    # ExpiresDefault "access plus 1 month"
+    ExpiresByType text/css "access plus 1 hour"
+    ExpiresByType text/plain "access plus 1 month"
+    ExpiresByType image/gif "access plus 1 month"
+    ExpiresByType image/png "access plus 1 month"
+    ExpiresByType image/jpeg "access plus 1 month"
+	ExpiresByType image/webp "access plus 1 month"
+	ExpiresByType image/svg+xml "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 hour"
+    ExpiresByType application/javascript "access plus 1 hour"
+    ExpiresByType application/x-icon "access plus 1 year"
+</IfModule>
+
+# Error Pages
+ErrorDocument 404 /404.php
+ErrorDocument 500 /500.php
+ErrorDocument 501 /500.php
+ErrorDocument 502 /500.php
+ErrorDocument 503 /500.php
+
+# Remove file extension from URL
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php [QSA,L]
+
+# reset password url at some point, mostly here as a template for URL rewrites
+# RewriteRule ^reset/([^/\.]+) login.php?token=$1 [L]
