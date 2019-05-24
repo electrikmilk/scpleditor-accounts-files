@@ -26,7 +26,7 @@ function json_response( $status, $message ) {
 
 if ( !$token ) {
 	echo json_response( "error", "No authentication token was received." );
-	http_response_code( 400 );
+	http_response_code( 403 );
 } else {
 	$session = dataArray( "tokens", $token, "token" ); // get user_id from token
 	if ( $session ) {

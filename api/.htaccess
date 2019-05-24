@@ -1,0 +1,6 @@
+# Error Pages
+ErrorDocument 404 /api/index.php
+ErrorDocument 500 /api/index.php
+ErrorDocument 501 /api/index.php
+ErrorDocument 502 /api/index.php
+ErrorDocument 503 /api/index.php
