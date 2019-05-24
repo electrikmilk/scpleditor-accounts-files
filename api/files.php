@@ -1,6 +1,6 @@
 <?php
-require("api.php");
-require("global.php");
+require("requests.php");
+require("../global.php");
 
 // File management backend
 
@@ -45,8 +45,9 @@ if ( $action === "filelist" ) { // return filelist json for logged in user
 if ( $action === "getfile" ) {
   $file_id = $_POST['file_id'];
   $itemdata = dataArray("files",$file_id,"id");
-  $contents = file_get_contents();
-    //echo $contents;
+  $name = $itemdata['name'];
+  $path = dirname(__FILE__) . "/$name";
+
 }
 
 if ( $action === "savefile" ) {
