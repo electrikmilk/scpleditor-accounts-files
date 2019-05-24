@@ -5,16 +5,16 @@
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 
-if($api !== true) {
+if ( $api !== true ) {
 	// ini_set( 'session.save_path', realpath( dirname( $_SERVER[ 'DOCUMENT_ROOT' ] ) . '/../session' ) ); // Start sessions, specify path because this caused an issue in the past
 	session_start();
-	if($_SESSION)$id = $_SESSION['user_id'];
+	if ( $_SESSION )$id = $_SESSION[ 'user_id' ];
 	else $id = null;
 }
 
-$connect = mysqli_connect("localhost","root","root");
-$action = $_POST['action'];
-$page = $_GET['page'];
+$connect = mysqli_connect( "localhost", "root", "root" );
+$action = $_POST[ 'action' ];
+$page = $_GET[ 'page' ];
 $folder = $_GET[ 'folder' ];
 
 // Misc functions
@@ -64,9 +64,9 @@ function setValue( $db, $val, $col, $where ) {
 	} else return false;
 }
 
-function e($string) {
-  global $connect;
-  return mysqli_real_escape_string($connect,$string);
+function e( $string ) {
+	global $connect;
+	return mysqli_real_escape_string( $connect, $string );
 }
 
 // Global time functions
@@ -110,14 +110,14 @@ function timeago( $datetime, $ago = false, $full = false, $shorten = false ) {
 
 // Global file/folder functions
 
-function formatSizeUnits($bytes) {
-        if ($bytes >= 1073741824) $bytes = number_format($bytes / 1073741824, 2) . ' GB';
-        elseif ($bytes >= 1048576)  $bytes = number_format($bytes / 1048576, 2) . ' MB';
-        elseif ($bytes >= 1024)$bytes = number_format($bytes / 1024, 2) . ' KB';
-        elseif ($bytes > 1)  $bytes = $bytes . ' bytes';
-        elseif ($bytes == 1)  $bytes = $bytes . ' byte';
-        else $bytes = '0 bytes';
-        return $bytes;
+function formatSizeUnits( $bytes ) {
+	if ( $bytes >= 1073741824 )$bytes = number_format( $bytes / 1073741824, 2 ) . ' GB';
+	elseif ( $bytes >= 1048576 )$bytes = number_format( $bytes / 1048576, 2 ) . ' MB';
+	elseif ( $bytes >= 1024 )$bytes = number_format( $bytes / 1024, 2 ) . ' KB';
+	elseif ( $bytes > 1 )$bytes = $bytes . ' bytes';
+	elseif ( $bytes == 1 )$bytes = $bytes . ' byte';
+	else $bytes = '0 bytes';
+	return $bytes;
 }
 
 function makeFolder( $name ) {
@@ -146,7 +146,7 @@ function folderArray( $folder ) {
 	if ( $handle = opendir( $folder ) ) {
 		while ( false !== ( $entry = readdir( $handle ) ) ) {
 			if ( $entry != "." && $entry != ".." ) {
-				if(pathinfo($entry,PATHINFO_EXTENSION))array_push_key( $folder_array, "file", $entry );
+				if ( pathinfo( $entry, PATHINFO_EXTENSION ) )array_push_key( $folder_array, "file", $entry );
 				else array_push( $folder_array, "folder", $entry );
 			}
 		}
