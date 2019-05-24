@@ -2,9 +2,9 @@
 <h3>Account Sign-up</h3>
 <form action="auth.php" method="POST">
     <input type="hidden" name="action" value="createuser"/>
-    <input type="text" placeholder="Username" /><br/>
-    <input type="text" placeholder="Your Email Address" /><br/>
-    <input type="text" placeholder="Password" /><div class="mask-btn"></div><br/><br/>
+    <input type="text" name="username" placeholder="Username" /><br/>
+    <input type="email" name="email" placeholder="Your Email Address" /><br/>
+    <input type="password" name="password" placeholder="Password" /><div class="mask-btn"></div><br/><br/>
     <button type="submit" class="primary-btn">Create Account</button>
 </form>
 <br/></br/><hr/></br/>

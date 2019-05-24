@@ -2,8 +2,8 @@
 <h3>Login to ScPL Editor</h3>
 <form action="auth.php" method="POST">
   <input type="hidden" name="action" value="startsession"/>
-  <input type="text" placeholder="Email Address" /><br/>
-  <input type="text" placeholder="Password" /><br/><br/>
+  <input type="email" name="email" placeholder="Email Address" /><br/>
+  <input type="password" name="password" placeholder="Password" /><br/><br/>
 <button type="submit" class="primary-btn">Login</button>
 <br/></br/><hr/></br/>
 <div class="login-footer">
