@@ -67,7 +67,7 @@ if($_SESSION) {
     } else if($_SESSION) {
       if(!$page)require("pages/settings.php");
       else require("pages/$page.php");
-      if($page === "login" || $page === "sign-up" || $page === "forgot") {
+      if($page === "login" || $page === "sign-up") {
         header("Location: /settings");
       }
     } else {

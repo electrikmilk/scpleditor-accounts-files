@@ -4,10 +4,16 @@
     <input type="text" placeholder="Your Email Address" /><br/></br/>
     <button type="submit" class="primary-btn">Send Reset Link</button>
 </form>
+<?php
+if(!$_SESSION) {
+?>
 <br/></br/><hr/></br/>
 <div class="login-footer">
 <ul>
   <li><a href="/login">Back to Login</a></li>
 </ul>
 </div>
+<?php
+}
+?>
 </form>

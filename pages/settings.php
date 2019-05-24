@@ -10,17 +10,22 @@ $account = dataArray("users",$id,"id");
 
 <hr/>
 
-<table class="width-full">
-<tr>
-  <td class="setting-label-td"><label for="username">Username:</label></td>
-  <td><input type="text" id="username" name="username" placeholder="Username" value="<?php echo $account['username']; ?>"/></td>
-</tr>
-<tr>
-  <td class="setting-label-td"><label for="email">Email Address:</label></td>
-  <td><input type="emal" id="email" name="email" placeholder="Email Address" value="<?php echo $account['email']; ?>"/></td>
-</tr>
-<tr>
-  <td class="setting-label-td"><br/><label for="password">Password:</label></td>
-  <td><br/><a href='/forgot-password'>Reset my password</a></td>
-</tr>
-</table>
+<form action="auth.php" method="POST">
+  <input type="hidden" name="action" value="updatefields"/>
+  <table class="width-full">
+  <tr>
+    <td class="setting-label-td"><label for="username">Username:</label></td>
+    <td><input type="text" id="username" name="username" spellcheck="false" placeholder="Username" value="<?php echo $account['username']; ?>"/></td>
+  </tr>
+  <tr>
+    <td class="setting-label-td"><label for="email">Email:</label></td>
+    <td><input type="emal" id="email" name="email" spellcheck="false" placeholder="Email Address" value="<?php echo $account['email']; ?>"/></td>
+  </tr>
+  <tr>
+    <td class="setting-label-td"><br/><label for="password">Password:</label></td>
+    <td><br/><a href='/forgot-password'>Reset my password</a></td>
+  </tr>
+  </table>
+  <br/><br/>
+  <button type="submit" class="primary-btn">Save changes</button>
+</form>

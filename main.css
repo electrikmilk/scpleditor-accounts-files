@@ -32,6 +32,7 @@
 	position: absolute;
 	width: 100%;
 	left: -200%;
+	box-shadow: 0 10px 10px rgba(0,0,0,.3);
 }
 .side-navigation.open-menu {
 	left: 0 !important;
@@ -41,6 +42,9 @@
 }
 .nav-menu {
 	display: inline-block !important;
+}
+.page-container {
+  padding: 10px 20px !important;
 }
 }
 /* General */

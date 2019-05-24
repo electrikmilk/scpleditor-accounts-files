@@ -20,9 +20,9 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
         $token_id = mysqli_insert_id($connect);
 				header( "Location: https://editor.scpl.dev/?login_key=$token_id" );
 			} else {
-        echo "error creating user token: ".mysqli_error($connect);
+        echo "Error creating user token.";
       }
-		} else echo "error creating account";
+		} else echo "Error creating account.";
 	}
 	if ( $action === "startsession" ) {
 		$email = $_POST['email'];
@@ -36,8 +36,19 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
         $token_id = mysqli_insert_id($connect);
 				header( "Location: https://editor.scpl.dev/?login_key=$token_id" );
 			} else {
-        echo "error creating user token: ".mysqli_error($connect);
+        echo "Error creating user token.";
       }
 		}
 	}
+  if($action === "updatefields") {
+    if($_SESSION) {
+      $username = $_POST['username'];
+  		$email = $_POST['email'];
+      if(mysqli_query($connect,"update data.users set username = '".$username."', email = '".$email."' where id = '$id'")) {
+        header("Location: /settings");
+      } else {
+        echo "Error updating your account.";
+      }
+    }
+  }
 }
