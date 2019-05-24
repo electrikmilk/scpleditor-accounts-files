@@ -8,18 +8,26 @@ function getFiles( $path ) {
     sort( $folder );
     unset( $files );
     foreach ( $folder as $file ) {
-        unset( $disabled );
-        unset( $folderfiles );
-        $ext = pathinfo( $file, PATHINFO_EXTENSION );
-        if ( !$query || stripos( $file, $query ) !== false ) {
+      unset( $folderfiles );
+      unset($content);
+      unset($updated);
+      unset($relative_updated);
+      $itemdata = dataArray("files",$file,"name");
+          $fid = $itemdata['id'];
+          $size = formatSize(filesize("$path/$file"));
+          $timestamp = $itemdata['timestamp'];
+          $relative = timeago($timestamp);
+          if($itemdata['timestamp']) {
+            $updated = $itemdata['updated'];
+            $relative_updated = timeago($updated);
+          }
             if ( is_dir( "$path/$file" ) === false ) {
-                $content =
-                $files .= '{"id":"'.$id.'","type":"file","name":"'.$file.'","content":"'.$content.'","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
+              $content = file_get_contents("$path/$file");
+              $files .= '{"id":"'.$fid.'","type":"file","name":"'.$file.'","size":"'.$size.'","content":"'.$content.'","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
             } else {
-                $folderfiles = getFiles( "$path/$file" );
-                $files .= '{"id":"'.$id.'","type":"folder","name":"'.$file.'","content":['.$folderfiles.']","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
+              $folderfiles = getFiles( "$path/$file" );
+              $files .= '{"id":"'.$fid.'","type":"folder","name":"'.$file.'","size":"'.$size.'","content":['.$folderfiles.']","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
             }
-        }
     }
     return "[$files]";
 }
