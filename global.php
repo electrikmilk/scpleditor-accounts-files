@@ -15,30 +15,7 @@ $action = $_POST['action'];
 $page = $_GET['page'];
 $folder = $_GET[ 'folder' ];
 
-// Database functions
-
-// Quickly get array for a row with a column value
-function dataArray( $db, $val, $col ) {
-	global $connect;
-	if ( $val !== false ) {
-		$get = "$col = '$val'";
-		$query = mysqli_query( $connect, "select * from data.$db where $get" );
-	} else $query = mysqli_query( $connect, "select * from data.$db" );
-	if ( mysqli_num_rows( $query ) !== 0 ) return mysqli_fetch_array( $query );
-	else return false;
-}
-
-// Quickly update one column in a row in the database.
-function setValue( $db, $val, $col, $where ) {
-	global $connect;
-	if ( $db && $val && $col && $where ) {
-		$set = "$col = '$val'";
-		if ( mysqli_query( $connect, "update $db set $set where $where" ) ) return true;
-		else return false;
-	} else return false;
-}
-
-// String functions
+// Misc functions
 
 function randString( $length ) { // create random string (for creating random filenames, identifiers, etc.)
 	$char = str_shuffle( "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" );
@@ -60,6 +37,29 @@ function commaRemove( $string, $item ) {
 		unset( $parts[ $i ] );
 	}
 	return implode( ',', $parts );
+}
+
+// Database functions
+
+// Quickly get array for a row with a column value
+function dataArray( $db, $val, $col ) {
+	global $connect;
+	if ( $val !== false ) {
+		$get = "$col = '$val'";
+		$query = mysqli_query( $connect, "select * from data.$db where $get" );
+	} else $query = mysqli_query( $connect, "select * from data.$db" );
+	if ( mysqli_num_rows( $query ) !== 0 ) return mysqli_fetch_array( $query );
+	else return false;
+}
+
+// Quickly update one column in a row in the database.
+function setValue( $db, $val, $col, $where ) {
+	global $connect;
+	if ( $db && $val && $col && $where ) {
+		$set = "$col = '$val'";
+		if ( mysqli_query( $connect, "update $db set $set where $where" ) ) return true;
+		else return false;
+	} else return false;
 }
 
 function e($string) {

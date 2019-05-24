@@ -26,13 +26,13 @@ function getFiles( $path ) {
               $files .= '{"id":"'.$fid.'","type":"file","name":"'.$file.'","size":"'.$size.'","content":"'.$content.'","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
             } else {
               $folderfiles = getFiles( "$path/$file" );
-              $files .= '{"id":"'.$fid.'","type":"folder","name":"'.$file.'","size":"'.$size.'","content":['.$folderfiles.']","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
+              $files .= '{"id":"'.$fid.'","type":"folder","name":"'.$file.'","size":"'.$size.'","content":'.$folderfiles.',"timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
             }
     }
     return "[$files]";
 }
 
-if ( $action === "filelist" ) {// return filelist json for logged in user
+if ( $action === "filelist" ) { // return filelist json for logged in user
     if(!$_SESSION) {
       echo "No account is logged in.";
       exit;
