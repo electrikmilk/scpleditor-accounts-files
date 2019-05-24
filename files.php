@@ -3,17 +3,59 @@ require("global.php");
 
 // File management backend
 
-if($action === "filelist") {
-  if(!$_SESSION) {
-    echo "No account is logged in.";
-    exit;
-  } else {
-    $files = folderArray("scpl-files/$id/");
-    foreach ($variable as $type => $file) {
-      $files .= '{"id":"'.$id.'","type":"'.$type.'","name":"'.$file.'","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
+function getFiles( $path ) {
+    $folder = folderArray( $path );
+    sort( $folder );
+    unset( $files );
+    foreach ( $folder as $file ) {
+        unset( $disabled );
+        unset( $folderfiles );
+        $ext = pathinfo( $file, PATHINFO_EXTENSION );
+        if ( !$query || stripos( $file, $query ) !== false ) {
+            if ( is_dir( "$path/$file" ) === false ) {
+                $content =
+                $files .= '{"id":"'.$id.'","type":"file","name":"'.$file.'","content":"'.$content.'","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
+            } else {
+                $folderfiles = getFiles( "$path/$file" );
+                $files .= '{"id":"'.$id.'","type":"folder","name":"'.$file.'","content":['.$folderfiles.']","timestamp":"'.$timestamp.'","updated":"'.$updated.'","relativeTimestamp":"'.$relative.'","relativeUpdated":"'.$relative_updated.'"}';
+            }
+        }
     }
-    echo "[$files]";
-  }
+    return "[$files]";
 }
 
-?>
+if ( $action === "filelist" ) {// return filelist json for logged in user
+    if(!$_SESSION) {
+      echo "No account is logged in.";
+      exit;
+    } else echo getFiles( "scpl-files/$id" ); // return json from function
+}
+
+if ( $action === "getfile" ) {
+  $file_id = $_POST['id'];
+    //$contents = file_get_contents();
+    //echo $contents;
+}
+
+if ( $action === "savefile" ) {
+    $file_id = $_POST[ 'id' ];
+    $content = $_POST[ 'content' ];
+    //if ( file_put_contents( "$path", $html ) )echo "saved";
+    //else echo "error";
+}
+
+if($action === "renamefile") {
+
+}
+
+if($action === "renamefolder") {
+
+}
+
+if($action === "deletefile") {
+
+}
+
+if($action === "deletefolder") {
+
+}

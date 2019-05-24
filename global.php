@@ -5,7 +5,7 @@ session_start();
 
 $id = $_SESSION['user_id'];
 
-$db = mysqli_connect("localhost");
+$connect = mysqli_connect("localhost");
 
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
@@ -16,6 +16,33 @@ $action = $_POST['action'];
 
 $page = $_GET['page'];
 $folder = $_GET[ 'folder' ];
+
+// Database functions
+
+// Quickly get array for a row with a column value
+
+function dataArray( $db, $val, $col ) {
+	global $connect;
+	if ( $val !== false ) {
+		$get = "$col = '$val'";
+		$query = mysqli_query( $connect, "select * from data.$db where $get" );
+	} else $query = mysqli_query( $connect, "select * from $db" );
+	if ( mysqli_num_rows( $query ) !== 0 ) return mysqli_fetch_array( $query );
+	else return false;
+}
+
+// Quickly update one column in a row in the database.
+
+function setValue( $db, $val, $col, $where ) {
+	global $connect;
+	if ( $db && $val && $col && $where ) {
+		$set = "$col = '$val'";
+		if ( mysqli_query( $connect, "update $db set $set where $where" ) ) return true;
+		else return false;
+	} else return false;
+}
+
+// String functions
 
 function randString( $length ) { // create random string (for creating random filenames, identifiers, etc.)
 	$char = str_shuffle( "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" );
@@ -40,8 +67,8 @@ function commaRemove( $string, $item ) {
 }
 
 function e($string) {
-  global $db;
-  return mysqli_real_escape_string($db,$string);
+  global $connect;
+  return mysqli_real_escape_string($connect,$string);
 }
 
 // Global time functions
@@ -89,6 +116,7 @@ function makeFolder( $name ) {
 	if ( !file_exists( $name ) )mkdir( $name, 0777, true );
 }
 
+// makes index get 500 error for some reason
 // function deleteDir( $dirPath ) {
 // 	if ( !is_dir( $dirPath ) ) return false;
 // 	if ( substr( $dirPath, strlen( $dirPath ) - 1, 1 ) != '/' )$dirPath .= '/';
