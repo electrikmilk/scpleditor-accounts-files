@@ -14,10 +14,14 @@ if ( $auth === true ) {
 		else echo json_response( "error", "No new name for the file was recieved." );
 	} else {
 		$itemdata = dataArray( "files", $item_id, "id" );
-		$name = $itemdata[ 'name' ];
-		$path = dirname( __FILE__ ) . "/$name";
-		$newpath = str_replace( $name, $new_name, $path );
-		if ( rename( $path, $newpath ) )echo json_response( "success", "$name has been renamed to $new_name." );
-		else echo json_response( "error", "There was an internal error renaming $name." );
+		if($itemdata) {
+			$name = $itemdata[ 'name' ];
+			$path = dirname( __FILE__ ) . "/$name";
+			$newpath = str_replace( $name, $new_name, $path );
+			if(file_exists($path)) {
+				if ( rename( $path, $newpath ) )echo json_response( "success", "$name has been renamed to $new_name." );
+				else echo json_response( "error", "There was an internal error renaming $name." );
+			} else echo json_response("error","File does not appear to exist.");
+		} else echo json_response("error","Invalid file ID.");
 	}
 }
