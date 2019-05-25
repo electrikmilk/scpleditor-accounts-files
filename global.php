@@ -29,6 +29,14 @@ function randString( $length ) { // create random string (for creating random fi
 	return $rand;
 }
 
+function numberFormat( $n, $precision = 1 ) {
+	if ( $n < 1000 )$n_format = number_format( $n ); // Anything less than a thousand
+	else if ( $n < 1000000 )$n_format = number_format( $n / 1000, $precision ) . 'k'; // Anything less than a million
+	else if ( $n < 1000000000 )$n_format = number_format( $n / 1000000, $precision ) . 'M'; // Anything less than a billion
+	else $n_format = number_format( $n / 1000000000, $precision ) . 'B'; // At least a billion
+	return intval( $n_format );
+}
+
 function clean( $string ) {
 	return strtolower( preg_replace( '/[^A-Za-z0-9\-]/', '', preg_replace( "/[\"\']/", " ", preg_replace( "/[\/\&%#\$]/", "_", strip_tags( str_replace( '--', '-', str_replace( ' ', '-', trim( $string ) ) ) ) ) ) ) );
 }
@@ -163,7 +171,7 @@ function folderArray( $folder ) {
 function file_count($directory) {
 	$filecount = 0;
 	$files = glob($directory . "*");
-	if ($files) $filecount = count($files);
+	if ($files) $filecount = numberFormat(count($files));
 	echo "$filecount files";
 }
 
