@@ -15,11 +15,16 @@ $account = dataArray("users",$id,"id");
   <table class="width-full">
   <tr>
     <td class="setting-label-td"><label for="username">Username:</label></td>
-    <td><input type="text" id="username" name="username" spellcheck="false" placeholder="Username" value="<?php echo $account['username']; ?>"/><div class="require-error">Username is required</div></td>
+    <td><input type="text" id="username" name="username" spellcheck="false" placeholder="Username" value="<?php echo $account['username']; ?>" data-require="true" data-limit="20"/>
+      <div class="input-limit" id="limit-username">
+        0 / 20 character limit
+      </div>
+      <br/>
+    </td>
   </tr>
   <tr>
     <td class="setting-label-td"><label for="email">Email:</label></td>
-    <td><input type="emal" id="email" name="email" spellcheck="false" placeholder="Email Address" value="<?php echo $account['email']; ?>"/><div class="require-error">Email address is required</div></td>
+    <td><input type="emal" id="email" name="email" spellcheck="false" placeholder="Email Address" value="<?php echo $account['email']; ?>" data-require="true"/></td>
   </tr>
   <tr>
     <td class="setting-label-td"><br/><label for="password">Password:</label></td>
