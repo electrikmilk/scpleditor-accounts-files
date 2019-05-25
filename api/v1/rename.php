@@ -19,8 +19,10 @@ if ( $auth === true ) {
 			$path = dirname( __FILE__ ) . "/$name";
 			$newpath = str_replace( $name, $new_name, $path );
 			if(file_exists($path)) {
-				if ( rename( $path, $newpath ) )echo json_response( "success", "$name has been renamed to $new_name." );
-				else echo json_response( "error", "There was an internal error renaming $name." );
+				if(mysqli_query($connect,"update data.files set name = '$new_name' where id = '$item_id'")) {
+					if ( rename( $path, $newpath ) )echo json_response( "success", "$name has been renamed to $new_name." );
+					else echo json_response( "error", "There was an internal error renaming $name." );
+				} else echo json_response( "error", "There was a database error renaming $name." );
 			} else echo json_response("error","File does not appear to exist.");
 		} else echo json_response("error","Invalid file ID.");
 	}
