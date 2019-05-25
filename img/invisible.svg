@@ -2,8 +2,8 @@
 <!-- Generator: Adobe Illustrator 21.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 30 30" style="enable-background:new 0 0 30 30;" xml:space="preserve">
-<circle cx="29" cy="15" r="1"/>
-<circle cx="1" cy="15" r="1"/>
+<circle fill="#555555" cx="29" cy="15" r="1"/>
+<circle fill="#555555" cx="1" cy="15" r="1"/>
 <line style="fill:none;stroke:#555555;stroke-width:2;stroke-miterlimit:10;" x1="1" y1="1" x2="29" y2="29"/>
 <path d="M18,15c0-1.657-1.343-3-3-3c-1.164,0-2.162,0.67-2.659,1.638l4.021,4.021C17.33,17.162,18,16.164,18,15z"/>
 <path d="M9.449,10.747C10.729,9.08,12.736,8,15,8c3.866,0,7,3.134,7,7c0,2.264-1.08,4.271-2.747,5.551l2.732,2.732
