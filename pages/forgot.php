@@ -16,4 +16,3 @@ if(!$_SESSION) {
 <?php
 }
 ?>
-</form>
