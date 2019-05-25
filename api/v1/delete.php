@@ -13,14 +13,18 @@ if ( $auth === true ) {
 		echo json_response( "error", "No item id was recieved." );
 	} else {
 		$itemdata = dataArray( "files", $file_id, "id" );
-		$name = $itemdata[ 'name' ];
-		$path = dirname( __FILE__ ) . "/$name";
-		if ( $type === "file" ) {
-			if ( unlink( $path ) )echo json_response( "success", "File $name was deleted." );
-			else echo json_response( "error", "No file id was recieved." );
-		} else {
-			if ( deleteDir( $path ) )echo json_response( "success", "Folder $name was deleted." );
-			else echo json_response( "error", "No file id was recieved." );
-		}
+		if($itemdata) {
+			$name = $itemdata[ 'name' ];
+			$path = dirname( __FILE__ ) . "/$name";
+			if(file_exists($path)) {
+				if ( $type === "file" ) {
+					if ( unlink( $path ) )echo json_response( "success", "File $name was deleted." );
+					else echo json_response( "error", "No file id was recieved." );
+				} else {
+					if ( deleteDir( $path ) )echo json_response( "success", "Folder $name was deleted." );
+					else echo json_response( "error", "No file id was recieved." );
+				}
+			} else echo json_response("error","File does not appear to exist.");
+		} else echo json_response("error","Invalid file ID.");
 	}
 }
