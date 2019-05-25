@@ -7,9 +7,9 @@
 <?php include("metadata.php"); ?>
 
 <script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript" src="main.js"></script>
 
 <link rel="stylesheet" href="main.css"/>
-<script type="text/javascript" src="main.js"></script>
 
 <link rel="shortcut icon" href="favicon/favicon.ico" />
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0"/>

@@ -1,10 +1,14 @@
 <div class="login-icon"></div>
 <h3>Account Sign-up</h3>
-<form action="auth.php" method="POST">
+<form action="auth.php" method="POST" id="signup-form">
     <input type="hidden" name="action" value="createuser"/>
-    <input type="text" name="username" placeholder="Username" /><br/>
-    <input type="email" name="email" placeholder="Your Email Address" /><br/>
-    <input type="password" id="password" name="password" placeholder="Password" /><div class="mask-btn"></div><br/><br/>
+    <input type="text" id="username" name="username" placeholder="Username" data-limit="20" data-require="true"/>
+    <div class="input-limit" id="limit-username">
+    					0 / 50 character limit
+    				</div>
+    <br/>
+    <input type="email" id="email" name="email" placeholder="Your Email Address" data-require="true" /><br/>
+    <div class="mask-btn"></div><input type="password" id="password" name="password" placeholder="Password"  data-require="true" /><br/><br/>
     <button type="submit" class="primary-btn">Create Account</button>
 </form>
 <br/></br/><hr/></br/>
