@@ -34,7 +34,6 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
     }
 	}
 	if ( $action === "startsession" ) {
-
 		$email = $_POST['email'];
 		$raw_password = $_POST['password'];
 		$password = sha1($email.$raw_password);
