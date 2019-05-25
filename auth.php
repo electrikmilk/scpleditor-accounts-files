@@ -30,7 +30,7 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
     } else if($check_username) {
       echo "Sorry, but someone beat you to that username.";
     } else if($check_email) {
-      echo "$email is already being used for another account.";
+      echo "Email is already in use.";
     }
 	}
 	if ( $action === "startsession" ) {

@@ -112,12 +112,13 @@ $(function () {
 				data: formdata,
 				success: function (response) {
 					if (response === "saved") {
+            $("#username-title").html($("#username").val());
             $("#settings-message").addClass("success");
             $("#settings-message").html("Account changes saved!");
             $("#settings-message").fadeIn();
             setTimeout(function(){
-              window.location = window.location.href;
-            }, 500);
+              $("#settings-message").fadeOut();
+            }, 3000);
 					} else {
             $("#settings-message").addClass("error");
   					$("#settings-message").html(response);

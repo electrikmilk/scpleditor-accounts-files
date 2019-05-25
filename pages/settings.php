@@ -6,8 +6,9 @@ $account = dataArray("users",$id,"id");
 
 <h1>Account Settings</h1>
 
-<h3><?php echo $account['username']; ?></h3>
+<h3 id="username-title"><?php echo $account['username']; ?></h3>
 <p class="subtext">Account created <?php echo timeago($account['timestamp']); ?></p>
+<p><?php echo file_count("files/".$account['id']); ?></p>
 <?php if($account['updated'])echo "<p>You last updated your account ".timeago($account['updated'])."</p>"; ?>
 
 <hr/>
