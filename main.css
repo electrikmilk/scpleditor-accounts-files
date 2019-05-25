@@ -77,7 +77,8 @@ a:focus {
 	cursor: pointer !important;
 }
 .subtext {
-	font-size: 15px;
+	font-size: 14px;
+	margin-bottom: 3px;
 	color: #777;
 }
 .setting-label-td {
@@ -367,14 +368,14 @@ div.spinner div.bar12 {
 	width: 300px;
 }
 .page-container {
-  padding: 20px 50px;
+  padding: 15px 40px;
 }
 /* side menu */
 .navigation-subhead {
   text-transform: uppercase;
   color: #6e6d73;
   margin: 15px 20px;
-  font-size: 15px;
+  font-size: 13px;
 }
 .menu-container {
   padding: 1px 0;
@@ -396,14 +397,15 @@ text-decoration: none;
 }
 .side-navigation li {
   transition: 0.2s all;
-  background: #fff url(img/icon.png) 15px center / 28px no-repeat;
+	font-size: 15px;
+  background: #fff url(img/icon.png) 15px center / 25px no-repeat;
 }
 .side-navigation li:hover {
   background-color: #f3f3f3;
 }
 .side-navigation li div {
-  padding: 15px 0;
-  margin-left: 55px;
+  padding: 12px 0;
+  margin-left: 50px;
 }
 .side-navigation ul a:not(:last-child) li div {
   border-bottom: 0.5px solid #c7c7cc;
