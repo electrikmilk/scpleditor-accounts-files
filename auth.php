@@ -18,7 +18,7 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
 			if(mysqli_query($connect,"insert into data.tokens (user_id,token) values ('".$user_id."','".$session_token."')")) {
 				$_SESSION['user_id'] = $user_id;
         $token_id = mysqli_insert_id($connect);
-				header( "Location: https://editor.scpl.dev/?login_key=$token_id" );
+				echo "https://editor.scpl.dev/?login_key=$token_id";
 			} else {
         echo "Error creating user token.";
       }
@@ -50,11 +50,8 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
     if($_SESSION) {
       $username = clean($_POST['username']);
   		$email = $_POST['email'];
-      if(mysqli_query($connect,"update data.users set username = '".$username."', email = '".$email."' where id = '$id'")) {
-        header("Location: /settings");
-      } else {
-        echo "Error updating your account.";
-      }
+      if(mysqli_query($connect,"update data.users set username = '".$username."', email = '".$email."' where id = '$id'")) echo "saved";
+      else echo "Error updating your account.";
     }
   }
 }
