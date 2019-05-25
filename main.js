@@ -67,15 +67,11 @@ $(function () {
 		if (checkinputs === true && checklimits === true) {
 			$.ajax({
 				type: "POST",
-				url: "/accounts/auth.php",
+				url: "auth.php",
 				data: formdata,
 				success: function (response) {
-					if (response === "created") {
-						if ($("#signup-action").val()) {
-							window.location = '/dashboard';
-						} else {
-							window.location = '/start';
-						}
+					if (response.includes("editor")) {
+						window.location = response;
 					} else {
 						$("#signup-error").html(response);
 						$("#signup-error").fadeIn();
@@ -85,11 +81,7 @@ $(function () {
 					}
 				},
 				error: function (data) {
-					if ($("#signup-action").val()) {
-						$("#signup-error").html("Oops! There was an error creating your page, please try again later.");
-					} else {
-						$("#signup-error").html("Oops! There was an error creating your account, please try again later.");
-					}
+          $("#signup-error").html("Backend error creating your account.");
 					$("#signup-error").fadeIn();
 					$('html,body').animate({
 						scrollTop: $("#signup-error").offset().top
