@@ -12,10 +12,12 @@ if ( $api !== true ) {
 	else $id = null;
 }
 
-$connect = mysqli_connect( "localhost", "root", "root" );
+// Establish database connection
+require("database.php");
+
+// Global variables
 $action = $_POST[ 'action' ];
 $page = $_GET[ 'page' ];
-$folder = $_GET[ 'folder' ];
 
 // Misc functions
 
