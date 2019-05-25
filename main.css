@@ -110,11 +110,13 @@ button {
 }
 input {
 	appearance: none;
+	-webkit-appearance: none;
+	-moz-appearance: none;
 	padding: 10px 15px;
 	background-color: #ebebec;
 	width: stretch;
 	border-radius: 8px;
-	border: none;
+	border: 1px solid #ebebec;
 	font-size: 14px;
 	margin: 10px 0;
 	min-width: 200px;
@@ -130,6 +132,10 @@ input:active {
 	margin-bottom: 5px !important;
 	margin-top: 1px !important;
 	width: 93%;
+}
+.require-input {
+	border-color: #d74c39;
+	background-color: #d74c3920;
 }
 /* buttons */
 button {
@@ -166,6 +172,41 @@ button.primary-btn {
 	color: #888;
 	margin: 0;
 	padding: 0;
+}
+/* messages */
+.message {
+	display: inline-block;
+	background: url(img/info.svg) 10px center / 20px no-repeat;
+	background-color: #eee;
+	border: 2px solid #88888850;
+	padding: 13px 20px;
+	padding-left: 40px;
+	border-radius: 5px;
+	color: #555;
+	font-size: 13px;
+	font-weight: 500;
+	margin-bottom: 10px;
+}
+.message.help {
+	background-image: url(img/help.svg);
+}
+.message.success {
+	background-image: url(img/success.svg);
+	background-color: #34ba4c10;
+	color: #34ba4c;
+	border-color: #34ba4c80;
+}
+.message.warning {
+	background-image: url(img/warn.svg);
+	background-color: #cfa60410;
+	color: #cfa604;
+	border-color: #cfa60480;
+}
+.message.error {
+	background-image: url(img/error.svg);
+	background-color: #d74c3910;
+	border-color: #d74c3950;
+	color: #d74c39;
 }
 /* required field errors */
 .require-error {

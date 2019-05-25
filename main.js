@@ -18,7 +18,9 @@ $(function () {
 		var limit = $(this).attr('data-limit');
 		if (thislength > limit) {
 			$(this).addClass("require-input");
-		}
+		} else {
+      $(this).removeClass("require-input");
+    }
 		$("#limit-" + this.id).html(thislength + " / " + limit + " character limit");
 	});
 
@@ -193,9 +195,9 @@ function checkInputs(id) {
 			} else {
 				$("#error-" + this.id).fadeIn();
 			}
-			if (field_count === 0) {
-				scrollOn(this.id);
-			}
+			// if (field_count === 0) {
+			// 	scrollOn(this.id);
+			// }
 			filled = "false";
 		} else {
 			console.log("true");
@@ -222,7 +224,7 @@ function checkCount(id) {
 			var this_limit = $(this).attr('data-limit');
 			$(this).addClass("require-input");
 			if (!$("#error-limit" + this.id).length) {
-				$(this).after("<p class='require-error' id='error-limit" + this.id + "'>Field must be under " + this_limit + " characters</p>");
+				$(this).after("<br/><div class='require-error' id='error-limit" + this.id + "'>Field must be under " + this_limit + " characters</div>");
 			} else {
 				$("#error-limit" + this.id).fadeIn();
 			}

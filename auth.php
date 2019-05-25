@@ -12,16 +12,26 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
 		$email = $_POST['email'];
 		$raw_password = $_POST['password'];
 		$password = sha1($email.$raw_password);
-		if(mysqli_query($connect,"insert into data.users (username,email,password) values ('".$username."','".$email."','".$password."')")) {
-			$user_id = mysqli_insert_id($connect);
-			if(mysqli_query($connect,"insert into data.tokens (user_id,token) values ('".$user_id."','".$session_token."')")) {
-				$_SESSION['user_id'] = $user_id;
-        $token_id = mysqli_insert_id($connect);
-				echo $token_id;
-			} else {
-        echo "Error creating user token.";
-      }
-		} else echo "Error creating account.";
+    $check_username = dataArray("users",$username,"username");
+    $check_email = dataArray("users",$email,"email");
+		if(!$check_username && !$check_email) {
+      if(mysqli_query($connect,"insert into data.users (username,email,password) values ('".$username."','".$email."','".$password."')")) {
+  			$user_id = mysqli_insert_id($connect);
+  			if(mysqli_query($connect,"insert into data.tokens (user_id,token) values ('".$user_id."','".$session_token."')")) {
+  				$_SESSION['user_id'] = $user_id;
+          $token_id = mysqli_insert_id($connect);
+  				echo "https://editor.scpl.dev/?login_key=$token_id";
+  			} else {
+          echo "Error creating user token.";
+        }
+  		} else echo "Error creating account.";
+    } else if($check_username) {
+      echo "Sorry, but someone beat you to that username.";
+    } else if($check_email) {
+      echo "$email is already being used for another account.";
+    } else if($check_email && $check_username) {
+      echo "Username and email address are both taken.";
+    }
 	}
 	if ( $action === "startsession" ) {
 
