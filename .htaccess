@@ -36,15 +36,10 @@ AddOutputFilterByType DEFLATE application/x-javascript
 # Error Pages
 ErrorDocument 404 /404.php
 ErrorDocument 500 /500.php
-ErrorDocument 501 /500.php
-ErrorDocument 502 /500.php
-ErrorDocument 503 /500.php
 
 # Remove file extension from URL
 RewriteCond %{REQUEST_FILENAME}.php -f
 RewriteRule !.*\.php$ %{REQUEST_FILENAME}.php [QSA,L]
-
-# reset password url at some point, mostly here as a template for URL rewrites
 
 RewriteRule ^login index.php?page=login [L]
 RewriteRule ^sign-up index.php?page=sign-up [L]
