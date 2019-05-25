@@ -7,10 +7,14 @@ if ( $auth === true ) {
 		echo json_response( "error", "No file id was recieved." );
 	} else {
 		$itemdata = dataArray( "files", $file_id, "id" );
-		$name = $itemdata[ 'name' ];
-		$path = dirname( __FILE__ ) . "/$name";
-		$contents = file_get_contents( $path );
-		$file = array( "contents" => $contents );
-		echo json_encode( $file );
+		if($itemdata) {
+			$name = $itemdata[ 'name' ];
+			$path = dirname( __FILE__ ) . "/$name";
+			if(file_exists($path)) {
+				$contents = file_get_contents( $path );
+				$file = array( "contents" => $contents );
+				echo json_encode( $file );
+			} else echo json_response("error","File does not appear to exist.");
+		} else echo json_response("error","Invalid file ID.");
 	}
 }
