@@ -8,10 +8,13 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
   exit; //just for good measure
 } else {
 	if ( $action === "createuser" ) {
-		$username = clean($_POST['username']);
-		$email = $_POST['email'];
+		$username = e(clean($_POST['username']));
+		$email = e($_POST['email']);
 		$raw_password = $_POST['password'];
-		$password = sha1($email.$raw_password);
+    $options = [
+        'cost' => 12,
+    ];
+		$password = password_hash($raw_password, PASSWORD_BCRYPT, $options);
     $check_username = dataArray("users",$username,"username");
     $check_email = dataArray("users",$email,"email");
 		if(!$check_username && !$check_email) {
@@ -34,12 +37,11 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
     }
 	}
 	if ( $action === "startsession" ) {
-		$email = $_POST['email'];
+		$email = e($_POST['email']);
 		$raw_password = $_POST['password'];
-		$password = sha1($email.$raw_password);
 		$account = dataArray("users",$email,"email");
 		if($account) {
-      if($password === $account['password']) {
+      if(password_verify($raw_password,$account['password'])) {
   			$user_id = $account['id'];
   			if(mysqli_query($connect,"insert into data.tokens (user_id,token) values ('".$user_id."','".$session_token."')")) {
   				$_SESSION['user_id'] = $user_id;
@@ -57,8 +59,8 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
 	}
   if($action === "updatefields") {
     if($_SESSION) {
-      $username = clean($_POST['username']);
-  		$email = $_POST['email'];
+      $username = e(clean($_POST['username']));
+  		$email = e($_POST['email']);
       $cu = mysqli_query($connect,"select * from data.users where username = '$username' and id != '$id'");
       $ce = mysqli_query($connect,"select * from data.users where email = '$email' and id != '$id'");
       if(mysqli_num_rows($cu) === 0)$check_username = false;
