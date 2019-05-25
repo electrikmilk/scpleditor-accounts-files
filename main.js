@@ -30,30 +30,34 @@ $(function () {
 		var checkinputs = checkInputs(this.id);
 		var checklimits = checkCount(this.id);
 		var form = $("form#" + this.id);
+    var formdata = form.serialize();
 		if (checkinputs === true && checklimits === true) {
 			$(":input, :button").prop('disabled', true);
 			$.ajax({
 				type: "POST",
 				url: "auth.php",
-				data: form.serialize(),
+				data: formdata,
 				success: function (response) {
 					console.log(response);
-					if (response.includes("editor")) {
+					if (response.includes("key") === true) {
 						window.location = response;
 					} else {
-						$(":input, :button").prop('disabled', true);
-						$("#login-error").fadeIn();
+						$(":input, :button").prop('disabled', false);
 						$("#login-error").html(response);
+            $("#login-error").fadeIn();
+            if(response === "Incorrect Password") {
+              $(".login-inputs").addClass("wrong-password");
+            }
 					}
 				},
 				error: function (data) {
-					$(":button").prop('disabled', false);
+					$(":input, :button").prop('disabled', false);
+          $("#login-error").html("Error logging you in, please try again later.");
 					$("#login-error").fadeIn();
-					$("#login-error").html("Error logging you in, please try again later.");
 				}
 			});
 		} else { // do nothing, the error messages are handled by another function
-			//console.log("Required inputs are empty or an input is beyond it's character limit");
+			console.log("Required inputs are empty or an input is beyond it's character limit");
 		}
 		event.preventDefault();
 	});
@@ -67,7 +71,7 @@ $(function () {
 		if (checkinputs === true && checklimits === true) {
 			$.ajax({
 				type: "POST",
-				url: "auth.php",
+				url: "/auth.php",
 				data: formdata,
 				success: function (response) {
 					if (response.includes("editor")) {
@@ -103,7 +107,7 @@ $(function () {
 		if (checkinputs === true && checklimits === true) {
 			$.ajax({
 				type: "POST",
-				url: "/accounts/auth.php",
+				url: "auth.php",
 				data: formdata,
 				success: function (response) {
 					if (response === "saved") {

@@ -172,7 +172,7 @@ button.primary-btn {
 	background: url(img/error.svg) left center / 16px no-repeat;
 	padding-left: 23px;
 	color: #d74c39;
-	margin-bottom: 20px;
+	margin-bottom: 3px;
 	font-size: 14px;
 	display: inline-block;
 }

@@ -3,7 +3,6 @@ require( "global.php" );
 $session_token = randString( 10 );
 
 // Account management backend
-
 if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
   $this->output->set_status_header(400, 'No Remote Access Allowed');
   exit; //just for good measure
@@ -18,13 +17,14 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
 			if(mysqli_query($connect,"insert into data.tokens (user_id,token) values ('".$user_id."','".$session_token."')")) {
 				$_SESSION['user_id'] = $user_id;
         $token_id = mysqli_insert_id($connect);
-				echo "https://editor.scpl.dev/?login_key=$token_id";
+				echo $token_id;
 			} else {
         echo "Error creating user token.";
       }
 		} else echo "Error creating account.";
 	}
 	if ( $action === "startsession" ) {
+
 		$email = $_POST['email'];
 		$raw_password = $_POST['password'];
 		$password = sha1($email.$raw_password);
@@ -37,13 +37,13 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
           $token_id = mysqli_insert_id($connect);
   				echo "https://editor.scpl.dev/?login_key=$token_id";
   			} else {
-          echo "Error creating user token.";
+          echo "Error creating user token";
         }
   		} else {
-        echo "Incorrect Password.";
+        echo "Incorrect Password";
       }
     } else {
-      echo "No account for that email address.";
+      echo "No account for that email address";
     }
 	}
   if($action === "updatefields") {
