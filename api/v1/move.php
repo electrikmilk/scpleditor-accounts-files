@@ -13,17 +13,21 @@ if ( $auth === true ) {
 		echo json_response( "error", "No 'file_id' was recieved." );
 	} else {
 		$filedata = dataArray( "files", $file_id, "id" );
-    $file = $filedata[ 'name' ];
-    $oldpath = dirname( __FILE__ ) . "/$file";
-    if($folder_id) {
-      $folderdata = dataArray( "files", $folder_id, "id" );
-      $folder_name = $folderdata['name'];
-      $path = dirname( __FILE__ ) . "/$folder_name";
-    } else {
-      $path = "../../files/";
-    }
-		$path = "$path/$name";
-		if ( rename($oldpath,$path) )echo json_response( "success", " File $file has been moved to $path." );
-		else echo json_response( "error", "There was an internal error moving $file." );
+    if($filedata) {
+			$file = $filedata[ 'name' ];
+	    $oldpath = dirname( __FILE__ ) . "/$file";
+	    if($folder_id) {
+	      $folderdata = dataArray( "files", $folder_id, "id" );
+	      $folder_name = $folderdata['name'];
+	      $path = dirname( __FILE__ ) . "/$folder_name";
+	    } else {
+	      $path = "../../files/";
+	    }
+			$path = "$path/$name";
+			if(file_exists($oldpath)) {
+				if ( rename($oldpath,$path) )echo json_response( "success", " File $file has been moved to $path." );
+				else echo json_response( "error", "There was an internal error moving $file." );
+			} else echo json_response("success","File does not appear to exist.");
+		} else echo json_response("success","Invalid file ID.");
 	}
 }
