@@ -25,12 +25,12 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
           echo "Error creating user token.";
         }
   		} else echo "Error creating account.";
+    } else if($check_email && $check_username) {
+      echo "Username and email address are both taken.";
     } else if($check_username) {
       echo "Sorry, but someone beat you to that username.";
     } else if($check_email) {
       echo "$email is already being used for another account.";
-    } else if($check_email && $check_username) {
-      echo "Username and email address are both taken.";
     }
 	}
 	if ( $action === "startsession" ) {

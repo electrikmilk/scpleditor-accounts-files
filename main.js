@@ -29,6 +29,7 @@ $(function () {
     event.preventDefault();
     $("#login-error").fadeOut();
     $(".require-error").fadeOut();
+    $(".login-inputs").removeClass("wrong-password");
 		var checkinputs = checkInputs(this.id);
 		var checklimits = checkCount(this.id);
 		var form = $("form#" + this.id);
@@ -59,6 +60,7 @@ $(function () {
 				}
 			});
 		} else { // do nothing, the error messages are handled by another function
+      $(":input, :button").prop('disabled', false);
 			console.log("Required inputs are empty or an input is beyond it's character limit");
 		}
 		event.preventDefault();
@@ -73,7 +75,7 @@ $(function () {
 		if (checkinputs === true && checklimits === true) {
 			$.ajax({
 				type: "POST",
-				url: "/auth.php",
+				url: "auth.php",
 				data: formdata,
 				success: function (response) {
 					if (response.includes("editor")) {
@@ -81,27 +83,24 @@ $(function () {
 					} else {
 						$("#signup-error").html(response);
 						$("#signup-error").fadeIn();
-						$('html,body').animate({
-							scrollTop: $("#signup-error").offset().top - 80
-						});
 					}
 				},
 				error: function (data) {
           $("#signup-error").html("Backend error creating your account.");
 					$("#signup-error").fadeIn();
-					$('html,body').animate({
-						scrollTop: $("#signup-error").offset().top
-					});
 				}
 			});
 		} else { // do nothing, the error messages are handled by another function
-			//console.log("Required inputs are empty or an input is beyond it's character limit");
+			console.log("Required inputs are empty or an input is beyond it's character limit");
+      $(":input, :button").prop('disabled', false);
 		}
 		event.preventDefault();
 	});
 
 	$("#user-settings-form").on("submit", function (event) {
-		$("#settings-error").fadeOut();
+		$("#settings-message").fadeOut();
+    $("#settings-message").attr('class','message');
+    $(":input, :button").prop('disabled', false);
 		var checkinputs = checkInputs(this.id);
 		var checklimits = checkCount(this.id);
 		var form = $("form#" + this.id);
@@ -113,16 +112,22 @@ $(function () {
 				data: formdata,
 				success: function (response) {
 					if (response === "saved") {
-						modal('account-settings');
-						modal('user-settings');
-						showMessage("settings-success", "Account settings saved!", true);
+            $("#settings-message").addClass("success");
+            $("#settings-message").html("Account changes saved!");
+            $("#settings-message").fadeIn();
+            setTimeout(function(){
+              window.location = window.location.href;
+            }, 500);
 					} else {
-						showMessage("settings-error", response, true);
+            $("#settings-message").addClass("error");
+  					$("#settings-message").html(response);
+  					$("#settings-message").fadeIn();
 					}
 				},
 				error: function (data) {
-					$("#settings-error").html("Oops! There was an error saving your changes, please try again later.");
-					$("#settings-error").fadeIn();
+          $("#settings-message").addClass("error");
+					$("#settings-message").html("Oops! There was an error saving your changes, please try again later.");
+					$("#settings-message").fadeIn();
 				}
 			});
 		} else { // do nothing, the error messages are handled by another function

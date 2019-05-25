@@ -2,6 +2,8 @@
 $account = dataArray("users",$id,"id");
 ?>
 
+<div class="message" id="settings-message" style="display: none;"></div>
+
 <h1>Account Settings</h1>
 
 <h3><?php echo $account['username']; ?></h3>
@@ -10,7 +12,7 @@ $account = dataArray("users",$id,"id");
 
 <hr/>
 
-<form action="auth.php" method="POST">
+<form action="auth.php" method="POST" id="user-settings-form">
   <input type="hidden" name="action" value="updatefields"/>
   <table class="width-full">
   <tr>
