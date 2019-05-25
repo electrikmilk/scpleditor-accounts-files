@@ -19,10 +19,10 @@ if ( $auth === true ) {
 			if(file_exists($path)) {
 				if ( $type === "file" ) {
 					if ( unlink( $path ) )echo json_response( "success", "File $name was deleted." );
-					else echo json_response( "error", "No file id was recieved." );
+					else echo json_response( "error", "There was an internal error deleting $name." );
 				} else {
 					if ( deleteDir( $path ) )echo json_response( "success", "Folder $name was deleted." );
-					else echo json_response( "error", "No file id was recieved." );
+					else echo json_response( "error", "There was an internal error deleting $name." );
 				}
 			} else echo json_response("error","File does not appear to exist.");
 		} else echo json_response("error","Invalid file ID.");
