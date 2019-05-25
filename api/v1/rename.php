@@ -8,7 +8,7 @@ header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 if ( $auth === true ) {
 	$item_id = $_POST[ 'id' ];
-	$new_name = $_POST[ 'name' ];
+	$new_name = e(special($_POST[ 'name' ]));
 	if ( !$item_id || !$new_name ) {
 		if ( !$item_id )echo json_response( "error", "No item id was recieved." );
 		else echo json_response( "error", "No new name for the file was recieved." );

@@ -29,8 +29,12 @@ function randString( $length ) { // create random string (for creating random fi
 	return $rand;
 }
 
-function clean( $string ) { // Used for making feature and listing identifiers, etc.
+function clean( $string ) {
 	return strtolower( preg_replace( '/[^A-Za-z0-9\-]/', '', preg_replace( "/[\"\']/", " ", preg_replace( "/[\/\&%#\$]/", "_", strip_tags( str_replace( '--', '-', str_replace( ' ', '-', trim( $string ) ) ) ) ) ) ) );
+}
+
+function special( $string ) {
+	return preg_replace( '/[^A-Za-z0-9\-]/', '', preg_replace( "/[\"\']/", " ", preg_replace( "/[\/\&%#\$]/", "_", strip_tags( trim( $string ) ) ) ) ) ;
 }
 
 function commaRemove( $string, $item ) {
@@ -156,10 +160,42 @@ function folderArray( $folder ) {
 	else return $folder_array;
 }
 
+function file_count($directory) {
+	$filecount = 0;
+	$files = glob($directory . "*");
+	if ($files) $filecount = count($files);
+	echo "$filecount files";
+}
+
 // Global array functions
 
 function array_push_key( & $array, $key, $value, $valuetwo, $inarray ) {
 	if ( $valuetwo )$array[ $key ] = array( $value, $valuetwo );
 	else if ( $inarray )$array[ $key ] = array( $value );
 	else $array[ $key ] = $value;
+}
+
+// Global mail functions
+
+function sendEmail( $to, $from, $subject, $title, $message ) { // Quickly send an email
+	$headers;
+	if ( !$to || $to === false )$to = "info@whatzup.com";
+	if ( !$from || $from === false ) {
+		$from = "info@whatzup.com";
+		$headers = "From: Whatzup < info@whatzup.com >\n";
+	} else $headers = "From: < $from >\n";
+	$headers .= 'X-Mailer: PHP/' . phpversion();
+	$headers .= "X-Priority: 1\n"; // Urgent message!
+	$headers .= "Return-Path: brandon@whatzup.com\n"; // Return path for errors
+	$headers .= "MIME-Version: 1.0\r\n";
+	$headers .= "Content-Type: text/html; charset=iso-8859-1\n";
+	$subject = "$subject - Whatzup";
+	$body = file_get_contents( "/home/www-data/whatzup/public_html/sections/email.html" );
+	$body .= "<h2>$title</h2>";
+	$body .= "$message<br/><br/>- <i>Whatzup</i>";
+	$body .= "</div></div>";
+	$body .= "</body></html>";
+	$send = mail( $to, $subject, $body, $headers, '-feedback@whatzup.com' );
+	if ( $send ) return true;
+	else return false;
 }

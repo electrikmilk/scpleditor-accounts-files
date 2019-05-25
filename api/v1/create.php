@@ -7,7 +7,7 @@ header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Max-Age: 3600");
 header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
 if ( $auth === true ) {
-	$name = $_POST[ 'name' ];
+	$name = e(special($_POST[ 'name' ]));
 	$contents = $_POST[ 'contents' ];
 	$type = $_POST[ 'type' ];
 	if ( !$name || !$type ) {
