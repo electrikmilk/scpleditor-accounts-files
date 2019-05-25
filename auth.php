@@ -59,8 +59,24 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
     if($_SESSION) {
       $username = clean($_POST['username']);
   		$email = $_POST['email'];
-      if(mysqli_query($connect,"update data.users set username = '".$username."', email = '".$email."' where id = '$id'")) echo "saved";
-      else echo "Error updating your account.";
+      $cu = mysqli_query($connect,"select * from data.users where username = '$username' and id != '$id'");
+      $ce = mysqli_query($connect,"select * from data.users where email = '$email' and id != '$id'");
+      if(mysqli_num_rows($cu) === 0)$check_username = false;
+      else $check_username = true;
+      if(mysqli_num_rows($ce) === 0)$check_email = false;
+      else $check_email = true;
+      if(!$check_username && !$check_email) {
+        if(mysqli_query($connect,"update data.users set username = '".$username."', email = '".$email."' where id = '$id'")) echo "saved";
+        else echo "Error updating your account.";
+      } else if($check_email && $check_username) {
+        echo "Username and email address are both taken.";
+      } else if($check_username) {
+        echo "Sorry, but someone beat you to that username.";
+      } else if($check_email) {
+        echo "$email is already being used for another account.";
+      }
+    } else {
+      echo "You appear to be logged out. Please refresh the page and try again.";
     }
   }
 }
