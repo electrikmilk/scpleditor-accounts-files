@@ -5,7 +5,7 @@
     <input type="hidden" name="action" value="createuser"/>
     <input type="text" id="username" name="username" placeholder="Username" data-limit="20" data-require="true"/>
     <div class="input-limit" id="limit-username">
-    					0 / 50 character limit
+    					0 / 20 character limit
     				</div>
     <br/>
     <input type="email" id="email" name="email" placeholder="Your Email Address" data-require="true" /><br/>

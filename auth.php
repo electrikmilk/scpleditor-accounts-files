@@ -9,7 +9,7 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
   exit; //just for good measure
 } else {
 	if ( $action === "createuser" ) {
-		$username = $_POST['username'];
+		$username = clean($_POST['username']);
 		$email = $_POST['email'];
 		$raw_password = $_POST['password'];
 		$password = sha1($email.$raw_password);
@@ -48,7 +48,7 @@ if ($_SERVER['SERVER_ADDR'] != $_SERVER['REMOTE_ADDR']){
 	}
   if($action === "updatefields") {
     if($_SESSION) {
-      $username = $_POST['username'];
+      $username = clean($_POST['username']);
   		$email = $_POST['email'];
       if(mysqli_query($connect,"update data.users set username = '".$username."', email = '".$email."' where id = '$id'")) {
         header("Location: /settings");
