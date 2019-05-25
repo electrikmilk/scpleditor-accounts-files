@@ -17,13 +17,15 @@ if ( $auth === true ) {
 			$name = $itemdata[ 'name' ];
 			$path = dirname( __FILE__ ) . "/$name";
 			if(file_exists($path)) {
-				if ( $type === "file" ) {
-					if ( unlink( $path ) )echo json_response( "success", "File $name was deleted." );
-					else echo json_response( "error", "There was an internal error deleting $name." );
-				} else {
-					if ( deleteDir( $path ) )echo json_response( "success", "Folder $name was deleted." );
-					else echo json_response( "error", "There was an internal error deleting $name." );
-				}
+				if(mysqli_query($connect,"delete from data.files where id = '".$file_id."'")) {
+					if ( $type === "file" ) {
+						if ( unlink( $path ) )echo json_response( "success", "File $name was deleted." );
+						else echo json_response( "error", "There was an internal error deleting $name." );
+					} else {
+						if ( deleteDir( $path ) )echo json_response( "success", "Folder $name was deleted." );
+						else echo json_response( "error", "There was an internal error deleting $name." );
+					}
+				} else echo json_response( "error", "There was a database error deleting $name." );
 			} else echo json_response("error","File does not appear to exist.");
 		} else echo json_response("error","Invalid file ID.");
 	}
