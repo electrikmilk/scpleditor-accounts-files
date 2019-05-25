@@ -20,8 +20,7 @@ if ( $auth === true ) {
 				if ( file_put_contents( "../../files/$id/$name", $contents ) ) {
 					$newfile = array("id"=>$file_id);
 					echo json_encode($newfile);
-				}
-				else echo json_response( "error", "Internal file system error creating file $name." );
+				} else echo json_response( "error", "Internal file system error creating file $name." );
 			} else {
 				if ( makeFolder( "../../files/$id/$name" ) )echo json_response( "success", "Folder $name was successfully created." );
 				else echo json_response( "error", "Internal file system error creating folder $name." );

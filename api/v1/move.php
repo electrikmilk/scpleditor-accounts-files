@@ -20,7 +20,7 @@ if ( $auth === true ) {
       $folder_name = $folderdata['name'];
       $path = dirname( __FILE__ ) . "/$folder_name";
     } else {
-      $path = "../../files/"
+      $path = "../../files/";
     }
 		$path = "$path/$name";
 		if ( rename($oldpath,$path) )echo json_response( "success", " File $file has been moved to $path." );

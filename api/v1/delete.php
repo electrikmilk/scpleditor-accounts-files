@@ -16,10 +16,10 @@ if ( $auth === true ) {
 		$name = $itemdata[ 'name' ];
 		$path = dirname( __FILE__ ) . "/$name";
 		if ( $type === "file" ) {
-			if ( unlink( $path ) )echo json_response( "error", "No file id was recieved." );
+			if ( unlink( $path ) )echo json_response( "success", "File $name was deleted." );
 			else echo json_response( "error", "No file id was recieved." );
 		} else {
-			if ( deleteDir( $path ) )echo json_response( "error", "No file id was recieved." );
+			if ( deleteDir( $path ) )echo json_response( "success", "Folder $name was deleted." );
 			else echo json_response( "error", "No file id was recieved." );
 		}
 	}
