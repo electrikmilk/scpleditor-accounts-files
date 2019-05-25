@@ -14,9 +14,13 @@ if ( $auth === true ) {
 		else echo json_response( "error", "No new file contents were recieved." );
 	} else {
 		$itemdata = dataArray( "files", $file_id, "id" );
-		$name = $itemdata[ 'name' ];
-		$path = dirname( __FILE__ ) . "/$name";
-		if ( file_put_contents( "$path", $content ) )echo json_response( "success", " File $name has been saved." );
-		else echo json_response( "error", "There was an internal error saving $name." );
+		if($itemdata) {
+			$name = $itemdata[ 'name' ];
+			$path = dirname( __FILE__ ) . "/$name";
+			if(file_exists($path)) {
+				if ( file_put_contents( "$path", $content ) )echo json_response( "success", " File $name has been saved." );
+				else echo json_response( "error", "There was an internal error saving $name." );
+			} else echo json_response("error","File does not appear to exist.");
+		} else echo json_response("error","Invalid file ID.");
 	}
 }
