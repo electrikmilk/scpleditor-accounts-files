@@ -363,7 +363,6 @@ div.spinner div.bar12 {
     height: -moz-fill-available;
     height: fill-available;
     border-right: 0.5px solid #c7c7cc;
-    padding-right: 1px;
     transition: 0.3s all;
     width: 300px;
 }
