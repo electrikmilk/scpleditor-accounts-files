@@ -189,23 +189,23 @@ function array_push_key( & $array, $key, $value, $valuetwo, $inarray ) {
 
 function sendEmail( $to, $from, $subject, $title, $message ) { // Quickly send an email
     $headers;
-    if ( !$to || $to === false )$to = "info@whatzup.com";
+    if ( !$to || $to === false )$to = "contact@scpl.dev";
     if ( !$from || $from === false ) {
-        $from = "info@whatzup.com";
-        $headers = "From: Whatzup < info@whatzup.com >\n";
+        $from = "donotreply@scpl.dev";
+        $headers = "From: ScPL Editor < donotreply@scpl.dev >\n";
     } else $headers = "From: < $from >\n";
     $headers .= 'X-Mailer: PHP/' . phpversion();
     $headers .= "X-Priority: 1\n"; // Urgent message!
-    $headers .= "Return-Path: brandon@whatzup.com\n"; // Return path for errors
+    $headers .= "Return-Path: contact@scpl.dev\n"; // Return path for errors
     $headers .= "MIME-Version: 1.0\r\n";
     $headers .= "Content-Type: text/html; charset=iso-8859-1\n";
-    $subject = "$subject - Whatzup";
-    $body = file_get_contents( "/home/www-data/whatzup/public_html/sections/email.html" );
+    $subject = "$subject - ScPL Editor";
+    $body = file_get_contents( "email.html" );
     $body .= "<h2>$title</h2>";
-    $body .= "$message<br/><br/>- <i>Whatzup</i>";
+    $body .= "$message<br/><br/>- <i>ScPL Team</i>";
     $body .= "</div></div>";
     $body .= "</body></html>";
-    $send = mail( $to, $subject, $body, $headers, '-feedback@whatzup.com' );
+    $send = mail( $to, $subject, $body, $headers, '-contact@scpl.dev' );
     if ( $send ) return true;
     else return false;
 }

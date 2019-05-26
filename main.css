@@ -111,6 +111,10 @@ input {
     outline: none;
     transition: 0.3s background-color;
 }
+input:disabled, button:disabled {
+  opacity: .5;
+  filter: grayscale(100%);
+}
 input:active {
     background-color: #8c99b350 !important;
 }

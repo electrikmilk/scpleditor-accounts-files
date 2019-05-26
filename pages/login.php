@@ -7,7 +7,7 @@
     <input type="email" id="email" name="email" placeholder="Email Address" data-require="true" /><br/>
     <div class="mask-btn"></div><input type="password" id="password" name="password" placeholder="Password" data-require="true" />
   </div>
-  <br/><br/>
+  <br/>
 <button type="submit" class="primary-btn">Login</button>
 <br/></br/><hr/></br/>
 <div class="login-footer">

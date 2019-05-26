@@ -73,11 +73,13 @@ $(function () {
         var form = $("form#" + this.id);
         var formdata = form.serialize();
         if (checkinputs === true && checklimits === true) {
+          $(":input, :button").prop('disabled', true);
             $.ajax({
                 type: "POST",
                 url: "auth.php",
                 data: formdata,
                 success: function (response) {
+                  $(":input, :button").prop('disabled', false);
                     if (response.includes("editor")) {
                         window.location = response;
                     } else {
@@ -86,6 +88,7 @@ $(function () {
                     }
                 },
                 error: function (data) {
+                  $(":input, :button").prop('disabled', false);
                     $("#signup-error").html("Backend error creating your account.");
                     $("#signup-error").fadeIn();
                 }
@@ -100,17 +103,19 @@ $(function () {
     $("#user-settings-form").on("submit", function (event) {
         $("#settings-message").fadeOut();
         $("#settings-message").attr('class', 'message');
-        $(":input, :button").prop('disabled', false);
+        $(":input, :button").prop('disabled', true);
         var checkinputs = checkInputs(this.id);
         var checklimits = checkCount(this.id);
         var form = $("form#" + this.id);
         var formdata = form.serialize();
         if (checkinputs === true && checklimits === true) {
+          $(":input, :button").prop('disabled', true);
             $.ajax({
                 type: "POST",
                 url: "auth.php",
                 data: formdata,
                 success: function (response) {
+                  $(":input, :button").prop('disabled', false);
                     if (response === "saved") {
                         $("#username-title").html($("#username").val());
                         $("#settings-message").addClass("success");
@@ -126,6 +131,7 @@ $(function () {
                     }
                 },
                 error: function (data) {
+                  $(":input, :button").prop('disabled', false);
                     $("#settings-message").addClass("error");
                     $("#settings-message").html("Oops! There was an error saving your changes, please try again later.");
                     $("#settings-message").fadeIn();
@@ -138,41 +144,68 @@ $(function () {
     });
     $("#forgot-password-form").on("submit", function (event) {
         event.preventDefault();
-        $(".require-error").fadeOut();
-        $(".login-error").slideUp();
-        $(".chooser-message").fadeOut();
+        $("#forgot-error").fadeOut();
         var form = $("#forgot-password-form");
-        forgotLoad();
-        var account = $("#forgot-field").val();
+        var formdata = form.serialize();
+        var account = $("#forgot-email").val();
         if (account) {
+          $(":input, :button").prop('disabled', true);
             $.ajax({
                 type: "POST",
-                url: "/accounts/auth.php",
-                data: form.serialize(),
+                url: "auth.php",
+                data: formdata,
                 success: function (response) {
-                    //console.log(response);
-                    forgotLoad();
-                    if (response === "go") {
-                        modal('forgotmodal');
-                        modal('loginmodal');
-                        $("#login-success").fadeIn();
-                        $("#login-success").html("Awesome! A reset password link has been sent to the email address associated with that account.");
-                    } else if (response === "noaccount") {
-                        forgotError("That account doesn't appear to exist, try your username or email address instead. If you believe this is an error, <a href='/support/web'>contact us</a>.");
-                    } else if (response === "noemail") {
-                        forgotError("This account does not have an email address. Please <a href='/support/web'>report it to us</a>.");
+                  $(":input, :button").prop('disabled', false);
+                    if (response === "sent") {
+                        $("#forgot-success").fadeIn();
+                        $("#forgot-success").html("Awesome! A reset password link has been sent to your email address. Be sure to check your junk/spam folder.");
                     } else {
-                        forgotError("An error occurred. Please <a href='/support/web'>report it to us</a>.");
+                        $("#forgot-error").html(response);
+                        $("#forgot-error").fadeIn();
                     }
                 },
                 error: function (data) {
-                    forgotLoad();
-                    forgotError("Sorry, something broke. Please try again later.");
+                  $(":input, :button").prop('disabled', false);
+                  $("#forgot-error").html("Backend error sending the email. Please try again later.");
+                  $("#forgot-error").fadeIn();
                 }
             });
         } else {
-            forgotLoad();
-            forgotError("Please enter your username or email address.");
+            $("#forgot-error")("Please enter your email address.");
+            $("#forgot-error").fadeIn();
+        }
+    });
+    $("#reset-password-form").on("submit", function (event) {
+        event.preventDefault();
+        $("#reset-error").fadeOut();
+        var form = $("#reset-password-form");
+        var formdata = form.serialize();
+        var password = $("#password").val();
+        if (password) {
+          $(":input, :button").prop('disabled', true);
+            $.ajax({
+                type: "POST",
+                url: "/auth.php",
+                data: formdata,
+                success: function (response) {
+                  $(":input, :button").prop('disabled', false);
+                    if (response === "reset") {
+                      window.location = '/login';
+                    } else {
+                        $("#reset-error").html(response);
+                        $("#reset-error").fadeIn();
+                    }
+                },
+                error: function (data) {
+                  $(":input, :button").prop('disabled', false);
+                  $("#reset-error").html("Backend error resetting your password. Please try again later.");
+                  $("#reset-error").fadeIn();
+                }
+            });
+        } else {
+          $(":input, :button").prop('disabled', false);
+            $("#reset-error")("Please enter a new password.");
+            $("#reset-error").fadeIn();
         }
     });
 });

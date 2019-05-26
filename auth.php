@@ -81,4 +81,31 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
             echo "You appear to be logged out. Please refresh the page and try again.";
         }
     }
+    if($action === "sendpasswordlink") {
+      $email = $_POST['email'];
+      $account = dataArray("users",$email,"email");
+      $user_id = $account['id'];
+      $link = "<a href='https://account.scpl.dev/reset-password/$session_token' class='link-btn'>Reset Your Password</a>";
+      if(mysqli_query($connect,"insert into data.tokens (user_id,token) values ('$user_id','$session_token')")) {
+        if(sendEmail( $email, "donotreply@scpl.dev", "Reset Password Link", "Reset Your Password", "Here's the link to reset your password:<br/><br/>$link<br/><br/>Don't share this with anyone." )) echo "sent";
+        else echo "Error sending reset password link.";
+      } else echo "Error creating reset password link.";
+    }
+    if($action === "resetpassword") {
+      $thistoken = dataArray("tokens",$_POST['token'],"token");
+      if($thistoken) {
+        $token = $_POST['token'];
+        $token_id = $thistoken['id'];
+        $user_id = $thistoken['user_id'];
+        $raw_password = $_POST[ 'password' ];
+        $options = [
+            'cost' => 12,
+        ];
+        $password = password_hash( $raw_password, PASSWORD_BCRYPT, $options );
+        if ( mysqli_query( $connect, "update data.users set password = '$password' where id = '$user_id'" ) ) {
+          if(mysqli_query($connect,"delete from data.tokens where id = '$token_id'"))echo "reset";
+          else echo "Error removing token.".mysqli_error($connect);
+        } else echo "Error updating your account.".mysqli_error($connect);
+      } else echo "Invalid reset token.";
+    }
 }
