@@ -208,7 +208,28 @@ $(function () {
             $("#reset-error").fadeIn();
         }
     });
-    $(".new-btn").on('click', function (e) {
+    $(".upload-btn").on('click', function (e) {
+      var token = "kDzZ2d4FRW";
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/file",
+            data: {
+              token: token,
+              id: "uMAsNX6ktQ6ExIAqxoR2"
+            },
+            success: function (response) {
+              $(":input, :button").prop('disabled', false);
+              alert("API response: "+JSON.stringify(response));
+            },
+            error: function (data) {
+              $(":input, :button").prop('disabled', false);
+              $("#reset-error").html("Backend error resetting your password. Please try again later.");
+              $("#reset-error").fadeIn();
+            }
+        });
+    });
+    $(".delete-btn").on('click', function (e) {
+      $(":input, :button").prop('disabled', true);
       var token = "kDzZ2d4FRW";
         $.ajax({
             type: "POST",
@@ -229,17 +250,19 @@ $(function () {
             }
         });
     });
-    $(".newe-btn").on('click', function (e) {
+    $(".new-btn").on('click', function (e) {
       var token = "kDzZ2d4FRW";
       var filename = prompt("Enter a filename:");
       if(filename) {
+        $(":input, :button").prop('disabled', true);
         $.ajax({
             type: "POST",
             url: "/api/v1/create",
             data: {
               token: token,
               name: filename,
-              type: "file"
+              type: "file",
+              contents: "showresult 'Test'"
             },
             success: function (response) {
               $(":input, :button").prop('disabled', false);
@@ -257,16 +280,16 @@ $(function () {
     });
     $(".newf-btn").on('click', function (e) {
       var token = "kDzZ2d4FRW";
-      var filename = prompt("Enter a folder name:");
-      if(filename) {
+      var foldername = prompt("Enter a folder name:");
+      if(foldername) {
+        $(":input, :button").prop('disabled', true);
         $.ajax({
             type: "POST",
             url: "/api/v1/create",
             data: {
               token: token,
-              name: filename,
-              type: "folder",
-              contents: "showresult 'Test'"
+              name: foldername,
+              type: "folder"
             },
             success: function (response) {
               $(":input, :button").prop('disabled', false);
@@ -279,7 +302,7 @@ $(function () {
             }
         });
       } else {
-        showMessage("files-message","You must enter a file name.","error");
+        showMessage("files-message","You must enter a folder name.","error");
       }
     });
 });
