@@ -99,15 +99,15 @@ $(function () {
         }
         event.preventDefault();
     });
-
     $("#user-settings-form").on("submit", function (event) {
+      var form = $("form#" + this.id);
+      var formdata = form.serialize();
+      event.preventDefault();
         $("#settings-message").fadeOut();
         $("#settings-message").attr('class', 'message');
         $(":input, :button").prop('disabled', true);
         var checkinputs = checkInputs(this.id);
         var checklimits = checkCount(this.id);
-        var form = $("#user-settings-form");
-        var formdata = form.serialize();
         if (checkinputs === true && checklimits === true) {
           $(":input, :button").prop('disabled', true);
             $.ajax({
@@ -138,7 +138,7 @@ $(function () {
                 }
             });
         } else { // do nothing, the error messages are handled by another function
-            //console.log("Required inputs are empty or an input is beyond it's character limit");
+            console.log("Required inputs are empty or an input is beyond it's character limit");
         }
         event.preventDefault();
     });

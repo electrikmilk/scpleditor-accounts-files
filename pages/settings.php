@@ -14,7 +14,7 @@ if($account['status'] === "0") echo "<div class='message warning'>Your account h
 
 <hr/>
 
-<form action="auth.php" method="POST" id="user-settings-form">
+<form action="auth.php" method="POST" name="user-settings-form" id="user-settings-form">
   <input type="hidden" name="action" value="updatefields"/>
   <table class="width-full">
   <tr>

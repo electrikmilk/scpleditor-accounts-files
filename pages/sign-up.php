@@ -1,7 +1,7 @@
 <div class="login-icon"></div>
 <h3>Account Sign-up</h3>
 <div class="message error" id="signup-error" style="display: none;">Error creating your account.</div>
-<form action="auth.php" method="POST" id="signup-form">
+<form action="auth.php" method="POST" name="sign-up-form" id="signup-form">
     <input type="hidden" name="action" value="createuser"/>
     <input type="text" id="username" name="username" placeholder="Username" data-limit="20" data-require="true"/>
     <div class="input-limit" id="limit-username">

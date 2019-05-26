@@ -11,7 +11,7 @@ if($_SESSION) {
   <?php
 } else echo "<h3>Forgot Password</h3>";
 ?>
-<div class="message error" id="forgot-error" style="display: none;">Error sending reset link.</div>
+<div class="message error" id="forgot-error" name="forgot-password-form" style="display: none;">Error sending reset link.</div>
 <div class="message success" id="forgot-success" style="display: none;">Link sent!</div>
 <form action="auth.php" method="POST" id="forgot-password-form">
     <input type="hidden" name="action" value="sendpasswordlink"/>

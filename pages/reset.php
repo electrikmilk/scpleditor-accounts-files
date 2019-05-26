@@ -12,7 +12,7 @@ if(!$_SESSION) {
 <?php
 }
 ?>
-<div class="message error" id="reset-error" style="display: none;">Error resetting password</div>
+<div class="message error" id="reset-error" name="reset-password-form" style="display: none;">Error resetting password</div>
 <form action="auth.php" method="POST" id="reset-password-form">
     <input type="hidden" name="action" value="resetpassword"/>
     <input type="hidden" name="token" value="<?php echo $_GET['token']; ?>"/>

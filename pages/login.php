@@ -1,6 +1,6 @@
 <div class="login-icon"></div>
 <h3>Login to ScPL Editor</h3>
-<div class="message error" id="login-error" style="display: none;">Error logging you into your account.</div>
+<div class="message error" id="login-error" name="login-form" style="display: none;">Error logging you into your account.</div>
 <form id="login-form">
   <input type="hidden" name="action" value="startsession"/>
   <div class="login-inputs">
