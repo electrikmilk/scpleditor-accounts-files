@@ -1,36 +1,59 @@
 <?php
 // List files for user account
 require( "../request.php" );
-
 function getFiles( $path ) {
     $folder = folderArray( $path );
+    $files = array();
     sort( $folder );
-    unset( $files );
     foreach ( $folder as $file ) {
-        unset( $folderfiles );
-        unset( $content );
-        unset( $updated );
-        unset( $relative_updated );
+      $path = $file;
+      $file = pathinfo($file, PATHINFO_BASENAME);
+      unset( $contents );
+      unset( $updated );
+      unset( $relative_updated );
         $itemdata = dataArray( "files", $file, "name" );
         $fid = $itemdata[ 'id' ];
-        $size = formatSize( filesize( "$path/$file" ) );
+        $size = formatSize( filesize( $path ) );
         $timestamp = $itemdata[ 'timestamp' ];
         $relative = timeago( $timestamp );
         if ( $itemdata[ 'timestamp' ] ) {
             $updated = $itemdata[ 'updated' ];
             $relative_updated = timeago( $updated );
         }
-        if ( is_dir( "$path/$file" ) === false ) {
-            $content = file_get_contents( "$path/$file" );
-            $files .= '{"id":"' . $fid . '","type":"file","name":"' . $file . '","size":"' . $size . '","timestamp":"' . $timestamp . '","updated":"' . $updated . '","relativeTimestamp":"' . $relative . '","relativeUpdated":"' . $relative_updated . '"}';
+        if ( is_dir( $path ) === false ) {
+            $name = $file;
+            $this_file = array(
+              "id"=>$fid,
+              "type"=>"file",
+              "name"=>$name,
+              "size"=>$size,
+              "timestamp"=>$timestamp,
+              "updated"=>$updated,
+              "relativeTimestamp"=>$relative,
+              "updated"=>$updated,
+              "relativeUpdated"=>$relative_updated
+            );
+            array_push($files,$this_file);
         } else {
-            $folderfiles = getFiles( "$path/$file" );
-            $files .= '{"id":"' . $fid . '","type":"folder","name":"' . $file . '","size":"' . $size . '","content":[' . $folderfiles . '],"timestamp":"' . $timestamp . '","updated":"' . $updated . '","relativeTimestamp":"' . $relative . '","relativeUpdated":"' . $relative_updated . '"}';
+            $contents = getFiles( $path );
+            $folder_files = array(
+              "id"=>$fid,
+              "type"=>"folder",
+              "name"=>$name,
+              "size"=>$size,
+              "content"=>$contents,
+              "timestamp"=>$timestamp,
+              "updated"=>$updated,
+              "relativeTimestamp"=>$relative,
+              "updated"=>$updated,
+              "relativeUpdated"=>$relative_updated
+            );
+            array_push($files,$folder_files);
         }
     }
     return $files;
 }
 
 if ( $auth === true ) {
-    echo getFiles( "scpl-files/$id" ); // return json from function
+    echo json_encode(getFiles( "../../files/$id" )); // return json from function
 }

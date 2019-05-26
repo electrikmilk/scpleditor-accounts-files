@@ -124,7 +124,7 @@ function timeago( $datetime, $ago = false, $full = false, $shorten = false ) {
 
 // Global file/folder functions
 
-function formatSizeUnits( $bytes ) {
+function formatSize( $bytes ) {
     if ( $bytes >= 1073741824 )$bytes = number_format( $bytes / 1073741824, 2 ) . ' GB';
     elseif ( $bytes >= 1048576 )$bytes = number_format( $bytes / 1048576, 2 ) . ' MB';
     elseif ( $bytes >= 1024 )$bytes = number_format( $bytes / 1024, 2 ) . ' KB';
@@ -161,19 +161,18 @@ function folderEmpty( $dir ) {
     return ( count( scandir( $dir ) ) == 2 );
 }
 
-function folderArray( $folder ) {
-    $folder_array = array();
-    if ( $handle = opendir( $folder ) ) {
-        while ( false !== ( $entry = readdir( $handle ) ) ) {
-            if ( $entry != "." && $entry != ".." ) {
-                if ( pathinfo( $entry, PATHINFO_EXTENSION ) )array_push_key( $folder_array, "file", $entry );
-                else array_push( $folder_array, "folder", $entry );
-            }
+function folderArray($dir, &$results = array()){
+    $files = scandir($dir);
+    foreach($files as $key => $value){
+        $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
+        if(!is_dir($path)) {
+            $results[] = $path;
+        } else if($value != "." && $value != "..") {
+            getDirContents($path, $results);
+            $results[] = $path;
         }
-        closedir( $handle );
     }
-    if ( empty( $folder_array ) ) return false;
-    else return $folder_array;
+    return $results;
 }
 
 function file_count( $directory ) {
@@ -186,10 +185,8 @@ function file_count( $directory ) {
 
 // Global array functions
 
-function array_push_key( & $array, $key, $value, $valuetwo, $inarray ) {
-    if ( $valuetwo )$array[ $key ] = array( $value, $valuetwo );
-    else if ( $inarray )$array[ $key ] = array( $value );
-    else $array[ $key ] = $value;
+function array_push_key( $array, $key, $value ) {
+	return $array[ $key ] = $value;
 }
 
 // Global mail functions

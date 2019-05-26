@@ -212,6 +212,27 @@ $(function () {
       var token = "kDzZ2d4FRW";
         $.ajax({
             type: "POST",
+            url: "/api/v1/list",
+            data: {
+              token: token
+            },
+            success: function (response) {
+              console.log(response);
+              $(":input, :button").prop('disabled', false);
+              alert("API response: "+JSON.stringify(response));
+            },
+            error: function (data) {
+              console.log("backend-error");
+              $(":input, :button").prop('disabled', false);
+              $("#files-error").html("Backend error resetting your password. Please try again later.");
+              $("#files-error").fadeIn();
+            }
+        });
+    });
+    $(".file").on('click', function (e) {
+      var token = "kDzZ2d4FRW";
+        $.ajax({
+            type: "POST",
             url: "/api/v1/file",
             data: {
               token: token,
