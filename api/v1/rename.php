@@ -8,15 +8,20 @@ header( "Access-Control-Max-Age: 3600" );
 header( "Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With" );
 if ( $auth === true ) {
     $item_id = $_POST[ 'id' ];
-    $new_name = e( special( $_POST[ 'name' ] ) );
+    $new_name = $_POST['name'];
     if ( !$item_id || !$new_name ) {
         if ( !$item_id )echo json_response( "error", "No item id was recieved." );
         else echo json_response( "error", "No new name for the file was recieved." );
     } else {
         $itemdata = dataArray( "files", $item_id, "id" );
         if ( $itemdata ) {
+          if($itemdata['type'] === "file") {
+              $new_name = str_replace(".scpl","",e( special( $_POST[ 'name' ] ) )).".scpl";
+            } else {
+              $new_name = str_replace(".scpl","",e( special( $_POST[ 'name' ] ) ));
+            }
             $name = $itemdata[ 'name' ];
-            $path = dirname( __FILE__ ) . "/$name";
+            $path = glob("../../files/$id/$name")[0];
             $newpath = str_replace( $name, $new_name, $path );
             if ( file_exists( $path ) ) {
                 if ( mysqli_query( $connect, "update data.files set name = '$new_name' where id = '$item_id'" ) ) {

@@ -210,6 +210,29 @@ $(function () {
     });
     $(".upload-btn").on('click', function (e) {
       var token = "kDzZ2d4FRW";
+      var name = prompt("Enter a new name for the file:");
+      if(name) {
+          $.ajax({
+              type: "POST",
+              url: "/api/v1/rename",
+              data: {
+                token: token,
+                id: "IrX5DA73t1u3aOQyKnPM",
+                name: name
+              },
+              success: function (response) {
+                $(":input, :button").prop('disabled', false);
+                alert("API response: "+JSON.stringify(response));
+              },
+              error: function (data) {
+                $(":input, :button").prop('disabled', false);
+                alert("error renaming");
+              }
+          });
+        }
+    });
+    $(".getlist").on('click', function (e) {
+      var token = "kDzZ2d4FRW";
         $.ajax({
             type: "POST",
             url: "/api/v1/list",
