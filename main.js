@@ -215,7 +215,7 @@ $(function () {
             url: "/api/v1/delete",
             data: {
               token: token,
-              id: "PSGuKN5huF13oePLQmN5",
+              id: "uMAsNX6ktQ6ExIAqxoR2",
               type: "folder"
             },
             success: function (response) {
