@@ -1,8 +1,7 @@
-<?php $account = dataArray("users",$id,"id"); ?>
-
-<div class="message" id="settings-message" style="display: none;"></div>
-
-<?php if($account['status'] === "0") echo "<div class='message warning'>Your account has not yet been activated. Please check your email. Be sure to check your junk/spam folder.</div>"; ?>
+<?php
+$account = dataArray("users",$id,"id");
+if($account['status'] === "0") echo "<div class='message warning'>Your account has not yet been activated. Please check your email. Be sure to check your junk/spam folder.</div>";
+?>
 
 <h1>Account Settings</h1>
 
@@ -18,7 +17,7 @@
   <table class="width-full">
   <tr>
     <td class="setting-label-td"><label for="username">Username:</label></td>
-    <td><input type="text" id="username" name="username" spellcheck="false" placeholder="Username" value="<?php echo $account['username']; ?>" data-require="true" data-limit="20"/>
+    <td><input type="text" id="username" name="username" class="width-stretch" spellcheck="false" placeholder="Username" value="<?php echo $account['username']; ?>" data-require="true" data-limit="20"/>
       <div class="input-limit" id="limit-username">
         0 / 20 character limit
       </div>
@@ -27,7 +26,7 @@
   </tr>
   <tr>
     <td class="setting-label-td"><label for="email">Email:</label></td>
-    <td><input type="emal" id="email" name="email" spellcheck="false" placeholder="Email Address" value="<?php echo $account['email']; ?>" data-require="true"/></td>
+    <td><input type="emal" id="email" name="email" class="width-stretch" spellcheck="false" placeholder="Email Address" value="<?php echo $account['email']; ?>" data-require="true"/></td>
   </tr>
   <tr>
     <td class="setting-label-td"><br/><label for="password">Password:</label></td>

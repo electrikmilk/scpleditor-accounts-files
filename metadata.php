@@ -9,10 +9,12 @@ if ( $page === "login" ) {
     $title = "Reset Password";
 } else if ( $page === "confirm" ) {
     $title = "Email Confirmation";
+} else if ( $page === "files" ) {
+    $title = "Files";
 }
 if ( !$nav_title )$nav_title = $title;
 if ( $title )echo "<title>$title - ScPL Editor</title>";
 else {
-    $nav_title = "Account";
-    echo "<title>Account - ScPL Editor</title>";
+    $nav_title = "Account Settings";
+    echo "<title>Account Settings - ScPL Editor</title>";
 }

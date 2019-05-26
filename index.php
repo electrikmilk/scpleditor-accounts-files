@@ -47,7 +47,7 @@
         <div class="main-container">
             <div class="side-navigation">
                 <div class="navigation-subhead">
-                    <div>Your Account</div>
+                    <div>Account</div>
                 </div>
                 <div class="menu-container">
                     <ul>
@@ -56,9 +56,20 @@
                                 <div>Account Settings</div>
                             </li>
                         </a>
+                        <?php
+                        if($_SESSION['user_id'] === "1010") {
+                        ?>
+                        <a href="/filebrowser">
+                            <li class="file-icon">
+                                <div>Your Files</div>
+                            </li>
+                        </a>
+                        <?php
+                        }
+                        ?>
                         <a href="https://editor.scpl.dev/" target="_blank" rel="noopener">
                             <li class="editor-icon">
-                                <div>Back to Editor</div>
+                                <div>Open Editor</div>
                             </li>
                         </a>
                         <a href="javascript:;" onclick="confirmLogout();">
