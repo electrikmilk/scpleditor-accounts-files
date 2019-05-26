@@ -363,7 +363,7 @@ $(function () {
               token: token,
               name: filename,
               type: "file",
-              contents: "showresult 'Test'"
+              contents: "@Color lightpurple\n@Icon wand"
             },
             success: function (response) {
               $(":input, :button").prop('disabled', false);

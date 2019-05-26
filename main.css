@@ -159,7 +159,10 @@ input:active {
     padding-left: 35px !important;
     margin-bottom: 5px !important;
     margin-top: 1px !important;
-    width: 93%;
+    width: 100%;
+    width: -webkit-fill-available;
+    width: -moz-fill-available;
+    width: fill-available;
 }
 .require-input {
     border-color: #d74c39;
@@ -645,7 +648,7 @@ div.spinner div.bar12 {
   grid-template-columns: 0fr 1fr;
 }
 .nav-btns {
-  width: 200px;
+  width: 130px;
 }
 .files-header {
 	position: sticky;
@@ -664,11 +667,6 @@ div.spinner div.bar12 {
   height: -webkit-fill-available;
   height: -moz-fill-available;
   height: fill-available;
-}
-.file-btns {
-	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr;
-	padding: 0 10px;
 }
 .file-btn {
 	font-size: 15px;
