@@ -44,7 +44,7 @@ function clean( $string ) {
 }
 
 function special( $string ) {
-    return preg_replace( '/[^A-Za-z0-9\-]/', '', preg_replace( "/[\"\']/", " ", preg_replace( "/[\/\&%#\$]/", "_", strip_tags( trim( $string ) ) ) ) );
+    return preg_replace( '/[^A-Za-z0-9\-]/', '', preg_replace( "/[\"\']/", "_", preg_replace( "/[\/\&%#\$]/", "_", strip_tags( trim( $string ) ) ) ) );
 }
 
 function commaRemove( $string, $item ) {
@@ -135,7 +135,10 @@ function formatSizeUnits( $bytes ) {
 }
 
 function makeFolder( $name ) {
-    if ( !file_exists( $name ) )mkdir( $name, 0777, true );
+    if ( !file_exists( $name ) ) {
+      if(mkdir( $name, 0777, true ))return true;
+      else return false;
+    } else return false;
 }
 
 function deleteDir( $dirPath ) {

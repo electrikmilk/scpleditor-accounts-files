@@ -208,7 +208,37 @@ $(function () {
             $("#reset-error").fadeIn();
         }
     });
+    $(".newf-btn").on('click', function (e) {
+      var token = "kDzZ2d4FRW";
+      var filename = prompt("Enter a filename:");
+      if(filename) {
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/create",
+            data: {
+              token: token,
+              name: filename,
+              type: "folder"
+            },
+            success: function (response) {
+              $(":input, :button").prop('disabled', false);
+              alert("API response: "+JSON.stringify(response));
+            },
+            error: function (data) {
+              $(":input, :button").prop('disabled', false);
+              $("#reset-error").html("Backend error resetting your password. Please try again later.");
+              $("#reset-error").fadeIn();
+            }
+        });
+      } else {
+        showMessage("files-message","You must enter a file name.","error");
+      }
+    });
 });
+
+function showMessage(id,message,type,fade) {
+
+}
 
 function confirmLogout() {
     var r = confirm("Are you sure you want to sign out?");
