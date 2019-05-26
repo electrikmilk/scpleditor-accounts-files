@@ -82,6 +82,8 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
                 echo "Sorry, but someone beat you to that username.";
             } else if ( $check_email ) {
                 echo "$email is already being used for another account.";
+            } else {
+              echo "Unknown error.";
             }
         } else {
             echo "You appear to be logged out. Please refresh the page and try again.";

@@ -106,7 +106,7 @@ $(function () {
         $(":input, :button").prop('disabled', true);
         var checkinputs = checkInputs(this.id);
         var checklimits = checkCount(this.id);
-        var form = $("form#" + this.id);
+        var form = $("#user-settings-form");
         var formdata = form.serialize();
         if (checkinputs === true && checklimits === true) {
           $(":input, :button").prop('disabled', true);
