@@ -100,17 +100,8 @@
             </div>
             <div class="page-container">
                 <?php
-                if ( !$_SESSION && $page !== "login" && $page !== "sign-up" && $page !== "confirm" && $page !== "forgot" && $page !== "reset" ) {
-                    header( "Location: /login" );
-                } else if ( $_SESSION ) {
-                    if ( !$page ) require( "pages/settings.php" );
-                    else require( "pages/$page.php" );
-                    if ( $page === "login" || $page === "sign-up" ) {
-                        header( "Location: /settings" );
-                    }
-                } else {
-                    require( "pages/$page.php" );
-                }
+                if ( $page === "login" || $page === "sign-up" )header( "Location: /settings" );
+                else require( "pages/$page.php" );
                 ?>
             </div>
         </div>
