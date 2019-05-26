@@ -208,7 +208,28 @@ $(function () {
             $("#reset-error").fadeIn();
         }
     });
-    $(".newf-btn").on('click', function (e) {
+    $(".new-btn").on('click', function (e) {
+      var token = "kDzZ2d4FRW";
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/create",
+            data: {
+              token: token,
+              name: filename,
+              type: "file"
+            },
+            success: function (response) {
+              $(":input, :button").prop('disabled', false);
+              alert("API response: "+JSON.stringify(response));
+            },
+            error: function (data) {
+              $(":input, :button").prop('disabled', false);
+              $("#reset-error").html("Backend error resetting your password. Please try again later.");
+              $("#reset-error").fadeIn();
+            }
+        });
+    });
+    $(".newe-btn").on('click', function (e) {
       var token = "kDzZ2d4FRW";
       var filename = prompt("Enter a filename:");
       if(filename) {
@@ -218,7 +239,34 @@ $(function () {
             data: {
               token: token,
               name: filename,
-              type: "folder"
+              type: "file"
+            },
+            success: function (response) {
+              $(":input, :button").prop('disabled', false);
+              alert("API response: "+JSON.stringify(response));
+            },
+            error: function (data) {
+              $(":input, :button").prop('disabled', false);
+              $("#reset-error").html("Backend error resetting your password. Please try again later.");
+              $("#reset-error").fadeIn();
+            }
+        });
+      } else {
+        showMessage("files-message","You must enter a file name.","error");
+      }
+    });
+    $(".newf-btn").on('click', function (e) {
+      var token = "kDzZ2d4FRW";
+      var filename = prompt("Enter a folder name:");
+      if(filename) {
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/create",
+            data: {
+              token: token,
+              name: filename,
+              type: "folder",
+              contents: "showresult 'Test'"
             },
             success: function (response) {
               $(":input, :button").prop('disabled', false);
