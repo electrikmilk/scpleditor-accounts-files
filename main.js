@@ -212,11 +212,11 @@ $(function () {
       var token = "kDzZ2d4FRW";
         $.ajax({
             type: "POST",
-            url: "/api/v1/create",
+            url: "/api/v1/delete",
             data: {
               token: token,
-              name: filename,
-              type: "file"
+              id: "PSGuKN5huF13oePLQmN5",
+              type: "folder"
             },
             success: function (response) {
               $(":input, :button").prop('disabled', false);

@@ -44,7 +44,7 @@ function clean( $string ) {
 }
 
 function special( $string ) {
-    return preg_replace( '/[^A-Za-z0-9\-]/', '', preg_replace( "/[\"\']/", "_", preg_replace( "/[\/\&%#\$]/", "_", strip_tags( trim( $string ) ) ) ) );
+  return preg_replace('/[ ](?=[ ])|[^-_,A-Za-z0-9 ]+/', '', str_replace("/","", str_replace('\"','', strip_tags( trim( $string ) ) ) ) );
 }
 
 function commaRemove( $string, $item ) {
@@ -143,14 +143,17 @@ function makeFolder( $name ) {
 
 function deleteDir( $dirPath ) {
     if ( !is_dir( $dirPath ) ) return false;
-    if ( substr( $dirPath, strlen( $dirPath ) - 1, 1 ) != '/' )$dirPath .= '/';
-    $files = glob( $dirPath . '*', GLOB_MARK );
-    foreach ( $files as $file ) {
-        if ( is_dir( $file ) ) {
-            deleteDir( $file );
-        } else unlink( $file );
+    else {
+      if ( substr( $dirPath, strlen( $dirPath ) - 1, 1 ) != '/' )$dirPath .= '/';
+      $files = glob( $dirPath . '*', GLOB_MARK );
+      foreach ( $files as $file ) {
+          if ( is_dir( $file ) ) {
+              deleteDir( $file );
+          } else unlink( $file );
+      }
+      if(rmdir( $dirPath ))return true;
+      else return false;
     }
-    rmdir( $dirPath );
 }
 
 function folderEmpty( $dir ) {

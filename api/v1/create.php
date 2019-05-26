@@ -24,12 +24,14 @@ if ( $auth === true ) {
           if ( mysqli_query( $connect, "insert into data.files (id,name,type,author) values ('" . $file_id . "','" . $name . "','$type','$id')" ) ) {
               if ( $type === "file" ) {
                   if ( file_put_contents( "../../files/$id/$name", $contents ) ) {
-                      $newfile = array( "id" => $file_id );
+                      $newfile = array( "id" => $file_id,"name"=>$name );
                       echo json_encode( $newfile );
                   } else echo json_response( "error", "Internal file system error creating file $name." );
               } else {
-                  if ( makeFolder( "../../files/$id/$name" ) )echo json_response( "success", "Folder $name was successfully created." );
-                  else echo json_response( "error", "Internal file system error creating folder $name." );
+                  if ( makeFolder( "../../files/$id/$name" ) ) {
+                    $newfile = array( "id" => $file_id,"name"=>$name );
+                    echo json_encode( $newfile );
+                  } else echo json_response( "error", "Internal file system error creating folder $name." );
               }
           } else echo json_response( "error", "Internal database error creating file $name. ".mysqli_error($connect) );
         } else echo json_response( "error", "File with name $name already exists." );
