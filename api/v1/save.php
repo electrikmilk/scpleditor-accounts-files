@@ -16,7 +16,7 @@ if ( $auth === true ) {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
             $name = $itemdata[ 'name' ];
-            $path = glob("../../files/$id/$name")[0];
+            $path = "../../files/$id/$name";
             if ( file_exists( $path ) ) {
                 if ( file_put_contents( "$path", $content ) )echo json_response( "success", "File $name has been saved." );
                 else echo json_response( "error", "There was an internal error saving $name." );

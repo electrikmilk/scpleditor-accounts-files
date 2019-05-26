@@ -15,19 +15,21 @@ if ( $auth === true ) {
         $filedata = dataArray( "files", $file_id, "id" );
         if ( $filedata ) {
             $file = $filedata[ 'name' ];
-            $oldpath = dirname( __FILE__ ) . "/$file";
+            $type = ucfirst($filedata['type']);
+            $infolder = folderArray("../../files/$id/");
+            $oldpath = $infolder[array_search($file,$infolder)];
             if ( $folder_id ) {
                 $folderdata = dataArray( "files", $folder_id, "id" );
-                $folder_name = $folderdata[ 'name' ];
-                $path = dirname( __FILE__ ) . "/$folder_name";
+                $folder_name = $folderdata[ 'name' ]; //$path = dirname("../../files/$id/$folder_name");
+                $path = $infolder[array_search($folder_name,$infolder)];
             } else {
-                $path = "../../files/";
+                $path = "../../files/$id";
             }
-            $path = "$path/$name";
+            $path = "$path/$file";
             if ( file_exists( $oldpath ) ) {
-                if ( rename( $oldpath, $path ) )echo json_response( "success", " File $file has been moved to $path." );
-                else echo json_response( "error", "There was an internal error moving $file." );
-            } else echo json_response( "success", "File does not appear to exist." );
-        } else echo json_response( "success", "Invalid file ID." );
+                if ( rename( $oldpath, $path ) )echo json_response( "success", "$type $file has been moved from $oldpath to $path." );
+                else echo json_response( "error", "Internal file system error moving $file from $oldpath to $path." );
+            } else echo json_response( "error", "File at $oldpath does not appear to exist." );
+        } else echo json_response( "error", "Invalid file ID." );
     }
 }

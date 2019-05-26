@@ -168,7 +168,7 @@ function folderArray($dir, &$results = array()){
         if(!is_dir($path)) {
             $results[] = $path;
         } else if($value != "." && $value != "..") {
-            getDirContents($path, $results);
+            folderArray($path, $results);
             $results[] = $path;
         }
     }
@@ -181,6 +181,14 @@ function file_count( $directory ) {
     if ( $files )$filecount = numberFormat( count( $files ) );
     if( $filecount > 1 ) $s = "s";
     echo "$filecount file$s";
+}
+
+function move_file($file, $to){
+    $path_parts = pathinfo($file);
+    $newplace   = "$to/{$path_parts['basename']}";
+    if(rename($file, $newplace))
+        return $newplace;
+    return null;
 }
 
 // Global array functions

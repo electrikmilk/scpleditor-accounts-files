@@ -209,6 +209,26 @@ $(function () {
         }
     });
     $(".upload-btn").on('click', function (e) {
+      var token = "kDzZ2d4FRW";
+      $.ajax({
+          type: "POST",
+          url: "/api/v1/move",
+          data: {
+            token: token,
+            file_id: "IrX5DA73t1u3aOQyKnPM",
+            folder_id: "Q9CgxPQifPnBKZ7K1FxV"
+          },
+          success: function (response) {
+            $(":input, :button").prop('disabled', false);
+            alert("API response: "+JSON.stringify(response));
+          },
+          error: function (data) {
+            $(":input, :button").prop('disabled', false);
+            alert("error moving file");
+          }
+      });
+    });
+    $(".token").on('click', function (e) {
       $.ajax({
           type: "POST",
           url: "/api/v1/token",

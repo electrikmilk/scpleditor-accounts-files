@@ -9,7 +9,7 @@ if ( $auth === true ) {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
             $name = $itemdata[ 'name' ];
-            $path = glob("../../files/$id/$name")[0];
+            $path = "../../files/$id/$name";
             if ( file_exists( $path ) ) {
                 $contents = file_get_contents( $path );
                 $file = array( "contents" => $contents );
