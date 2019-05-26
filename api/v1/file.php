@@ -9,12 +9,12 @@ if ( $auth === true ) {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
             $name = $itemdata[ 'name' ];
-            $path = dirname( __FILE__ ) . "/$name";
+            $path = glob("../../files/$id/$name")[0];
             if ( file_exists( $path ) ) {
                 $contents = file_get_contents( $path );
                 $file = array( "contents" => $contents );
                 echo json_encode( $file );
-            } else echo json_response( "error", "File does not appear to exist." );
+            } else echo json_response( "error", "File at $path does not appear to exist." );
         } else echo json_response( "error", "Invalid file ID." );
     }
 }
