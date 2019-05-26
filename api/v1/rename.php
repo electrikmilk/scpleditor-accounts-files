@@ -1,5 +1,5 @@
 <?php
-// Rename folder or .scpl file
+// Rename folder or ScPL file
 require( "../request.php" );
 header( "Access-Control-Allow-Origin: *" );
 header( "Content-Type: application/json; charset=UTF-8" );

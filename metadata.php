@@ -9,7 +9,6 @@ if ( $page === "login" ) {
     $title = "Reset Password";
 } else if ( $page === "confirm" ) {
     $title = "Email Confirmation";
-    $nav_title = "Account Activated!";
 }
 if ( !$nav_title )$nav_title = $title;
 if ( $title )echo "<title>$title - ScPL Editor</title>";

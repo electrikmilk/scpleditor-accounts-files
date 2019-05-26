@@ -1,5 +1,5 @@
 <?php
-// Save .scpl file with new contents
+// Move ScPL file or folder into root or into another folder
 require( "../request.php" );
 header( "Access-Control-Allow-Origin: *" );
 header( "Content-Type: application/json; charset=UTF-8" );

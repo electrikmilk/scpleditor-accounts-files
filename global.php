@@ -101,7 +101,7 @@ function howlongago( $datetime, $full ) {
 
 function timeago( $datetime, $ago = false, $full = false, $shorten = false ) {
     if ( $ago === false ) {
-        if ( date( "Y-m-d", strtotime( $datetime ) ) === date( "Y-m-d", strtotime( 'today' ) ) ) {
+        if ( date( "Y-m-d", strtotime( $datetime ) ) === date( "Y-m-d", strtotime('today') ) ) {
             if ( date( "H:i:s", strtotime( $datetime ) ) > date( "H:i:s", strtotime( '-5 hours' ) ) )$str = howlongago( date( "Y-m-d H:i:s", strtotime( "$datetime +4 hours" ) ), $full );
             else $str = "Today at " . date( "g:i a", strtotime( $datetime ) );
         } else if ( date( "Y-m-d", strtotime( $datetime ) ) === date( "Y-m-d", strtotime( 'yesterday' ) ) ) {

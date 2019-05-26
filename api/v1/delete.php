@@ -1,5 +1,5 @@
 <?php
-// Delete folder or .scpl file
+// Delete folder or ScPL file
 require( "../request.php" );
 header( "Access-Control-Allow-Origin: *" );
 header( "Content-Type: application/json; charset=UTF-8" );

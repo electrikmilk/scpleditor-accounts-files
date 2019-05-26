@@ -1,8 +1,8 @@
-<?php
-$account = dataArray("users",$id,"id");
-?>
+<?php $account = dataArray("users",$id,"id"); ?>
 
 <div class="message" id="settings-message" style="display: none;"></div>
+
+<?php if($account['status'] === "0") echo "<div class='message warning'>Your account has not yet been activated. Please check your email. Be sure to check your junk/spam folder.</div>"; ?>
 
 <h1>Account Settings</h1>
 

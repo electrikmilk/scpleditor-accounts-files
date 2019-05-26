@@ -1,5 +1,5 @@
 <?php
-// Retrieve .scpl file contents
+// Retrieve ScPL file contents
 require( "../request.php" );
 if ( $auth === true ) {
     $file_id = $_POST[ 'id' ];

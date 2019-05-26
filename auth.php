@@ -20,10 +20,16 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
         if ( !$check_username && !$check_email ) {
             if ( mysqli_query( $connect, "insert into data.users (username,email,password) values ('" . $username . "','" . $email . "','" . $password . "')" ) ) {
                 $user_id = mysqli_insert_id( $connect );
-                if ( mysqli_query( $connect, "insert into data.tokens (user_id,token) values ('" . $user_id . "','" . $session_token . "')" ) ) {
+                $confirm_token = randString( 10 );
+                if ( mysqli_query( $connect, "insert into data.tokens (user_id,token) values ('" . $user_id . "','" . $session_token . "')" ) && mysqli_query( $connect, "insert into data.tokens (user_id,token) values ('" . $user_id . "','" . $confirm_token . "')" ) ) {
+                  $link = "<a href='https://account.scpl.dev/confirm-email/$confirm_token' class='link-btn'>Confirm Email Address</a>";
+                  if(sendEmail( $_POST['email'], "donotreply@scpl.dev", "Activate Your Account", "Account activation", "Here's the link to confirm your email and activate your account:<br/><br/>$link<br/><br/>Don't share this with anyone." )) {
                     $_SESSION[ 'user_id' ] = $user_id;
                     $token_id = mysqli_insert_id( $connect );
                     echo "https://editor.scpl.dev/?login_key=$token_id";
+                  } else {
+                       echo "Error sending confirmation email.";
+                   }
                 } else {
                     echo "Error creating user token.";
                 }

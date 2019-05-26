@@ -191,7 +191,7 @@ button.primary-btn {
 .message.warning {
     background-image: url(img/warn.svg);
     background-color: #cfa60410;
-    color: #cfa604;
+    color: #ba9605;
     border-color: #cfa60480;
 }
 .message.error {
