@@ -209,6 +209,23 @@ $(function () {
         }
     });
     $(".upload-btn").on('click', function (e) {
+      $.ajax({
+          type: "POST",
+          url: "/api/v1/token",
+          data: {
+            key: "19"
+          },
+          success: function (response) {
+            $(":input, :button").prop('disabled', false);
+            alert("API response: "+JSON.stringify(response));
+          },
+          error: function (data) {
+            $(":input, :button").prop('disabled', false);
+            alert("error getting token");
+          }
+      });
+    });
+    $(".save").on('click', function (e) {
       var token = "kDzZ2d4FRW";
       $.ajax({
           type: "POST",
@@ -224,7 +241,7 @@ $(function () {
           },
           error: function (data) {
             $(":input, :button").prop('disabled', false);
-            alert("error renaming");
+            alert("error saving");
           }
       });
     });

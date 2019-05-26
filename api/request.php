@@ -19,23 +19,25 @@ $token = $_POST[ 'token' ];
 
 function json_response( $status, $message ) {
     if ( $status === "success" )http_response_code( 200 );
-    //else http_response_code( 503 );
+    else http_response_code( 503 );
     $json = array( "status" => $status, "message" => $message );
     return json_encode( $json );
 }
 
-if ( !$token ) {
+if ( $_POST[ 'key' ] ) {
+    $auth = true;
+} else if ( !$token ) {
     echo json_response( "error", "No authentication token was received." );
     http_response_code( 403 );
-} else if ( $_POST[ 'key' ] ) {
-    $auth = true;
 } else {
     $session = dataArray( "tokens", $token, "token" ); // get user_id from token
     if ( $session ) {
         $id = $session[ 'user_id' ];
         $auth = true;
-    } else { // if no user id recieved from token, or no token, null user id
+    } else { // invalid token, return error
         $id = null;
+        $auth = false;
         json_response( "error", "Invalid authentication token." );
+        http_response_code( 403 );
     }
 }
