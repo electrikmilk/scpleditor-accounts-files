@@ -10,8 +10,7 @@ if ( $auth === true ) {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
           $collab = explode(",",$itemdata['collab']);
-          $loggedin = $token['user_id'];
-          if(in_array($loggedin,$collab) === true) {
+          if(in_array($id,$collab) === true) {
             $name = $itemdata[ 'name' ];
             if($itemdata['path'])$itempath = $itemdata[ 'path' ]."/";
             $path = "../../files/$id/$itempath$name";

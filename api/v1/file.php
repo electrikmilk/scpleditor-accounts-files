@@ -9,8 +9,7 @@ if ( $auth === true ) {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
           $owner = $itemdata['author'];
-          $loggedin = $token['user_id'];
-          if($owner === $loggedin) {
+          if($owner === $id) {
             $name = $itemdata[ 'name' ];
             if($itemdata['path'])$itempath = $itemdata[ 'path' ]."/";
             $path = "../../files/$id/$itempath$name";
