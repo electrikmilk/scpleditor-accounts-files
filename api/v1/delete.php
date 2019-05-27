@@ -15,7 +15,8 @@ if ( $auth === true ) {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
             $name = $itemdata[ 'name' ];
-            $path = "../../files/$id/$name";
+            if($itemdata['path'])$itempath = $itemdata[ 'path' ]."/";
+            $path = "../../files/$id/$itempath$name";
             if ( file_exists( $path ) ) {
                 if ( mysqli_query( $connect, "delete from data.files where id = '" . $file_id . "'" ) ) {
                     if ( $type === "file" ) {

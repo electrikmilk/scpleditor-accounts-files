@@ -21,7 +21,8 @@ if ( $auth === true ) {
               $new_name = str_replace(".scpl","",e( special( $_POST[ 'name' ] ) ));
             }
             $name = $itemdata[ 'name' ];
-            $path = "../../files/$id/$name";
+            if($itemdata['path'])$itempath = $itemdata[ 'path' ]."/";
+            $path = "../../files/$id/$itempath$name";
             $newpath = str_replace( $name, $new_name, $path );
             if ( file_exists( $path ) ) {
                 if ( mysqli_query( $connect, "update data.files set name = '$new_name' where id = '$item_id'" ) ) {
