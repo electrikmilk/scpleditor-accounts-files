@@ -20,8 +20,8 @@ function getFiles( $path ) {
             $updated = $itemdata[ 'updated' ];
             $relative_updated = timeago( $updated );
         }
+        $name = $file;
         if ( is_dir( $path ) === false ) {
-            $name = $file;
             $this_file = array(
               "id"=>$fid,
               "type"=>"file",
