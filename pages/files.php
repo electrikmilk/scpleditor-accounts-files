@@ -7,7 +7,6 @@
 <br/><hr/>
 <div class="files-nav">
   <div class="nav-btns">
-    <button type="submit" class="file-btn upload-btn"></button>
     <button type="submit" class="file-btn new-btn"></button>
     <button type="submit" class="file-btn newf-btn"></button>
   </div>
