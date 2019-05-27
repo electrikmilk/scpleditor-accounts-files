@@ -15,6 +15,10 @@ if ( $auth === true ) {
     } else {
         $itemdata = dataArray( "files", $item_id, "id" );
         if ( $itemdata ) {
+          $owner = $itemdata['author'];
+          $type = ucfirst($itemdata['type']);
+          $thetype = $itemdata['type'];
+          if($owner === $id) {
           if($itemdata['type'] === "file") {
               $new_name = str_replace(".scpl","",e( special( $_POST[ 'name' ] ) )).".scpl";
             } else {
@@ -29,7 +33,8 @@ if ( $auth === true ) {
                     if ( rename( $path, $newpath ) )echo json_response( "success", "$name has been renamed to $new_name." );
                     else echo json_response( "error", "There was an internal error renaming $name." );
                 } else echo json_response( "error", "There was a database error renaming $name." );
-            } else echo json_response( "error", "File does not appear to exist." );
-        } else echo json_response( "error", "Invalid file ID." );
+            } else echo json_response( "error", "$type does not appear to exist." );
+          } else echo json_response( "error", "You do not appear to own that $thetype." );
+        } else echo json_response( "error", "Invalid $thetype ID." );
     }
 }

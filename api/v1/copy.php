@@ -14,6 +14,8 @@ if ( $auth === true ) {
     } else {
         $itemdata = dataArray( "files", $item_id, "id" );
         if ( $itemdata ) {
+          $owner = $itemdata['author'];
+          if($owner === $id) {
             $item = $itemdata[ 'name' ];
             $thistype = $itemdata['type'];
             $type = ucfirst($itemdata['type']);
@@ -37,6 +39,7 @@ if ( $auth === true ) {
                   else echo json_response( "error", "Internal database error creating copy of $item." );
                 } else echo json_response( "error", "Internal file system error copying $item to $folder_name." );
             } else echo json_response( "error", "$type $item does not appear to exist." );
-        } else echo json_response( "error", "Invalid item ID." );
+          } else echo json_response( "error", "You do not appear to own that $thetype." );
+        } else echo json_response( "error", "Invalid $thetype ID." );
     }
 }
