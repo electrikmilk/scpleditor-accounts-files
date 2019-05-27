@@ -8,6 +8,9 @@ if ( $auth === true ) {
     } else {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
+          $owner = $itemdata['author'];
+          $loggedin = $token['user_id'];
+          if($owner === $loggedin) {
             $name = $itemdata[ 'name' ];
             if($itemdata['path'])$itempath = $itemdata[ 'path' ]."/";
             $path = "../../files/$id/$itempath$name";
@@ -16,6 +19,7 @@ if ( $auth === true ) {
                 $file = array( "contents" => $contents );
                 echo json_encode( $file );
             } else echo json_response( "error", "File at $path does not appear to exist." );
+          } else echo json_response( "error", "You do not appear to own that file." );
         } else echo json_response( "error", "Invalid file ID." );
     }
 }
