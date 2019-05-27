@@ -161,18 +161,16 @@ function folderEmpty( $dir ) {
     return ( count( scandir( $dir ) ) == 2 );
 }
 
-function folderArray($dir, &$results = array()){
-    $files = scandir($dir);
-    foreach($files as $key => $value){
-        $path = realpath($dir.DIRECTORY_SEPARATOR.$value);
-        if(!is_dir($path)) {
-            $results[] = $path;
-        } else if($value != "." && $value != "..") {
-            folderArray($path, $results);
-            $results[] = $path;
-        }
-    }
-    return $results;
+function folderArray( $folder ) {
+	$folder_array = array();
+	if ( $handle = opendir( $folder ) ) {
+		while ( false !== ( $entry = readdir( $handle ) ) ) {
+			if ( $entry != "." && $entry != ".." )array_push( $folder_array, $entry );
+		}
+		closedir( $handle );
+	}
+	if ( empty( $folder_array ) ) return false;
+	else return $folder_array;
 }
 
 function file_count( $directory ) {

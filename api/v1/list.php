@@ -6,7 +6,7 @@ function getFiles( $path ) {
     $files = array();
     sort( $folder );
     foreach ( $folder as $file ) {
-      $path = $file;
+      $path = "$path/$file";
       $file = pathinfo($file, PATHINFO_BASENAME);
       unset( $contents );
       unset( $updated );
@@ -16,7 +16,7 @@ function getFiles( $path ) {
         $size = formatSize( filesize( $path ) );
         $timestamp = $itemdata[ 'timestamp' ];
         $relative = timeago( $timestamp );
-        if ( $itemdata[ 'timestamp' ] ) {
+        if ( $itemdata[ 'updated' ] ) {
             $updated = $itemdata[ 'updated' ];
             $relative_updated = timeago( $updated );
         }
@@ -41,7 +41,7 @@ function getFiles( $path ) {
               "type"=>"folder",
               "name"=>$name,
               "size"=>$size,
-              "content"=>$contents,
+              "contents"=>$contents,
               "timestamp"=>$timestamp,
               "updated"=>$updated,
               "relativeTimestamp"=>$relative,

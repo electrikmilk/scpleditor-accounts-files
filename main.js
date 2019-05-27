@@ -208,7 +208,7 @@ $(function () {
             $("#reset-error").fadeIn();
         }
     });
-    $(".upload-btn").on('click', function (e) {
+    $(".move").on('click', function (e) {
       var token = "kDzZ2d4FRW";
       $.ajax({
           type: "POST",
@@ -288,7 +288,7 @@ $(function () {
           });
         }
     });
-    $(".getlist").on('click', function (e) {
+    $(".getlist, .upload-btn").on('click', function (e) {
       var token = "kDzZ2d4FRW";
         $.ajax({
             type: "POST",
