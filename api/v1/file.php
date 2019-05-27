@@ -18,7 +18,7 @@ if ( $auth === true ) {
                 $contents = file_get_contents( $path );
                 $file = array( "contents" => $contents );
                 echo json_encode( $file );
-            } else echo json_response( "error", "File at $path does not appear to exist." );
+            } else echo json_response( "error", "File $name does not appear to exist." );
           } else echo json_response( "error", "You do not appear to own that file." );
         } else echo json_response( "error", "Invalid file ID." );
     }
