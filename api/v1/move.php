@@ -23,7 +23,7 @@ if ( $auth === true ) {
                 if($folderdata['path'])$folderpath = $folderdata['path']."/";
                 $path = "../../files/$id/$folderpath".$folderdata['name']."/$item";
                 $folder_name = $folderdata['name'];
-                $db_path = "'$folderpath/".$folderdata['name']."'";
+                $db_path = "'$folderpath".$folderdata['name']."'";
             } else {
                 $folder_name = "root";
                 $path = dirname(__DIR__,2)."/files/$id/$item";
