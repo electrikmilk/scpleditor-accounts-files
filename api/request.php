@@ -19,7 +19,7 @@ $token = $_POST[ 'token' ];
 
 function json_response( $status, $message ) {
     if ( $status === "success" )http_response_code( 200 );
-    //else http_response_code( 503 );
+    else http_response_code( 503 );
     $json = array( "status" => $status, "message" => $message );
     return json_encode( $json );
 }
@@ -34,6 +34,7 @@ if ( $_POST[ 'key' ] ) {
     if ( $session ) {
         $id = $session[ 'user_id' ];
         $auth = true;
+        $token = dataArray("tokens",$token,"token");
     } else { // invalid token, return error
         $id = null;
         $auth = false;

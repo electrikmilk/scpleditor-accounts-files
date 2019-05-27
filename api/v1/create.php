@@ -10,9 +10,9 @@ if ( $auth === true ) {
     if($_POST['contents'])$contents = $_POST[ 'contents' ];
     $type = $_POST[ 'type' ];
     if($type === "file") {
-      $name = str_replace(".scpl","",e( special( $_POST[ 'name' ] ) )).".scpl";
+      $name = e( special(str_replace(".scpl","", $_POST[ 'name' ] ) )).".scpl";
     } else {
-      $name = str_replace(".scpl","",e( special( $_POST[ 'name' ] ) ));
+      $name = e( special(str_replace(".scpl","", $_POST[ 'name' ] ) ));
     }
     if ( !$name || !$type ) {
         if ( !$name )echo json_response( "error", "No item name was recieved." );

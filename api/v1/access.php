@@ -6,3 +6,22 @@ header( "Content-Type: application/json; charset=UTF-8" );
 header( "Access-Control-Allow-Methods: POST" );
 header( "Access-Control-Max-Age: 3600" );
 header( "Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With" );
+if($auth === true) {
+  $file_id = $_POST['file_id'];
+  if(!$file_id) {
+      echo json_response("error","No file ID was recieved.");
+  } else {
+    $filedata = dataArray("files",$file_id,"id");
+    $name = $filedata['name'];
+    $owner = $filedata['author'];
+    $loggedin = $token['user_id'];
+    // Comma seperated list of users that the owner would like to share the file with
+    $users = implode(",",explode(",",trim($_POST['users']))); // Reformat/clean list
+    if($filedata) {
+      if($owner === $loggedin) {
+        if(mysqli_query($connect,"update data.files set collab = '$users' where id = '$file_id'")) echo json_response("success","Collaborators were set for $name.");
+        else echo json_response("error","Internal database error setting collaborators.");
+      } else echo json_response("error","You do not appear to own that file.");
+    } else echo json_response("error","Invalid file ID.");
+  }
+}
