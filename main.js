@@ -215,8 +215,8 @@ $(function () {
           url: "/api/v1/move",
           data: {
             token: token,
-            file_id: "IrX5DA73t1u3aOQyKnPM",
-            folder_id: "Q9CgxPQifPnBKZ7K1FxV"
+            item_id: "IrX5DA73t1u3aOQyKnPM",
+            //folder_id: "WQApghH2pQs8O8JWNTUj"
           },
           success: function (response) {
             $(":input, :button").prop('disabled', false);

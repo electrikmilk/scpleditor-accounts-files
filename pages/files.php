@@ -7,8 +7,9 @@
 <br/><hr/>
 <div class="files-nav">
   <div class="nav-btns">
+    <button type="submit" class="file-btn upload-btn"></button>
     <button type="submit" class="file-btn new-btn"></button>
-    <button type="submit" class="file-btn newf-btn" disabled></button>
+    <button type="submit" class="file-btn newf-btn"></button>
   </div>
   <div class="nav-search"><input type="search" class="search-input" id="files-search" placeholder="Search Files"/></div>
 </div>
