@@ -14,31 +14,31 @@ if ( $auth === true ) {
     } else {
         $itemdata = dataArray( "files", $item_id, "id" );
         if ( $itemdata ) {
-          $owner = $itemdata['author'];
-          if($owner === $id) {
-            $item = $itemdata[ 'name' ];
-            $type = ucfirst($itemdata['type']);
-            $thetype = $itemdata['type'];
-            if($itemdata['path'])$filepath = $itemdata['path']."/";
-            $oldpath = "../../files/$id/$filepath$item";
-            if ( $folder_id ) {
-                $folderdata = dataArray( "files", $folder_id, "id" );
-                if($folderdata['path'])$folderpath = $folderdata['path']."/";
-                $path = "../../files/$id/$folderpath".$folderdata['name']."/$item";
-                $folder_name = $folderdata['name'];
-                $db_path = "'$folderpath".$folderdata['name']."'";
-            } else {
-                $folder_name = "root";
-                $path = dirname(__DIR__,2)."/files/$id/$item";
-                $db_path = "NULL";
-            }
-            if ( file_exists( $oldpath ) ) {
-                if ( rename( $oldpath, $path ) ) {
-                  if(mysqli_query($connect,"update data.files set path = $db_path where id = '$item_id'")) echo json_response( "success", "$type $item has been moved to $folder_name." );
-                  else echo json_response( "error", "Internal database error setting $item path to $db_path." );
-                } else echo json_response( "error", "Internal file system error moving $item to $folder_name." );
-            } else echo json_response( "error", "$type $item does not appear to exist." );
-          } else echo json_response( "error", "You do not appear to own that $thetype." );
+            $owner = $itemdata[ 'author' ];
+            if ( $owner === $id ) {
+                $item = $itemdata[ 'name' ];
+                $type = ucfirst( $itemdata[ 'type' ] );
+                $thetype = $itemdata[ 'type' ];
+                if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
+                $oldpath = "../../files/$id/$filepath$item";
+                if ( $folder_id ) {
+                    $folderdata = dataArray( "files", $folder_id, "id" );
+                    if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
+                    $path = "../../files/$id/$folderpath" . $folderdata[ 'name' ] . "/$item";
+                    $folder_name = $folderdata[ 'name' ];
+                    $db_path = "'$folderpath" . $folderdata[ 'name' ] . "'";
+                } else {
+                    $folder_name = "root";
+                    $path = dirname( __DIR__, 2 ) . "/files/$id/$item";
+                    $db_path = "NULL";
+                }
+                if ( file_exists( $oldpath ) ) {
+                    if ( rename( $oldpath, $path ) ) {
+                        if ( mysqli_query( $connect, "update data.files set path = $db_path where id = '$item_id'" ) )echo json_response( "success", "$type $item has been moved to $folder_name." );
+                        else echo json_response( "error", "Internal database error setting $item path to $db_path." );
+                    } else echo json_response( "error", "Internal file system error moving $item to $folder_name." );
+                } else echo json_response( "error", "$type $item does not appear to exist." );
+            } else echo json_response( "error", "You do not appear to own that $thetype." );
         } else echo json_response( "error", "Invalid $thetype ID." );
     }
 }

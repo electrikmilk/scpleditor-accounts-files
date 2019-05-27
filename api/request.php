@@ -34,7 +34,7 @@ if ( $_POST[ 'key' ] ) {
     if ( $session ) {
         $id = $session[ 'user_id' ];
         $auth = true;
-        $token = dataArray("tokens",$token,"token");
+        $token = dataArray( "tokens", $token, "token" );
     } else { // invalid token, return error
         $id = null;
         $auth = false;

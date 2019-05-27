@@ -1,2 +1,1 @@
-<?php
-$connect = mysqli_connect( "host", "username", "password" );
+<?php $connect = mysqli_connect( "host", "username", "password" ); ?>

@@ -15,18 +15,18 @@ if ( $auth === true ) {
     } else {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
-          $type = ucfirst($itemdata['type']);
-          $thetype = $itemdata['type'];
-          $owner = $itemdata['author'];
-          if($owner === $id) {
-            $name = $itemdata[ 'name' ];
-            if($itemdata['path'])$itempath = $itemdata[ 'path' ]."/";
-            $path = "../../files/$id/$itempath$name";
-            if ( file_exists( $path ) ) {
-                if ( file_put_contents( "$path", $content ) )echo json_response( "success", "File $name has been saved." );
-                else echo json_response( "error", "There was an internal error saving $name." );
-            } else echo json_response( "error", "$type does not appear to exist." );
-          } else echo json_response( "error", "You do not appear to own that $thetype." );
+            $type = ucfirst( $itemdata[ 'type' ] );
+            $thetype = $itemdata[ 'type' ];
+            $owner = $itemdata[ 'author' ];
+            if ( $owner === $id ) {
+                $name = $itemdata[ 'name' ];
+                if ( $itemdata[ 'path' ] )$itempath = $itemdata[ 'path' ] . "/";
+                $path = "../../files/$id/$itempath$name";
+                if ( file_exists( $path ) ) {
+                    if ( file_put_contents( "$path", $content ) )echo json_response( "success", "File $name has been saved." );
+                    else echo json_response( "error", "There was an internal error saving $name." );
+                } else echo json_response( "error", "$type does not appear to exist." );
+            } else echo json_response( "error", "You do not appear to own that $thetype." );
         } else echo json_response( "error", "Invalid $thetype ID." );
     }
 }

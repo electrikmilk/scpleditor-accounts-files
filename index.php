@@ -57,8 +57,8 @@
                             </li>
                         </a>
                         <?php
-                        if($_SESSION['user_id'] === "1010") {
-                        ?>
+                        if ( $_SESSION[ 'user_id' ] === "1010" ) {
+                            ?>
                         <a href="/filebrowser">
                             <li class="file-icon">
                                 <div>Your Files</div>

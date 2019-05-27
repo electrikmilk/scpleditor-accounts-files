@@ -44,7 +44,7 @@ function clean( $string ) {
 }
 
 function special( $string ) {
-  return preg_replace('/[ ](?=[ ])|[^-_,A-Za-z0-9 ]+/', '', str_replace("/","", str_replace('\"','', strip_tags( trim( $string ) ) ) ) );
+    return preg_replace( '/[ ](?=[ ])|[^-_,A-Za-z0-9 ]+/', '', str_replace( "/", "", str_replace( '\"', '', strip_tags( trim( $string ) ) ) ) );
 }
 
 function commaRemove( $string, $item ) {
@@ -101,7 +101,7 @@ function howlongago( $datetime, $full ) {
 
 function timeago( $datetime, $ago = false, $full = false, $shorten = false ) {
     if ( $ago === false ) {
-        if ( date( "Y-m-d", strtotime( $datetime ) ) === date( "Y-m-d", strtotime('today') ) ) {
+        if ( date( "Y-m-d", strtotime( $datetime ) ) === date( "Y-m-d", strtotime( 'today' ) ) ) {
             if ( date( "H:i:s", strtotime( $datetime ) ) > date( "H:i:s", strtotime( '-5 hours' ) ) )$str = howlongago( date( "Y-m-d H:i:s", strtotime( "$datetime +4 hours" ) ), $full );
             else $str = "Today at " . date( "g:i a", strtotime( $datetime ) );
         } else if ( date( "Y-m-d", strtotime( $datetime ) ) === date( "Y-m-d", strtotime( 'yesterday' ) ) ) {
@@ -136,23 +136,23 @@ function formatSize( $bytes ) {
 
 function makeFolder( $name ) {
     if ( !file_exists( $name ) ) {
-      if(mkdir( $name, 0777, true ))return true;
-      else return false;
+        if ( mkdir( $name, 0777, true ) ) return true;
+        else return false;
     } else return false;
 }
 
 function deleteDir( $dirPath ) {
     if ( !is_dir( $dirPath ) ) return false;
     else {
-      if ( substr( $dirPath, strlen( $dirPath ) - 1, 1 ) != '/' )$dirPath .= '/';
-      $files = glob( $dirPath . '*', GLOB_MARK );
-      foreach ( $files as $file ) {
-          if ( is_dir( $file ) ) {
-              deleteDir( $file );
-          } else unlink( $file );
-      }
-      if(rmdir( $dirPath ))return true;
-      else return false;
+        if ( substr( $dirPath, strlen( $dirPath ) - 1, 1 ) != '/' )$dirPath .= '/';
+        $files = glob( $dirPath . '*', GLOB_MARK );
+        foreach ( $files as $file ) {
+            if ( is_dir( $file ) ) {
+                deleteDir( $file );
+            } else unlink( $file );
+        }
+        if ( rmdir( $dirPath ) ) return true;
+        else return false;
     }
 }
 
@@ -162,29 +162,29 @@ function folderEmpty( $dir ) {
 }
 
 function folderArray( $folder ) {
-	$folder_array = array();
-	if ( $handle = opendir( $folder ) ) {
-		while ( false !== ( $entry = readdir( $handle ) ) ) {
-			if ( $entry != "." && $entry != ".." )array_push( $folder_array, $entry );
-		}
-		closedir( $handle );
-	}
-	if ( empty( $folder_array ) ) return false;
-	else return $folder_array;
+    $folder_array = array();
+    if ( $handle = opendir( $folder ) ) {
+        while ( false !== ( $entry = readdir( $handle ) ) ) {
+            if ( $entry != "." && $entry != ".." )array_push( $folder_array, $entry );
+        }
+        closedir( $handle );
+    }
+    if ( empty( $folder_array ) ) return false;
+    else return $folder_array;
 }
 
 function file_count( $directory ) {
     $filecount = 0;
     $files = glob( $directory . "*" );
     if ( $files )$filecount = numberFormat( count( $files ) );
-    if( $filecount > 1 ) $s = "s";
+    if ( $filecount > 1 )$s = "s";
     echo "$filecount file$s";
 }
 
-function move_file($file, $to){
-    $path_parts = pathinfo($file);
-    $newplace   = "$to/{$path_parts['basename']}";
-    if(rename($file, $newplace))
+function move_file( $file, $to ) {
+    $path_parts = pathinfo( $file );
+    $newplace = "$to/{$path_parts['basename']}";
+    if ( rename( $file, $newplace ) )
         return $newplace;
     return null;
 }
@@ -192,7 +192,7 @@ function move_file($file, $to){
 // Global array functions
 
 function array_push_key( $array, $key, $value ) {
-	return $array[ $key ] = $value;
+    return $array[ $key ] = $value;
 }
 
 // Global mail functions

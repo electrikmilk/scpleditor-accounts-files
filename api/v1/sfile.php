@@ -9,17 +9,17 @@ if ( $auth === true ) {
     } else {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
-          $collab = explode(",",$itemdata['collab']);
-          if(in_array($id,$collab) === true) {
-            $name = $itemdata[ 'name' ];
-            if($itemdata['path'])$itempath = $itemdata[ 'path' ]."/";
-            $path = "../../files/$id/$itempath$name";
-            if ( file_exists( $path ) ) {
-                $contents = file_get_contents( $path );
-                $file = array( "contents" => $contents );
-                echo json_encode( $file );
-            } else echo json_response( "error", "File $name does not appear to exist." );
-          } else echo json_response( "error", "This file has not been shared with you." );
+            $collab = explode( ",", $itemdata[ 'collab' ] );
+            if ( in_array( $id, $collab ) === true ) {
+                $name = $itemdata[ 'name' ];
+                if ( $itemdata[ 'path' ] )$itempath = $itemdata[ 'path' ] . "/";
+                $path = "../../files/$id/$itempath$name";
+                if ( file_exists( $path ) ) {
+                    $contents = file_get_contents( $path );
+                    $file = array( "contents" => $contents );
+                    echo json_encode( $file );
+                } else echo json_response( "error", "File $name does not appear to exist." );
+            } else echo json_response( "error", "This file has not been shared with you." );
         } else echo json_response( "error", "Invalid file ID." );
     }
 }
