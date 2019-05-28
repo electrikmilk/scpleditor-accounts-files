@@ -1,7 +1,7 @@
 <?php
 // List files shared with the user
 require( "../request.php" );
-$shared_files = mysqli_query( $connect, "select * from data.files" );
+$shared_files = mysqli_query( $connect, "select * from data.files where type = 'file'" );
 $files = array();
 while ( $file = mysqli_fetch_array( $shared_files ) ) {
     $collab = explode( ",", $file[ 'collab' ] );

@@ -17,7 +17,7 @@ if ( $auth === true ) {
         if ( $itemdata ) {
             $owner = $itemdata[ 'author' ];
             $type = ucfirst( $itemdata[ 'type' ] );
-            $thetype = $itemdata[ 'type' ];
+            $itemtype = $itemdata[ 'type' ];
             if ( $owner === $id ) {
                 if ( $itemdata[ 'type' ] === "file" ) {
                     $new_name = str_replace( ".scpl", "", e( special( $_POST[ 'name' ] ) ) ) . ".scpl";
@@ -37,7 +37,7 @@ if ( $auth === true ) {
                         } else echo json_response( "error", "There was an internal error renaming $name." );
                     } else echo json_response( "error", "There was a database error renaming $name." );
                 } else echo json_response( "error", "$type does not appear to exist." );
-            } else echo json_response( "error", "You do not appear to own that $thetype." );
-        } else echo json_response( "error", "Invalid $thetype ID." );
+            } else echo json_response( "error", "You do not appear to own that $itemtype." );
+        } else echo json_response( "error", "Invalid $itemtype ID." );
     }
 }

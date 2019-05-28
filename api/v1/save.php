@@ -16,7 +16,7 @@ if ( $auth === true ) {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
             $type = ucfirst( $itemdata[ 'type' ] );
-            $thetype = $itemdata[ 'type' ];
+            $itemtype = $itemdata[ 'type' ];
             $owner = $itemdata[ 'author' ];
             $collab = explode( ",", $itemdata[ 'collab' ] );
             if ( $owner === $id || in_array( $id, $collab ) === true ) {
@@ -27,7 +27,7 @@ if ( $auth === true ) {
                     if ( file_put_contents( "$path", $content ) )echo json_response( "success", "File $name has been saved." );
                     else echo json_response( "error", "There was an internal error saving $name." );
                 } else echo json_response( "error", "$type does not appear to exist." );
-            } else echo json_response( "error", "You do not appear to own that $thetype." );
-        } else echo json_response( "error", "Invalid $thetype ID." );
+            } else echo json_response( "error", "You do not appear to own that $itemtype." );
+        } else echo json_response( "error", "Invalid $itemtype ID." );
     }
 }

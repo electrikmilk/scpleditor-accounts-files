@@ -18,7 +18,7 @@ if ( $auth === true ) {
             if ( $owner === $id ) {
                 $item = $itemdata[ 'name' ];
                 $type = ucfirst( $itemdata[ 'type' ] );
-                $thetype = $itemdata[ 'type' ];
+                $itemtype = $itemdata[ 'type' ];
                 if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
                 $oldpath = "../../files/$id/$filepath$item";
                 if ( $folder_id ) {
@@ -38,7 +38,7 @@ if ( $auth === true ) {
                         else echo json_response( "error", "Internal database error setting $item path to $db_path." );
                     } else echo json_response( "error", "Internal file system error moving $item to $folder_name." );
                 } else echo json_response( "error", "$type $item does not appear to exist." );
-            } else echo json_response( "error", "You do not appear to own that $thetype." );
-        } else echo json_response( "error", "Invalid $thetype ID." );
+            } else echo json_response( "error", "You do not appear to own that $itemtype." );
+        } else echo json_response( "error", "Invalid $itemtype ID." );
     }
 }

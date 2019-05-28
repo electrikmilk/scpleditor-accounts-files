@@ -18,7 +18,7 @@ if ( $auth === true ) {
             if ( $owner === $id ) {
                 $name = $itemdata[ 'name' ];
                 $type = ucfirst( $itemdata[ 'type' ] );
-                $thetype = $itemdata[ 'type' ];
+                $itemtype = $itemdata[ 'type' ];
                 if ( $itemdata[ 'path' ] )$itempath = $itemdata[ 'path' ] . "/";
                 $path = "../../files/$id/$itempath$name";
                 if ( file_exists( $path ) ) {
@@ -32,7 +32,7 @@ if ( $auth === true ) {
                         }
                     } else echo json_response( "error", "There was a internal database error deleting $name." );
                 } else echo json_response( "error", "$type does not appear to exist." );
-            } else echo json_response( "error", "You do not appear to own that $thetype." );
-        } else echo json_response( "error", "Invalid $thetype ID." );
+            } else echo json_response( "error", "You do not appear to own that $itemtype." );
+        } else echo json_response( "error", "Invalid $itemtype ID." );
     }
 }

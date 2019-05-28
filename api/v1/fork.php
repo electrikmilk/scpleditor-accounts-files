@@ -16,7 +16,7 @@ if ( $auth === true ) {
           $owner = $itemdata['user_id'];
           $collab = explode( ",", $itemdata[ 'collab' ] );
           $item = $itemdata[ 'name' ];
-          $thistype = $itemdata[ 'type' ];
+          $itemtype = $itemdata[ 'type' ];
           $type = ucfirst( $itemdata[ 'type' ] );
           if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
           $path = "../../files/$owner/$filepath$item";
@@ -25,12 +25,12 @@ if ( $auth === true ) {
           } else if(in_array( $id, $collab ) === true) {
             if ( copy( $path, "../../files/$id/$item" ) === true ) {
                 $file_id = randString( 20 );
-                if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $item_id . "','" . $item . "','$thistype',NULL,'$id')" ) )echo json_response( "success", "$type $item has been forked to your files." );
+                if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $item_id . "','" . $item . "','$itemtype',NULL,'$id')" ) )echo json_response( "success", "$type $item has been forked to your files." );
                 else echo json_response( "error", "Internal database error forking $item." );
             } else echo json_response( "error", "Internal file system error forking $item." );
           } else {
-            echo json_response( "error", "This $thetype has not been shared with you." );
+            echo json_response( "error", "This $itemtype has not been shared with you." );
           }
-        } else echo json_response( "error", "Invalid $thetype ID." );
+        } else echo json_response( "error", "Invalid $itemtype ID." );
     }
 }

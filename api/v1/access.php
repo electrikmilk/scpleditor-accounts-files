@@ -21,14 +21,14 @@ if ( $auth === true ) {
             $collab = explode( ",", $itemdata[ 'collab' ] );
             // Comma seperated list of users that the owner would like to share the file with
             $users = implode( ",", explode( ",", trim( $_POST[ 'users' ] ) ) ); // Reformat/clean list
-            $thistype = $itemdata[ 'type' ];
+            $itemtype = $itemdata[ 'type' ];
             $type = ucfirst( $itemdata[ 'type' ] );
             if ( $owner === $id ) {
                 if ( mysqli_query( $connect, "update data.files set collab = '$users' where id = '$file_id'" ) )echo json_response( "success", "Collaborators were set for $name." );
                 else echo json_response( "error", "Internal database error setting collaborators." );
             } else if(in_array( $id, $collab ) === true) {
-              echo json_response( "error", "Only the owner of this $thetype is allowed to change who can access it." );
-            } else echo json_response( "error", "You do not own this $thetype." );
-        } else echo json_response( "error", "Invalid $thetype ID." );
+              echo json_response( "error", "Only the owner of this $itemtype is allowed to change who can access it." );
+            } else echo json_response( "error", "You do not own this $itemtype." );
+        } else echo json_response( "error", "Invalid $itemtype ID." );
     }
 }
