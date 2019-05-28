@@ -7,7 +7,7 @@ header( "Access-Control-Allow-Methods: POST" );
 header( "Access-Control-Max-Age: 3600" );
 header( "Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With" );
 if ( $auth === true ) {
-    $item_id = $_POST[ 'item_id' ];
+    $item_id = $_POST[ 'id' ];
     if ( !$item_id ) {
         echo json_response( "error", "No 'item_id' was recieved." );
     } else {
