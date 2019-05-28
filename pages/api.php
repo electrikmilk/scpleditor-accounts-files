@@ -168,7 +168,7 @@
 <div class="endpoint-params">
   <h4>Response</h4>
   <ul>
-    <li>Success or error message</li>
+    <li>name=[new filename] (special characters removed)</li>
   </ul>
 </div>
 </div>

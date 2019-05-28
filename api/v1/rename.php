@@ -30,8 +30,11 @@ if ( $auth === true ) {
                 $newpath = str_replace( $name, $new_name, $path );
                 if ( file_exists( $path ) ) {
                     if ( mysqli_query( $connect, "update data.files set name = '$new_name' where id = '$item_id'" ) ) {
-                        if ( rename( $path, $newpath ) )echo json_response( "success", "$name has been renamed to $new_name." );
-                        else echo json_response( "error", "There was an internal error renaming $name." );
+                        if ( rename( $path, $newpath ) ) {
+                          $response = array("name"=>$new_name);
+                          echo json_encode($response);
+                          //echo json_response( "success", "$name has been renamed to $new_name." );
+                        } else echo json_response( "error", "There was an internal error renaming $name." );
                     } else echo json_response( "error", "There was a database error renaming $name." );
                 } else echo json_response( "error", "$type does not appear to exist." );
             } else echo json_response( "error", "You do not appear to own that $thetype." );
