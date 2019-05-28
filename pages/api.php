@@ -13,7 +13,7 @@
   <h4>URL Params</h4>
   <ul>
     <li>token=[alphanumeric]</li><br/>
-    <li>users=[Comma separated list]</li>
+    <li>users=[comma-list-of-ids]</li>
   </ul>
 </div>
 <div class="endpoint-params">
@@ -231,4 +231,25 @@
       <li>token=[alphanumeric] (10 characters)</li>
     </ul>
   </div>
+</div>
+<div class="endpoint-item">
+<div class="endpoint"><span>/</span>users</div>
+<div class="endpoint-description">Search users by username. Includes user ID for sending to the 'access' endpoint for the owner of a file to add other users as collaborators.</div>
+  <div class="endpoint-method">Method: <span>POST</span></div>
+  <div class="endpoint-params">
+    <h4>URL Params</h4>
+    <ul>
+      <li>token=[alphanumeric]</li><br/>
+      <li>query=[search-query] (required)</li>
+    </ul>
+    <h4>Response</h4>
+    <ul>
+      <li>List of all users in JSON format.</li>
+    </ul>
+    <h4>Example Response</h4>
+    <ul>
+      <li>[{<br/>"id":"1050",<br/>"username":"ScPLUser"<br/>}]</li>
+    </ul>
+  </div>
+
 </div>
