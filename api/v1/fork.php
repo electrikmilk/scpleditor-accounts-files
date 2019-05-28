@@ -29,7 +29,7 @@ if ( $auth === true ) {
                 else echo json_response( "error", "Internal database error forking $item." );
             } else echo json_response( "error", "Internal file system error forking $item." );
           } else {
-            echo json_response( "error", "You do not appear to own this $thetype or it has not been shared with you." );
+            echo json_response( "error", "This $thetype has not been shared with you." );
           }
         } else echo json_response( "error", "Invalid $thetype ID." );
     }
