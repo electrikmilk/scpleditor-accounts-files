@@ -21,7 +21,7 @@ if ( $auth === true ) {
                     $file = array( "contents" => $contents );
                     echo json_encode( $file );
                 } else echo json_response( "error", "$type $name does not appear to exist." );
-            } else echo json_response( "error", "You do not appear to own that $thetype or this $thetype has not been shared with you." );
+            } else echo json_response( "error", "You do not appear to own this $thetype or it has not been shared with you." );
         } else echo json_response( "error", "Invalid $thetype ID." );
     }
 }

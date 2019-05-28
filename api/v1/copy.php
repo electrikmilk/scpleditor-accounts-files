@@ -33,7 +33,7 @@ if ( $auth === true ) {
                     $db_path = "";
                 }
                 if ( file_exists( $oldpath ) ) {
-                    if ( copy( $oldpath, $path ) ) {
+                    if ( copy( $oldpath, $path ) === true ) {
                         $file_id = randString( 20 );
                         if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $item . "','$thistype','" . $path . "','$id')" ) )echo json_response( "success", "$type $item has been copied to $folder_name." );
                         else echo json_response( "error", "Internal database error creating copy of $item." );
