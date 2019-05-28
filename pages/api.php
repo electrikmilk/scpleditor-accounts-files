@@ -126,13 +126,17 @@
   <ul>
     <li>token=[alphanumeric]</li>
   </ul>
-</div>
-<div class="endpoint-params">
   <h4>Response</h4>
   <ul>
-    <li>List of current users files in JSON format.</li>
+    <li>List of current users files (only owned by the user) in JSON format.</li>
+  </ul>
+  <h4>Example Response</h4>
+  <ul>
+    <li>[{<br/>"id":"n402n4uc84i20ehf73j8",<br/>"type":"file",<br/>"name":"File.scpl",<br/>"size":"8 KB",<br/>"timestamp":"2019-04-09 15:05:32",<br/>"relativeTimestamp":"Today at 3:05 pm",<br/>"updated":null,<br/>"relativeUpdated":null<br/>},<br/>
+      {<br/>"id":"2ruc944hfkgutiy930du",<br/>"type":"folder",<br/>"name":"Folder",<br/>"size":"0 bytes",<br/>"contents":[...],<br/>"timestamp":"2019-04-09 15:05:32",<br/>"relativeTimestamp":"Today at 3:05 pm",<br/>"updated":null,<br/>"relativeUpdated":null<br/>}]</li>
   </ul>
 </div>
+
 </div>
 <div class="endpoint-item">
 <div class="endpoint"><span>/</span>move</div>
@@ -200,11 +204,14 @@
     <ul>
       <li>token=[alphanumeric]</li>
     </ul>
-  </div>
-  <div class="endpoint-params">
     <h4>Response</h4>
     <ul>
       <li>List of files shared with the current user in JSON format.</li>
+    </ul>
+    <h4>Example Response</h4>
+    <ul>
+      <li>[{<br/>"id":"n402n4uc84i20ehf73j8",<br/>"type":"file",<br/>"name":"File.scpl",<br/>"size":"8 KB",<br/>"timestamp":"2019-04-09 15:05:32",<br/>"relativeTimestamp":"Today at 3:05 pm",<br/>"updated":null,<br/>"relativeUpdated":null<br/>},<br/>
+        {<br/>"id":"2ruc944hfkgutiy930du",<br/>"type":"folder",<br/>"name":"Folder",<br/>"size":"0 bytes",<br/>"contents":[...],<br/>"timestamp":"2019-04-09 15:05:32",<br/>"relativeTimestamp":"Today at 3:05 pm",<br/>"updated":null,<br/>"relativeUpdated":null<br/>}]</li>
     </ul>
   </div>
 </div>
