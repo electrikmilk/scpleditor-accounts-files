@@ -9,7 +9,8 @@ if ( $auth === true ) {
         $itemdata = dataArray( "files", $file_id, "id" );
         if ( $itemdata ) {
             $owner = $itemdata[ 'author' ];
-            if ( $owner === $id ) {
+            $collab = explode( ",", $itemdata[ 'collab' ] );
+            if ( $owner === $id || in_array( $id, $collab ) === true ) {
                 $name = $itemdata[ 'name' ];
                 $type = ucfirst( $itemdata[ 'type' ] );
                 $thetype = $itemdata[ 'type' ];
@@ -20,7 +21,7 @@ if ( $auth === true ) {
                     $file = array( "contents" => $contents );
                     echo json_encode( $file );
                 } else echo json_response( "error", "$type $name does not appear to exist." );
-            } else echo json_response( "error", "You do not appear to own that $thetype." );
+            } else echo json_response( "error", "You do not appear to own that $thetype or this $thetype has not been shared with you." );
         } else echo json_response( "error", "Invalid $thetype ID." );
     }
 }
