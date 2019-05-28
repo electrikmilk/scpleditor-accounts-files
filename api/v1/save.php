@@ -18,7 +18,8 @@ if ( $auth === true ) {
             $type = ucfirst( $itemdata[ 'type' ] );
             $thetype = $itemdata[ 'type' ];
             $owner = $itemdata[ 'author' ];
-            if ( $owner === $id ) {
+            $collab = explode( ",", $itemdata[ 'collab' ] );
+            if ( $owner === $id || in_array( $id, $collab ) === true ) {
                 $name = $itemdata[ 'name' ];
                 if ( $itemdata[ 'path' ] )$itempath = $itemdata[ 'path' ] . "/";
                 $path = "../../files/$id/$itempath$name";
