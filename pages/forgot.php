@@ -18,8 +18,7 @@ if ( $_SESSION ) {
     <div class="message success" id="forgot-success" style="display: none;">Link sent!</div>
     <form action="auth.php" method="POST" id="forgot-password-form">
         <input type="hidden" name="action" value="sendpasswordlink"/>
-        <input type="text" name="email" id="forgot-email" placeholder="Your Email Address" <?php echo $class; ?> value="
-        <?php echo $email; ?>" data-require="true" /><br/><br/>
+        <input type="text" name="email" id="forgot-email" placeholder="Your Email Address" <?php echo $class; ?> value="<?php echo $email; ?>" data-require="true" /><br/><br/>
         <button type="submit" class="primary-btn">Send Reset Link</button>
     </form>
     <?php
