@@ -9,7 +9,7 @@ header( "Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Header
 if ( $auth === true ) {
     $key = $_POST[ 'key' ];
     if ( !$key ) {
-        echo json_response( "error", "No key was recieved." );
+        echo json_response( "error", "No key was received." );
     } else {
         $token = dataArray( "tokens", $key, "id" );
         if ( !$token ) {
