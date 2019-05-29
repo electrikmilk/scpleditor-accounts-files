@@ -1,6 +1,6 @@
 **Get list of users files**
 ----
-List of current users files (only owned by the user) in JSON format.
+Get a list of current users files (only owned by the user).
 
 * **URL**
 
