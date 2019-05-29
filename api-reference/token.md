@@ -23,13 +23,6 @@ Send a key given from the accounts backend. Will return the actual token created
 
 * **Error Response:**
 
-   * **Code:** 401 UNAUTHORIZED <br />
-     **Content:**<br/>
-     `{ "status":"error", "message":"No authentication token was received." }`<br/>
-     `{ "status":"error", "message":"Invalid authentication token." }`
-
-     OR
-
    * **Code:** 503 SERVICE_UNAVAILABLE <br />
        **Content:**<br/>
        `{ "status":"error", "message":"No key was received." }`<br/>

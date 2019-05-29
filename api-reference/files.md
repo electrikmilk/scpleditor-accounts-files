@@ -52,11 +52,6 @@ Get a list of current users files (only owned by the current user).
      `{ "status":"error", "message":"No authentication token was received." }`<br/>
      `{ "status":"error", "message":"Invalid authentication token." }`
 
-     OR
-
-    * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `[]`
-
 * **Sample Call:**
 
 ```javascript

@@ -24,7 +24,7 @@ Includes user ID for sending to the 'access' endpoint for the owner of a file to
     * **Code:** 200 <br />
        **Content:** `[{ "id":"1050", "username":"ScPLUser" },{ "id":"2480", "username":"AnotherScPLUser" }]`
 
-   * **Error Response:**
+* **Error Response:**
 
    * **Code:** 401 UNAUTHORIZED <br />
      **Content:**<br/>
