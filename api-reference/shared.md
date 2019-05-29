@@ -43,7 +43,8 @@ Returns a JSON formatted list of files shared with the user. Currently only file
      OR
 
    * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
+       **Content:**<br/>
+       `{ "status":"error", "message":"No files are shared with this user." }`
 
    * **Sample Call:**
 
