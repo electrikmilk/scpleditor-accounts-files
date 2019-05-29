@@ -18,7 +18,7 @@ Get a list of current users files (only owned by the current user).
 
 * **Success Response:**
 
-     * **Code:** 200 <br />
+     * **Code:** 200 OK <br />
        **Content:**<br/>
        ```json
        [{
@@ -47,7 +47,7 @@ Get a list of current users files (only owned by the current user).
 
 * **Error Response:**
 
-   * **Code:** 404 NOT_FOUND <br />
+   * **Code:** 404 NOT FOUND <br />
        **Content:**<br/>
        `{ "status":"error", "message":"This user has added no files to their account." }`
 
