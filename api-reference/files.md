@@ -26,6 +26,7 @@ Get a list of current users files (only owned by the current user).
          "type":"file",
          "name":"File.scpl",
          "size":"8 KB",
+         "collab":"4563,3994",
          "timestamp":"2019-04-09 15:05:32",
          "relativeTimestamp":"Today at 3:05 pm",
          "updated":null,
