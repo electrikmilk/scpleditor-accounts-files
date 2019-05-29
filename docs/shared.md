@@ -18,7 +18,7 @@ Returns a JSON formatted list of files shared with the user. Currently only file
 
 * **Success Response:**
 
-     * **Code:** 200 <br />
+     * **Code:** 200 OK <br />
        **Content:**<br/>
        ```json
        [{
@@ -42,7 +42,7 @@ Returns a JSON formatted list of files shared with the user. Currently only file
 
      OR
 
-   * **Code:** 404 NOT_FOUND <br />
+   * **Code:** 404 NOT FOUND <br />
        **Content:**<br/>
        `{ "status":"error", "message":"No files are shared with this user." }`
 
