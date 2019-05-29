@@ -21,7 +21,7 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
 * **Success Response:**
 
     * **Code:** 200 <br />
-       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
+       **Content:** `{ "status" : "success", "message":"File file.scpl was deleted." }`
 
 * **Error Response:**
 
@@ -39,13 +39,13 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
 
    ```javascript
        $.ajax({
-         url: "https://account.scpl.dev/api/v1/access",
+         url: "https://account.scpl.dev/api/v1/delete",
          dataType: "json",
          type: "POST",
          date: {
             token: "AUTH_TOKEN",
+            type: "file",
             id: "FILE_ID"
-            users: "4356,3478"
          },
          success : function(r) {
            console.log(r);
