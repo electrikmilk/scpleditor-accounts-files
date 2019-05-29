@@ -21,7 +21,7 @@ Includes user ID for sending to the 'access' endpoint for the owner of a file to
 
 * **Success Response:**
 
-    * **Code:** 200 <br />
+    * **Code:** 200 OK <br />
        **Content:** `[{ "id":"1050", "username":"ScPLUser" },{ "id":"2480", "username":"AnotherScPLUser" }]`
 
 * **Error Response:**
@@ -33,7 +33,7 @@ Includes user ID for sending to the 'access' endpoint for the owner of a file to
 
      OR
 
-    * **Code:** 503 SERVICE_UNAVAILABLE <br />
+    * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:** `{ "status":"error", "message":"No query was recieved." }`
 
 * **Sample Call:**
