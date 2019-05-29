@@ -39,8 +39,8 @@ Get a list of current users files (only owned by the current user).
          "contents":[ ],
          "timestamp":"2019-04-09 15:05:32",
          "relativeTimestamp":"Today at 3:05 pm",
-         "updated":null,
-         "relativeUpdated":null
+         "updated":"2019-04-09 16:00:32",
+         "relativeUpdated":"5 minutes ago"
         }]
         ```
 
