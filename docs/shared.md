@@ -42,7 +42,7 @@ Returns a JSON formatted list of files shared with the user. Currently only file
 
      OR
 
-   * **Code:** 503 SERVICE_UNAVAILABLE <br />
+   * **Code:** 404 NOT_FOUND <br />
        **Content:**<br/>
        `{ "status":"error", "message":"No files are shared with this user." }`
 

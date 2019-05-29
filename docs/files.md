@@ -47,6 +47,12 @@ Get a list of current users files (only owned by the current user).
 
 * **Error Response:**
 
+   * **Code:** 404 NOT_FOUND <br />
+       **Content:**<br/>
+       `{ "status":"error", "message":"This user has added no files to their account." }`
+
+     OR
+
    * **Code:** 401 UNAUTHORIZED <br />
      **Content:**<br/>
      `{ "status":"error", "message":"No authentication token was received." }`<br/>
