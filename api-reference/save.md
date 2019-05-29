@@ -33,7 +33,11 @@ Save new contents for a file specified by 'id'. Endpoint is restricted to the ow
      OR
 
     * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
+       **Content:**<br/>
+       `{ "status":"error", "message":"There was an internal file system error saving file.scpl." }`<br/>
+       `{ "status":"error", "message":"File does not appear to exist." }`<br/>
+       `{ "status":"error", "message":"You do not appear to own that file." }`<br/>
+       `{ "status":"error", "message":"Invalid file ID." }`
 
 * **Sample Call:**
 
