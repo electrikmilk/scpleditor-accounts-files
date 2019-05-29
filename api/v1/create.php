@@ -18,19 +18,19 @@ if ( $auth === true ) {
         $file_check = mysqli_query( $connect, "select * from data.files where name = '$name' and type = '$type'" );
         if ( mysqli_num_rows( $file_check ) === 0 ) {
             $file_id = randString( 20 );
-            if ( mysqli_query( $connect, "insert into data.files (id,name,type,author) values ('" . $file_id . "','" . $name . "','$type','$id')" ) ) {
-                if ( $type === "file" ) {
-                    if ( file_put_contents( "../../files/$id/$name", $contents ) !== false ) {
-                        $newfile = array( "id" => $file_id, "name" => $name );
-                        echo json_encode( $newfile );
-                    } else echo json_response( "error", "Internal file system error creating file $name." );
-                } else {
-                    if ( makeFolder( "../../files/$id/$name" ) ) {
-                        $newfile = array( "id" => $file_id, "name" => $name );
-                        echo json_encode( $newfile );
-                    } else echo json_response( "error", "Internal file system error creating folder $name." );
-                }
-            } else echo json_response( "error", "Internal database error creating file $name.";
+            if(mysqli_query( $connect, "insert into data.files (id,name,type,author) values ('" . $file_id . "','" . $name . "','$type','$id')" )) {
+                  if ( $type === "file" ) {
+                      if ( file_put_contents( "../../files/$id/$name", $contents ) !== false ) {
+                          $newfile = array( "id" => $file_id, "name" => $name );
+                          echo json_encode( $newfile );
+                      } else echo json_response( "error", "Internal file system error creating file $name." );
+                  } else {
+                      if ( makeFolder( "../../files/$id/$name" ) ) {
+                          $newfile = array( "id" => $file_id, "name" => $name );
+                          echo json_encode( $newfile );
+                      } else echo json_response( "error", "Internal file system error creating folder $name." );
+                  }
+            } else echo json_response( "error", "Internal database error creating file $name.");
         } else echo json_response( "error", "File with name $name already exists." );
     }
 }
