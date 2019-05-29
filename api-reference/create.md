@@ -2,7 +2,7 @@
 ----
 Creates a physical file or folder in the users folder and a database record for that file or folder.
 
-No need to send 'name' with '.scpl' at the end, this endpoint will add it for you. However if for some reason you need to, endpoint will also allow it and not add an extension.
+No need to send 'name' with '.scpl' at the end, this endpoint will add it for you. However if for some reason you need to, this endpoint will allow it and not append an extension if it already exists.
 
 'contents' is optional for files and will be ignored if you are creating a folder.
 
