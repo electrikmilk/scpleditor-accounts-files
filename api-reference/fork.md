@@ -4,7 +4,7 @@ Fork a file shared with the current user, file is specified by 'id'. File is cop
 
 * **URL**
 
-/fork
+  /fork
 
 * **Method:**
 
