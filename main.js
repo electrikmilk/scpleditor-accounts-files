@@ -351,65 +351,32 @@ $(function () {
 			}
 		});
 	});
-	$(".new-btn").on('click', function (e) {
-		var token = "nNXZtQM8Fy";
-		var filename = prompt("Enter a filename:");
-		if (filename) {
-			$(":input, :button").prop('disabled', true);
-			$.ajax({
-				type: "POST",
-				url: "/api/v1/create",
-				data: {
-					token: token,
-					name: filename,
-					type: "file",
-					contents: "@Color lightpurple\n@Icon wand"
-				},
-				success: function (response) {
-					$(":input, :button").prop('disabled', false);
-					alert("API response: " + JSON.stringify(response));
-				},
-				error: function (data) {
-					$(":input, :button").prop('disabled', false);
-					$("#reset-error").html("Backend error resetting your password. Please try again later.");
-					$("#reset-error").fadeIn();
-				}
-			});
-		} else {
-			showMessage("files-message", "You must enter a file name.", "error");
-		}
-	});
-	$(".newf-btn").on('click', function (e) {
-		var token = "nNXZtQM8Fy";
-		var foldername = prompt("Enter a folder name:");
-		if (foldername) {
-			$(":input, :button").prop('disabled', true);
-			$.ajax({
-				type: "POST",
-				url: "/api/v1/create",
-				data: {
-					token: token,
-					name: foldername,
-					type: "folder"
-				},
-				success: function (response) {
-					$(":input, :button").prop('disabled', false);
-					alert("API response: " + JSON.stringify(response));
-				},
-				error: function (data) {
-					$(":input, :button").prop('disabled', false);
-					$("#reset-error").html("Backend error resetting your password. Please try again later.");
-					$("#reset-error").fadeIn();
-				}
-			});
-		} else {
-			showMessage("files-message", "You must enter a folder name.", "error");
-		}
-	});
 });
 
-function showMessage(id, message, type, fade) {
-
+function showMessage(id, toggle = true, newtext = false, type = false, fade = true, timeout = 3000) {
+	if (id) {
+		var element = ".message#" + id;
+		if (timeout !== 3000) {
+			timeout = timeout + '000';
+		}
+		if(type !== false) {
+			$(element).attr("class","message");
+			$(element).addClass(type);
+		}
+		if (newtext !== false) {
+			$(element).html(newtext);
+		}
+		if (toggle === true) {
+			$(element).fadeIn();
+		} else {
+			$(element).fadeOut();
+		}
+		if (fade !== false) {
+			setTimeout(function () {
+				$(element).fadeOut();
+			}, timeout);
+		}
+	}
 }
 
 function confirmLogout() {
@@ -485,23 +452,98 @@ function checkCount(id) {
 	}
 }
 
+function goPage(url, newtab) {
+	if (newtab) {
+		var win = window.open(url, '_blank');
+		win.focus();
+	} else {
+		window.location = url;
+	}
+}
+
 function listFiles() {
 	$.ajax({
 		type: "POST",
-		url: "filelist.php",
+		url: "files.php",
 		data: {
 			action: "list"
 		},
 		success: function (response) {
-			console.log(response);
 			$(".file-list").html(response);
 			$(":input, :button").prop('disabled', false);
+			$(".file-list ul li:not(.list-item-file,.disabled) > div").click(function () {
+                $(this).closest("li").toggleClass("open-folder");
+            });
+						$(".list-item-file").click(function () {
+							var id = this.id.replace("file-","");
+						goPage("https://editor.scpl.dev/?file="+id,true)
+			            });
 		},
 		error: function (data) {
-			console.log("backend-error");
 			$(":input, :button").prop('disabled', false);
-			$("#files-message").html("Backend error resetting your password. Please try again later.");
-			$("#files-message").fadeIn();
+			showMessage("files-message",false, "There was an error loading your files.", "error");
 		}
 	});
+}
+
+function newFile() {
+	showMessage("files-message",false);
+	var filename = prompt("Enter a filename:");
+	if (filename) {
+		$(":input, :button").prop('disabled', true);
+		$.ajax({
+			type: "POST",
+			url: "files.php",
+			data: {
+				action: "create",
+				name: filename,
+				type: "file",
+				contents: "@Color lightpurple\n@Icon wand"
+			},
+			success: function (response) {
+				$(":input, :button").prop('disabled', false);
+				console.log(response);
+				if(response.includes("name")) {
+					listFiles();
+					showMessage("files-message",true, "Created file "+filename+".", "success");
+				} else {
+					showMessage("files-message",true, response, "error");
+				}
+			},
+			error: function (data) {
+				$(":input, :button").prop('disabled', false);
+				showMessage("files-message",true, "There was a backend error creating the file.", "error");
+			}
+		});
+	} else {
+		showMessage("files-message", true, "You must enter a file name.", "error");
+	}
+}
+
+function newFolder() {
+	showMessage("files-message",false);
+	var foldername = prompt("Enter a folder name:");
+	if (foldername) {
+		$(":input, :button").prop('disabled', true);
+		$.ajax({
+			type: "POST",
+			url: "files.php",
+			data: {
+				action: "create",
+				name: foldername,
+				type: "folder"
+			},
+			success: function (response) {
+				$(":input, :button").prop('disabled', false);
+				listFiles();
+				showMessage("files-message",true, "Created folder "+foldername+".", "success");
+			},
+			error: function (data) {
+				$(":input, :button").prop('disabled', false);
+				showMessage("files-message",true, "There was a backend error creating the folder.", "error");
+			}
+		});
+	} else {
+		showMessage("files-message", true,"You must enter a folder name.", "error");
+	}
 }

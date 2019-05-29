@@ -178,7 +178,7 @@ function file_count( $directory ) {
 	$files = glob( $directory . "*" );
 	if ( $files )$filecount = numberFormat( count( $files ) );
 	if ( $filecount !== 1 )$s = "s";
-	echo "$filecount file$s";
+	echo "$filecount file$s and folder$s";
 }
 
 // Global array function
