@@ -4,7 +4,7 @@ Save new contents for a file specified by 'id'. Endpoint is restricted to the ow
 
 * **URL**
 
-/save
+  /save
 
 * **Method:**
 
@@ -12,22 +12,18 @@ Save new contents for a file specified by 'id'. Endpoint is restricted to the ow
 
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._>
-
    **Required:**
 
-   `id=[integer]`
+   `token=[alphanumeric]`<br/>
+   `id=[alphanumeric]`<br/>
+   `content=[scpl]`
 
-   **Optional:**
-
-   `photo_id=[alphanumeric]`
-
-   * **Success Response:**
+* **Success Response:**
 
      * **Code:** 200 <br />
-       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
+       **Content:** `{ "status" : "success", "message":"File file.scpl has been saved." }`
 
-   * **Error Response:**
+* **Error Response:**
 
    * **Code:** 401 UNAUTHORIZED <br />
      **Content:**<br/>
@@ -36,26 +32,26 @@ Save new contents for a file specified by 'id'. Endpoint is restricted to the ow
 
      OR
 
-     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+    * **Code:** 503 SERVICE_UNAVAILABLE <br />
        **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
 
-   * **Sample Call:**
+* **Sample Call:**
 
-   ```javascript
+```javascript
        $.ajax({
          url: "https://account.scpl.dev/api/v1/access",
          dataType: "json",
          type: "POST",
          date: {
             token: "AUTH_TOKEN",
-            id: "FILE_ID"
-            users: "4356,3478"
+            id: "FILE_ID",
+            contents: "ShowResult 'Hello ScPL'"
          },
          success : function(r) {
            console.log(r);
          }
        });
-     ```
+```
 
    * **Notes:**
 
