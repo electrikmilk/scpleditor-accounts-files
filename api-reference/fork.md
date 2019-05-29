@@ -8,8 +8,6 @@ Fork a file shared with the current user, file is specified by 'id'. File is cop
 
 * **Method:**
 
-  <_The request type_>
-
   `POST`
 
 *  **URL Params**
@@ -22,7 +20,7 @@ Fork a file shared with the current user, file is specified by 'id'. File is cop
 * **Success Response:**
 
      * **Code:** 200 <br />
-       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
+       **Content:** `{ "status" : "success", "message":"File file.scpl has been forked to your files." }`
 
 * **Error Response:**
 
