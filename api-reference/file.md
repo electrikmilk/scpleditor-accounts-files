@@ -20,7 +20,7 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
    * **Success Response:**
 
      * **Code:** 200 <br />
-       **Content:** `{ "contents" : "ShowResult 'File Contents'" }`
+       **Content:** `{ "contents" : "ShowResult 'Hello ScPL'" }`
 
    * **Error Response:**
 
