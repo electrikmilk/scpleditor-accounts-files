@@ -45,7 +45,7 @@ Includes user ID for sending to the 'access' endpoint for the owner of a file to
          type: "POST",
          date: {
             token: "AUTH_TOKEN",
-            query: "Search by username"
+            query: "Search query"
          },
          success : function(r) {
            console.log(r);
