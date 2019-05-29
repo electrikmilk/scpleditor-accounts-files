@@ -20,7 +20,7 @@ Save new contents for a file specified by 'id'. Endpoint is restricted to the ow
 
 * **Success Response:**
 
-     * **Code:** 200 <br />
+     * **Code:** 200 OK <br />
        **Content:** `{ "status" : "success", "message":"File file.scpl has been saved." }`
 
 * **Error Response:**
@@ -32,7 +32,7 @@ Save new contents for a file specified by 'id'. Endpoint is restricted to the ow
 
      OR
 
-    * **Code:** 503 SERVICE_UNAVAILABLE <br />
+    * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:**<br/>
        `{ "status":"error", "message":"There was an internal file system error saving file.scpl." }`<br/>
        `{ "status":"error", "message":"File does not appear to exist." }`<br/>
