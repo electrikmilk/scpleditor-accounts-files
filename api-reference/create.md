@@ -1,6 +1,6 @@
 **Create File or Folder**
 ----
-Creates a physical file or folder in the users folder and a database record for that file or folder. 'contents' is optional for files and will be ignored if you are creating a folder.
+Creates a physical file or folder in the users folder and a database record for that file or folder. No need to send 'name' with '.scpl' at the end, endpoint will add it for you. If you do, endpoint will also allow it and not add an extension. 'contents' is optional for files and will be ignored if you are creating a folder.
 
 * **URL**
 
@@ -48,8 +48,9 @@ Creates a physical file or folder in the users folder and a database record for 
          type: "POST",
          date: {
             token: "AUTH_TOKEN",
-            id: "FILE_ID"
-            users: "4356,3478"
+            type: "file",
+            name: "New File",
+            contents: "ShowResult 'Hello ScPL'"
          },
          success : function(r) {
            console.log(r);
