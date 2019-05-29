@@ -30,12 +30,6 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
        `{ "status":"error", "message":"Invalid authentication token." }`
 
      OR
-     
-     * **Code:** 404 NOT_FOUND <br />
-       **Content:**<br/>
-       `{ "status":"error", "message":"This user has added no files to their account." }`
-
-     OR
 
      * **Code:** 503 SERVICE_UNAVAILABLE <br />
        **Content:**<br />
