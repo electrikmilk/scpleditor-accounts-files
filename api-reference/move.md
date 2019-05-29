@@ -39,7 +39,10 @@ Move a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
        **Content:**<br/>
        `{ "status":"error", "message":"Internal database error moving file file.scpl." }`<br/>
        `{ "status":"error", "message":"Internal database error moving folder foldername." }`<br/>
-       `{ "status":"error", "message":"File|Folder file.scpl|foldername does not appear to exist." }`<br/>
+       `{ "status":"error", "message":"Internal file system error moving file.scpl to foldername." }`<br/>
+       `{ "status":"error", "message":"Internal file system error moving foldername to foldername2." }`<br/>
+       `{ "status":"error", "message":"File file.scpl does not appear to exist." }`<br/>
+       `{ "status":"error", "message":"Folder foldername does not appear to exist." }`<br/>
        `{ "status":"error", "message":"You do not appear to own that file|folder." }`<br/>
        `{ "status":"error", "message":"Invalid file|folder ID." }`
 
