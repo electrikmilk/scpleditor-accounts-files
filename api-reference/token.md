@@ -31,7 +31,9 @@ Send a key given from the accounts backend. Will return the actual token created
      OR
 
    * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
+       **Content:**<br/>
+       `{ "status":"error", "message":"No key was received." }`<br/>
+       `{ "status":"error", "message":"Invalid token key." }`
 
 * **Sample Call:**
 
