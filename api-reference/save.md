@@ -16,7 +16,7 @@ Save new contents for a file specified by 'id'. Endpoint is restricted to the ow
 
    `token=[alphanumeric]`<br/>
    `id=[alphanumeric]`<br/>
-   `content=[scpl]`
+   `contents=[scpl]`
 
 * **Success Response:**
 
