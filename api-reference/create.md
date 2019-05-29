@@ -41,7 +41,11 @@ No need to send 'name' with '.scpl' at the end, this endpoint will add it for yo
      OR
 
      * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Internal database, file system, permission error or invalid file or folder ID." }`
+       **Content:**<br/>
+       `{ "status":"error", "message":"Internal file system error creating file file.scpl." }`
+       `{ "status":"error", "message":"Internal file system error creating folder Folder." }`
+       `{ "status":"error", "message":"Internal database error creating file file.scpl. " }`
+       `{ "status":"error", "message":"File with name file.scpl already exists." }`
 
    * **Sample Call:**
 
