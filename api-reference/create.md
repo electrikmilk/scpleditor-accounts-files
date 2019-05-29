@@ -14,22 +14,22 @@ Creates a physical file or folder in the users folder and a database record for 
 
    **Required:**
 
-   `token=[alphanumeric]`
-   `type=[file|folder]`
+   `token=[alphanumeric]`<br/>
+   `type=[file|folder]`<br/>
    `name=[string]`
 
    **Optional:**
 
    `contents=[scpl]`
 
-   * **Success Response:**
+  * **Success Response:**
 
      * **Code:** 200 <br />
        **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
 
    * **Error Response:**
 
-   * **Code:** 401 UNAUTHORIZED <br />
+      * **Code:** 401 UNAUTHORIZED <br />
      **Content:**<br/>
      `{ "status":"error", "message":"No authentication token was received." }`<br/>
      `{ "status":"error", "message":"Invalid authentication token." }`
