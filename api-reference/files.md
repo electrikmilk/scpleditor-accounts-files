@@ -4,11 +4,9 @@ List of current users files (only owned by the user) in JSON format.
 
 * **URL**
 
-/files
+  /files
 
 * **Method:**
-
-  <_The request type_>
 
   `POST`
 
@@ -24,12 +22,12 @@ List of current users files (only owned by the user) in JSON format.
 
    `photo_id=[alphanumeric]`
 
-   * **Success Response:**
+* **Success Response:**
 
      * **Code:** 200 <br />
        **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
 
-   * **Error Response:**
+* **Error Response:**
 
    * **Code:** 401 UNAUTHORIZED <br />
      **Content:**<br/>
@@ -38,12 +36,12 @@ List of current users files (only owned by the user) in JSON format.
 
      OR
 
-     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+    * **Code:** 503 SERVICE_UNAVAILABLE <br />
        **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
 
-   * **Sample Call:**
+* **Sample Call:**
 
-   ```javascript
+```javascript
        $.ajax({
          url: "https://account.scpl.dev/api/v1/access",
          dataType: "json",
@@ -57,8 +55,8 @@ List of current users files (only owned by the user) in JSON format.
            console.log(r);
          }
        });
-     ```
+```
 
-   * **Notes:**
+* **Notes:**
 
      _No notes._
