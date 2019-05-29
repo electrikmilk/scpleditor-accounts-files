@@ -14,8 +14,6 @@ Includes user ID for sending to the 'access' endpoint for the owner of a file to
 
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._>
-
    **Required:**
 
    `token=[alphanumeric]`<br/>
