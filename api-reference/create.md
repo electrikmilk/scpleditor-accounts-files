@@ -41,7 +41,7 @@ Creates a physical file or folder in the users folder and a database record for 
 
    * **Sample Call:**
 
-   ```javascript
+```javascript
        $.ajax({
          url: "https://account.scpl.dev/api/v1/create",
          dataType: "json",
@@ -55,7 +55,7 @@ Creates a physical file or folder in the users folder and a database record for 
            console.log(r);
          }
        });
-     ```
+```
 
    * **Notes:**
 
