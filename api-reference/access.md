@@ -35,7 +35,11 @@ This overwrites the current list of collaborators, you'll need to get previous c
   OR
 
   * **Code:** 503 SERVICE_UNAVAILABLE <br />
-    **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
+    **Content:**<br/>
+    `{ "status":"error", "message":"Internal database error setting collaborators." }`<br/>
+    `{ "status":"error", "message":"Only the owner of this file is allowed to change who can access it." }`<br/>
+    `{ "status":"error", "message":"You do not own this file." }`<br/>
+    `{ "status":"error", "message":"Invalid file ID." }`
 
 * **Sample Call:**
 
