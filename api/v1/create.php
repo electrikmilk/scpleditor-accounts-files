@@ -33,7 +33,7 @@ if ( $auth === true ) {
                         echo json_encode( $newfile );
                     } else echo json_response( "error", "Internal file system error creating folder $name." );
                 }
-            } else echo json_response( "error", "Internal database error creating file $name. " . mysqli_error( $connect ) );
+            } else echo json_response( "error", "Internal database error creating file $name.";
         } else echo json_response( "error", "File with name $name already exists." );
     }
 }
