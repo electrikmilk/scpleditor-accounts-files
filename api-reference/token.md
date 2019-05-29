@@ -1,10 +1,10 @@
 **Get Authentication Token**
 ----
-Send 'key' supplied by '?login_key=' from the accounts backend. Will return the actual token created when the user logged in or signed up that can be used to make requests to the REST API.
+Send a key given from the accounts backend. Will return the actual token created when the user logged in or signed up that can be used to make requests to the Files REST API.
 
 * **URL**
 
-/token
+  /token
 
 * **Method:**
 
@@ -12,22 +12,16 @@ Send 'key' supplied by '?login_key=' from the accounts backend. Will return the 
 
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._>
-
    **Required:**
 
-   `id=[integer]`
+   `key=[integer]`
 
-   **Optional:**
-
-   `photo_id=[alphanumeric]`
-
-   * **Success Response:**
+* **Success Response:**
 
      * **Code:** 200 <br />
-       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
+       **Content:** `{ "token":"10Em39Vn58f7" }`
 
-   * **Error Response:**
+* **Error Response:**
 
    * **Code:** 401 UNAUTHORIZED <br />
      **Content:**<br/>
@@ -36,27 +30,25 @@ Send 'key' supplied by '?login_key=' from the accounts backend. Will return the 
 
      OR
 
-     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+   * **Code:** 503 SERVICE_UNAVAILABLE <br />
        **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
 
-   * **Sample Call:**
+* **Sample Call:**
 
-   ```javascript
+```javascript
        $.ajax({
-         url: "https://account.scpl.dev/api/v1/access",
+         url: "https://account.scpl.dev/api/v1/token",
          dataType: "json",
          type: "POST",
          date: {
-            token: "AUTH_TOKEN",
-            id: "FILE_ID"
-            users: "4356,3478"
+            key: "LOGIN_KEY"
          },
          success : function(r) {
            console.log(r);
          }
        });
-     ```
+```
 
-   * **Notes:**
+* **Notes:**
 
      _No notes._

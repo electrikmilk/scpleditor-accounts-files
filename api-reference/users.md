@@ -1,10 +1,12 @@
 **Search all users**
 ----
-Search users by username. Includes user ID for sending to the 'access' endpoint for the owner of a file to add other users as collaborators.
+Search users by username. A counter-part of the /access endpoint.
+
+Includes user ID for sending to the 'access' endpoint for the owner of a file to add other users as collaborators. Supplies a list of 50 users at a time searching by usernames using 'query'.
 
 * **URL**
 
-/users
+  /users
 
 * **Method:**
 
@@ -12,20 +14,15 @@ Search users by username. Includes user ID for sending to the 'access' endpoint 
 
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._>
-
    **Required:**
 
-   `id=[integer]`
+   `token=[alphanumeric]`<br/>
+   `query=[string]`
 
-   **Optional:**
+* **Success Response:**
 
-   `photo_id=[alphanumeric]`
-
-   * **Success Response:**
-
-     * **Code:** 200 <br />
-       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
+    * **Code:** 200 <br />
+       **Content:** `[{ "id":"1050", "username":"ScPLUser" },{ "id":"2480", "username":"AnotherScPLUser" }]`
 
    * **Error Response:**
 
@@ -36,27 +33,25 @@ Search users by username. Includes user ID for sending to the 'access' endpoint 
 
      OR
 
-     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+    * **Code:** 503 SERVICE_UNAVAILABLE <br />
        **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
 
-   * **Sample Call:**
+* **Sample Call:**
 
-   ```javascript
+```javascript
        $.ajax({
-         url: "https://account.scpl.dev/api/v1/access",
+         url: "https://account.scpl.dev/api/v1/users",
          dataType: "json",
          type: "POST",
          date: {
             token: "AUTH_TOKEN",
-            id: "FILE_ID"
-            users: "4356,3478"
+            query: "Search by username"
          },
          success : function(r) {
            console.log(r);
          }
        });
-     ```
-
-   * **Notes:**
+```
+* **Notes:**
 
      _No notes._

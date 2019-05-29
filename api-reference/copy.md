@@ -47,7 +47,7 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
          type: "POST",
          date: {
             token: "AUTH_TOKEN",
-            item_id: "FILE_ID"
+            item_id: "FILE_OR_FOLDER_ID",
             folder_id: "FOLDER_ID"
          },
          success : function(r) {

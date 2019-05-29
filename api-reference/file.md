@@ -17,12 +17,12 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
    `token=[alphanumeric]`<br/>
    `id=[alphanumeric]`
 
-   * **Success Response:**
+* **Success Response:**
 
      * **Code:** 200 <br />
        **Content:** `{ "contents" : "ShowResult 'Hello ScPL'" }`
 
-   * **Error Response:**
+* **Error Response:**
 
      * **Code:** 401 UNAUTHORIZED <br />
        **Content:**<br/>
@@ -34,9 +34,9 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
      * **Code:** 503 SERVICE_UNAVAILABLE <br />
        **Content:** `{ "status":"error", "message":"Internal database, file system, permission error or invalid file or folder ID." }`
 
-   * **Sample Call:**
+* **Sample Call:**
 
-   ```javascript
+```javascript
        $.ajax({
          url: "https://account.scpl.dev/api/v1/file",
          dataType: "json",
@@ -49,8 +49,8 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
            console.log(r);
          }
        });
-     ```
+```
 
-   * **Notes:**
+* **Notes:**
 
      _No notes._

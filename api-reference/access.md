@@ -2,6 +2,8 @@
 ----
 Add collaborators to a file. This will give the selected collaborators read/write access. However, collaborators may not delete, rename, copy, move or change access to any files shared with them. Currently only files may be shared until folder sharing is implemented. This endpoint is restricted to the owner of the file.
 
+This overwrites the current list of collaborators, you'll need to get previous collaborators from the /files endpoint.
+
 * **URL**
 
    /access
@@ -44,7 +46,7 @@ Add collaborators to a file. This will give the selected collaborators read/writ
       type: "POST",
       date: {
          token: "AUTH_TOKEN",
-         id: "FILE_ID"
+         id: "FILE_ID",
          users: "4356,3478"
       },
       success : function(r) {

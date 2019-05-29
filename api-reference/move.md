@@ -1,10 +1,10 @@
-**Move file or folder**
+**Move File or Folder**
 ----
-Move a file or folder specified by 'item_id' to a folder set by 'folder_id'. Item ID can be the ID of a folder or file. If no folder ID is given, the file or folder is moved to the root of the current users files. This endpoint is restricted to the owner of the file or folder.
+Move a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'folder_id' is given, the file or folder is moved to the root of their files. This endpoint is restricted to the owner of the file or folder.
 
 * **URL**
 
-/move
+  /move
 
 * **Method:**
 
@@ -12,51 +12,50 @@ Move a file or folder specified by 'item_id' to a folder set by 'folder_id'. Ite
 
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._>
-
    **Required:**
 
-   `id=[integer]`
+   `token=[alphanumeric]`<br />
+   `item_id=[alphanumeric]`
 
    **Optional:**
 
-   `photo_id=[alphanumeric]`
+   `folder_id=[alphanumeric]`
 
-   * **Success Response:**
+  * **Success Response:**
 
      * **Code:** 200 <br />
-       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
+       **Content:** `{ "status" : "success", "message":"File file.scpl has been moved to folder." }`
 
    * **Error Response:**
 
-   * **Code:** 401 UNAUTHORIZED <br />
-     **Content:**<br/>
-     `{ "status":"error", "message":"No authentication token was received." }`<br/>
-     `{ "status":"error", "message":"Invalid authentication token." }`
+      * **Code:** 401 UNAUTHORIZED <br />
+      **Content:**<br/>
+      `{ "status":"error", "message":"No authentication token was received." }`<br/>
+      `{ "status":"error", "message":"Invalid authentication token." }`
 
      OR
 
      * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
+       **Content:** `{ "status":"error", "message":"Internal database, file system, permission error or invalid file or folder ID." }`
 
    * **Sample Call:**
 
-   ```javascript
+```javascript
        $.ajax({
-         url: "https://account.scpl.dev/api/v1/access",
+         url: "https://account.scpl.dev/api/v1/move",
          dataType: "json",
          type: "POST",
          date: {
             token: "AUTH_TOKEN",
-            id: "FILE_ID"
-            users: "4356,3478"
+            item_id: "FILE_OR_FOLDER_ID"
+            folder_id: "FOLDER_ID"
          },
          success : function(r) {
            console.log(r);
          }
        });
-     ```
+```
 
-   * **Notes:**
+* **Notes:**
 
-     _No notes._
+  _No notes._
