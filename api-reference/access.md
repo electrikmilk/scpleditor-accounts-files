@@ -46,7 +46,7 @@ This overwrites the current list of collaborators, you'll need to get previous c
       type: "POST",
       date: {
          token: "AUTH_TOKEN",
-         id: "FILE_ID"
+         id: "FILE_ID",
          users: "4356,3478"
       },
       success : function(r) {
