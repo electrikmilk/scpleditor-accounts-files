@@ -39,9 +39,9 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
        **Content:**<br/>
        `{ "status":"error", "message":"Internal database error creating copy of file.scpl." }`<br/>
        `{ "status":"error", "message":"Internal file system error copying file.scpl to foldername." }`<br/>
-       `{ "status":"error", "message":"File file.scpl does not appear to exist." }`<br/>
-       `{ "status":"error", "message":"You do not appear to own that file." }`<br/>
-       `{ "status":"error", "message":"Invalid file ID." }`
+       `{ "status":"error", "message":"File|folder file.scpl|foldername does not appear to exist." }`<br/>
+       `{ "status":"error", "message":"You do not appear to own that file|folder." }`<br/>
+       `{ "status":"error", "message":"Invalid file|folder ID." }`
 
    * **Sample Call:**
 
