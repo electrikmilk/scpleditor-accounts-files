@@ -1,6 +1,6 @@
 **Create File or Folder**
 ----
-Creates a physical file or folder in the users folder and a database record for that file or folder. 'contents' is optional for files and will be ignored if you are creating a folder.
+Creates a physical file or folder in the users folder and a database record for that file or folder. No need to send 'name' with '.scpl' at the end, endpoint will add it for you. If you do, endpoint will also allow it and not add an extension. 'contents' is optional for files and will be ignored if you are creating a folder.
 
 * **URL**
 
@@ -14,22 +14,22 @@ Creates a physical file or folder in the users folder and a database record for 
 
    **Required:**
 
-   `token=[alphanumeric]`
-   `type=[file|folder]`
+   `token=[alphanumeric]`<br/>
+   `type=[file|folder]`<br/>
    `name=[string]`
 
    **Optional:**
 
    `contents=[scpl]`
 
-   * **Success Response:**
+  * **Success Response:**
 
      * **Code:** 200 <br />
        **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
 
    * **Error Response:**
 
-   * **Code:** 401 UNAUTHORIZED <br />
+      * **Code:** 401 UNAUTHORIZED <br />
      **Content:**<br/>
      `{ "status":"error", "message":"No authentication token was received." }`<br/>
      `{ "status":"error", "message":"Invalid authentication token." }`
@@ -41,21 +41,22 @@ Creates a physical file or folder in the users folder and a database record for 
 
    * **Sample Call:**
 
-   ```javascript
+```javascript
        $.ajax({
          url: "https://account.scpl.dev/api/v1/create",
          dataType: "json",
          type: "POST",
          date: {
             token: "AUTH_TOKEN",
-            id: "FILE_ID"
-            users: "4356,3478"
+            type: "file",
+            name: "New File",
+            contents: "ShowResult 'Hello ScPL'"
          },
          success : function(r) {
            console.log(r);
          }
        });
-     ```
+```
 
    * **Notes:**
 

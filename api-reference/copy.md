@@ -21,17 +21,17 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
 
    `folder_id=[alphanumeric]`
 
-   * **Success Response:**
+  * **Success Response:**
 
      * **Code:** 200 <br />
        **Content:** `{ "status" : "success", "message":"File file.scpl has been copied to folder." }`
 
    * **Error Response:**
 
-   * **Code:** 401 UNAUTHORIZED <br />
-     **Content:**<br/>
-     `{ "status":"error", "message":"No authentication token was received." }`<br/>
-     `{ "status":"error", "message":"Invalid authentication token." }`
+      * **Code:** 401 UNAUTHORIZED <br />
+      **Content:**<br/>
+      `{ "status":"error", "message":"No authentication token was received." }`<br/>
+      `{ "status":"error", "message":"Invalid authentication token." }`
 
      OR
 
@@ -40,7 +40,7 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
 
    * **Sample Call:**
 
-   ```javascript
+```javascript
        $.ajax({
          url: "https://account.scpl.dev/api/v1/copy",
          dataType: "json",
@@ -54,8 +54,8 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
            console.log(r);
          }
        });
-     ```
+```
 
-   * **Notes:**
+* **Notes:**
 
-     _No notes._
+  _No notes._
