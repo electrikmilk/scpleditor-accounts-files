@@ -29,7 +29,7 @@ No need to send 'name' with '.scpl' at the end, this endpoint will add it for yo
   * **Success Response:**
 
      * **Code:** 200 <br />
-       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
+       **Content:** `{ "id":"3nc8rjfi49dneuc84ir9", "name":"New File.scpl" }`
 
    * **Error Response:**
 
