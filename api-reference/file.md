@@ -25,9 +25,9 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
    * **Error Response:**
 
      * **Code:** 401 UNAUTHORIZED <br />
-       **Content:**<br/>
+       Content:<br/>
        `{ "status":"error", "message":"No authentication token was received." }`<br/>
-       `{ "status":"error", "message":"No authentication token was received." }`
+       `{ "status":"error", "message":"Invalid authentication token." }`
 
      OR
 
