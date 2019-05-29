@@ -26,6 +26,7 @@ Returns a JSON formatted list of files shared with the user. Currently only file
          "type":"file",
          "name":"Shared File.scpl",
          "size":"8 KB",
+         "owner":"2543",
          "timestamp":"2019-04-09 15:05:32",
          "relativeTimestamp":"Today at 3:05 pm",
          "updated":null,
