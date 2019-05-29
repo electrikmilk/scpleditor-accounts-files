@@ -33,7 +33,14 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
      OR
 
     * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Internal database, file system, permission error or invalid file or folder ID." }`
+       **Content:**<br />
+       `{ "status":"error", "message":"There was an internal file system error deleting file file.scpl." }`<br/>
+       `{ "status":"error", "message":"There was an internal file system error deleting folder Folder." }`<br/>
+       `{ "status":"error", "message":"There was a internal database error deleting file file.scpl." }`<br/>
+       `{ "status":"error", "message":"There was a internal database error deleting folder Folder." }`<br/>
+       `{ "status":"error", "message":"File|Folder does not appear to exist." }`<br/>
+       `{ "status":"error", "message":"You do not appear to own that file|folder." }`<br/>
+       `{ "status":"error", "message":"Invalid file|folder ID." }`<br/>
 
 * **Sample Call:**
 
