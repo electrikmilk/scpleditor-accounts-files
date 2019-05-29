@@ -22,7 +22,7 @@ This overwrites the current list of collaborators, you'll need to get previous c
 
 * **Success Response:**
 
-  * **Code:** 200 <br />
+  * **Code:** 200 OK<br />
     **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
 
 * **Error Response:**
@@ -34,7 +34,7 @@ This overwrites the current list of collaborators, you'll need to get previous c
 
   OR
 
-  * **Code:** 503 SERVICE_UNAVAILABLE <br />
+  * **Code:** 503 SERVICE UNAVAILABLE <br />
     **Content:**<br/>
     `{ "status":"error", "message":"Internal database error setting collaborators." }`<br/>
     `{ "status":"error", "message":"Only the owner of this file is allowed to change who can access it." }`<br/>
