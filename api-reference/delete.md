@@ -53,6 +53,6 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
        });
      ```
 
-   * **Notes:**
+* **Notes:**
 
      _No notes._
