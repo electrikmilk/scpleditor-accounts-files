@@ -32,7 +32,12 @@ Fork a file shared with the current user, file is specified by 'id'. File is cop
      OR
 
     * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
+       **Content:**<br/>
+       `{ "status":"error", "message":"You are the owner of this file. No need to fork it." }`<br/>
+       `{ "status":"error", "message":"Internal database error forking file.scpl." }`<br/>
+       `{ "status":"error", "message":"Internal file system error forking file.scpl." }`<br/>
+       `{ "status":"error", "message":"This file|folder has not been shared with you." }`<br/>
+       `{ "status":"error", "message":"Invalid file|folder ID." }`
 
 * **Sample Call:**
 
