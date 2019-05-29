@@ -19,7 +19,7 @@ Fork a file shared with the current user, file is specified by 'id'. File is cop
 
 * **Success Response:**
 
-     * **Code:** 200 <br />
+     * **Code:** 200 OK <br />
        **Content:** `{ "status" : "success", "message":"File file.scpl has been forked to your files." }`
 
 * **Error Response:**
@@ -31,7 +31,7 @@ Fork a file shared with the current user, file is specified by 'id'. File is cop
 
      OR
 
-    * **Code:** 503 SERVICE_UNAVAILABLE <br />
+    * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:**<br/>
        `{ "status":"error", "message":"You are the owner of this file. No need to fork it." }`<br/>
        `{ "status":"error", "message":"Internal database error forking file.scpl." }`<br/>
