@@ -14,7 +14,7 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
 
    **Required:**
 
-   `token=[alphanumeric]`
+   `token=[alphanumeric]`<br />
    `item_id=[alphanumeric]`
 
    **Optional:**
@@ -28,8 +28,10 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
 
    * **Error Response:**
 
-     * **Code:** 401 UNAUTHORIZED <br />
-       **Content:** `{ "status":"error", "message":"No authentication token was received." | "Invalid authentication token." }`
+   * **Code:** 401 UNAUTHORIZED <br />
+     **Content:**<br/>
+     `{ "status":"error", "message":"No authentication token was received." }`<br/>
+     `{ "status":"error", "message":"Invalid authentication token." }`
 
      OR
 

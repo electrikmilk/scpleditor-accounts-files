@@ -31,8 +31,10 @@ Rename a file or folder specified by 'id'. 'name' is the new name of the file or
 
    * **Error Response:**
 
-     * **Code:** 401 UNAUTHORIZED <br />
-       **Content:** `{ "status":"error", "message":"No authentication token was received." | "Invalid authentication token." }`
+   * **Code:** 401 UNAUTHORIZED <br />
+     **Content:**<br/>
+     `{ "status":"error", "message":"No authentication token was received." }`<br/>
+     `{ "status":"error", "message":"Invalid authentication token." }`
 
      OR
 

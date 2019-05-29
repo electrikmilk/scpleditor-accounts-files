@@ -29,8 +29,10 @@ Creates a physical file or folder in the users folder and a database record for 
 
    * **Error Response:**
 
-     * **Code:** 401 UNAUTHORIZED <br />
-       **Content:** `{ "status":"error", "message":"No authentication token was received." | "Invalid authentication token." }`
+   * **Code:** 401 UNAUTHORIZED <br />
+     **Content:**<br/>
+     `{ "status":"error", "message":"No authentication token was received." }`<br/>
+     `{ "status":"error", "message":"Invalid authentication token." }`
 
      OR
 

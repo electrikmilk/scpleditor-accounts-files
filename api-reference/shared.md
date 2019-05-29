@@ -33,8 +33,10 @@ Returns a JSON formatted list of files shared with the user. Currently only file
 
    * **Error Response:**
 
-     * **Code:** 401 UNAUTHORIZED <br />
-       **Content:** `{ "status":"error", "message":"No authentication token was received." | "Invalid authentication token." }`
+   * **Code:** 401 UNAUTHORIZED <br />
+     **Content:**<br/>
+     `{ "status":"error", "message":"No authentication token was received." }`<br/>
+     `{ "status":"error", "message":"Invalid authentication token." }`
 
      OR
 

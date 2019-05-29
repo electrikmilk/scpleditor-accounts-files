@@ -29,8 +29,10 @@ Move a file or folder specified by 'item_id' to a folder set by 'folder_id'. Ite
 
    * **Error Response:**
 
-     * **Code:** 401 UNAUTHORIZED <br />
-       **Content:** `{ "status":"error", "message":"No authentication token was received." | "Invalid authentication token." }`
+   * **Code:** 401 UNAUTHORIZED <br />
+     **Content:**<br/>
+     `{ "status":"error", "message":"No authentication token was received." }`<br/>
+     `{ "status":"error", "message":"Invalid authentication token." }`
 
      OR
 
