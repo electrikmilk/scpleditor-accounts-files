@@ -34,7 +34,7 @@ Includes user ID for sending to the 'access' endpoint for the owner of a file to
      OR
 
     * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
+       **Content:** `{ "status":"error", "message":"No query was recieved." }`
 
 * **Sample Call:**
 
