@@ -25,7 +25,7 @@ if ( $auth === true ) {
                 $path = "../../files/$id/$itempath$name";
                 if ( file_exists( $path ) ) {
                     if ( file_put_contents( "$path", $content ) )echo json_response( "success", "File $name has been saved." );
-                    else echo json_response( "error", "There was an internal error saving $name." );
+                    else echo json_response( "error", "There was an internal file system error saving $name." );
                 } else echo json_response( "error", "$type does not appear to exist." );
             } else echo json_response( "error", "You do not appear to own that $itemtype." );
         } else echo json_response( "error", "Invalid $itemtype ID." );
