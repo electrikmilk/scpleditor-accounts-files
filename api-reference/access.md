@@ -53,4 +53,4 @@ Add collaborators to a file. This will give the selected collaborators read/writ
 
 * **Notes:**
 
-  <_No notes._>
+  _No notes._
