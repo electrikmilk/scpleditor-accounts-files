@@ -6,7 +6,7 @@ Includes user ID for sending to the 'access' endpoint for the owner of a file to
 
 * **URL**
 
-/users
+  /users
 
 * **Method:**
 
