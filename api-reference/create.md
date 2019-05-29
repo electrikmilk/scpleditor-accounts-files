@@ -22,25 +22,39 @@ Creates a physical file or folder in the users folder and a database record for 
 
    `contents=[scpl]`
 
-* **Success Response:**
+   * **Success Response:**
 
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
+     * **Code:** 200 <br />
+       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
 
-* **Error Response:**
+   * **Error Response:**
 
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Log in" }`
+     * **Code:** 401 UNAUTHORIZED <br />
+       **Content:** `{ "status":"error", "message":"No authentication token was received." | "Invalid authentication token." }`
 
-  OR
+     OR
 
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Email Invalid" }`
+     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+       **Content:** `{ "status":"error", "message":"Internal database, file system, permission error or invalid file or folder ID." }`
 
-* **Sample Call:**
+   * **Sample Call:**
 
-  <_Just a sample call to your endpoint in a runnable format ($.ajax call or a curl request) - this makes life easier and more predictable._>
+   ```javascript
+       $.ajax({
+         url: "https://account.scpl.dev/api/v1/create",
+         dataType: "json",
+         type: "POST",
+         date: {
+            token: "AUTH_TOKEN",
+            id: "FILE_ID"
+            users: "4356,3478"
+         },
+         success : function(r) {
+           console.log(r);
+         }
+       });
+     ```
 
-* **Notes:**
+   * **Notes:**
 
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._>
+     _No notes._

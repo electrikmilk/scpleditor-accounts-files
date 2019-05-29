@@ -22,33 +22,39 @@ Move a file or folder specified by 'item_id' to a folder set by 'folder_id'. Ite
 
    `photo_id=[alphanumeric]`
 
-* **Data Params**
+   * **Success Response:**
 
-  <_If making a post request, what should the body payload look like? URL Params rules apply here too._>
+     * **Code:** 200 <br />
+       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
 
-* **Success Response:**
+   * **Error Response:**
 
-  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
+     * **Code:** 401 UNAUTHORIZED <br />
+       **Content:** `{ "status":"error", "message":"No authentication token was received." | "Invalid authentication token." }`
 
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
+     OR
 
-* **Error Response:**
+     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+       **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
 
-  <_Most endpoints will have many ways they can fail. From unauthorized access, to wrongful parameters etc. All of those should be liste d here. It might seem repetitive, but it helps prevent assumptions from being made where they should be._>
+   * **Sample Call:**
 
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Log in" }`
+   ```javascript
+       $.ajax({
+         url: "https://account.scpl.dev/api/v1/access",
+         dataType: "json",
+         type: "POST",
+         date: {
+            token: "AUTH_TOKEN",
+            id: "FILE_ID"
+            users: "4356,3478"
+         },
+         success : function(r) {
+           console.log(r);
+         }
+       });
+     ```
 
-  OR
+   * **Notes:**
 
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Email Invalid" }`
-
-* **Sample Call:**
-
-  <_Just a sample call to your endpoint in a runnable format ($.ajax call or a curl request) - this makes life easier and more predictable._>
-
-* **Notes:**
-
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._>
+     _No notes._

@@ -21,25 +21,39 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
 
    `folder_id=[alphanumeric]`
 
-* **Success Response:**
+   * **Success Response:**
 
-  * **Code:** 200 <br />
-    **Content:** `{ id : 12 }`
+     * **Code:** 200 <br />
+       **Content:** `{ "status" : "success", "message":"File file.scpl has been copied to folder." }`
 
-* **Error Response:**
+   * **Error Response:**
 
-  * **Code:** 401 UNAUTHORIZED <br />
-    **Content:** `{ error : "Log in" }`
+     * **Code:** 401 UNAUTHORIZED <br />
+       **Content:** `{ "status":"error", "message":"No authentication token was received." | "Invalid authentication token." }`
 
-  OR
+     OR
 
-  * **Code:** 422 UNPROCESSABLE ENTRY <br />
-    **Content:** `{ error : "Email Invalid" }`
+     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+       **Content:** `{ "status":"error", "message":"Internal database, file system, permission error or invalid file or folder ID." }`
 
-* **Sample Call:**
+   * **Sample Call:**
 
-  <_Just a sample call to your endpoint in a runnable format ($.ajax call or a curl request) - this makes life easier and more predictable._>
+   ```javascript
+       $.ajax({
+         url: "https://account.scpl.dev/api/v1/copy",
+         dataType: "json",
+         type: "POST",
+         date: {
+            token: "AUTH_TOKEN",
+            item_id: "FILE_ID"
+            folder_id: "FOLDER_ID"
+         },
+         success : function(r) {
+           console.log(r);
+         }
+       });
+     ```
 
-* **Notes:**
+   * **Notes:**
 
-  <_This is where all uncertainties, commentary, discussion etc. can go. I recommend timestamping and identifying oneself when leaving comments here._>
+     _No notes._
