@@ -288,11 +288,11 @@ $(function () {
 			});
 		}
 	});
-	$(".getlist, .upload-btn").on('click', function (e) {
-		var token = "kDzZ2d4FRW";
+	$(".upload-btn").on('click', function (e) {
+		var token = "nNXZtQM8Fy";
 		$.ajax({
 			type: "POST",
-			url: "/api/v1/list",
+			url: "/api/v1/files",
 			data: {
 				token: token
 			},
@@ -310,7 +310,7 @@ $(function () {
 		});
 	});
 	$(".file").on('click', function (e) {
-		var token = "kDzZ2d4FRW";
+		var token = "nNXZtQM8Fy";
 		$.ajax({
 			type: "POST",
 			url: "/api/v1/file",
@@ -331,7 +331,7 @@ $(function () {
 	});
 	$(".delete-btn").on('click', function (e) {
 		$(":input, :button").prop('disabled', true);
-		var token = "kDzZ2d4FRW";
+		var token = "nNXZtQM8Fy";
 		$.ajax({
 			type: "POST",
 			url: "/api/v1/delete",
@@ -352,7 +352,7 @@ $(function () {
 		});
 	});
 	$(".new-btn").on('click', function (e) {
-		var token = "kDzZ2d4FRW";
+		var token = "nNXZtQM8Fy";
 		var filename = prompt("Enter a filename:");
 		if (filename) {
 			$(":input, :button").prop('disabled', true);
@@ -380,7 +380,7 @@ $(function () {
 		}
 	});
 	$(".newf-btn").on('click', function (e) {
-		var token = "kDzZ2d4FRW";
+		var token = "nNXZtQM8Fy";
 		var foldername = prompt("Enter a folder name:");
 		if (foldername) {
 			$(":input, :button").prop('disabled', true);
@@ -483,4 +483,25 @@ function checkCount(id) {
 	} else {
 		return false;
 	}
+}
+
+function listFiles() {
+	$.ajax({
+		type: "POST",
+		url: "filelist.php",
+		data: {
+			action: "list"
+		},
+		success: function (response) {
+			console.log(response);
+			$(".file-list").html(response);
+			$(":input, :button").prop('disabled', false);
+		},
+		error: function (data) {
+			console.log("backend-error");
+			$(":input, :button").prop('disabled', false);
+			$("#files-message").html("Backend error resetting your password. Please try again later.");
+			$("#files-message").fadeIn();
+		}
+	});
 }
