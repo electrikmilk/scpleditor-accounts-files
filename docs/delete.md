@@ -20,7 +20,7 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
 
 * **Success Response:**
 
-    * **Code:** 200 <br />
+    * **Code:** 200 OK <br />
        **Content:** `{ "status" : "success", "message":"File file.scpl was deleted." }`
 
 * **Error Response:**
@@ -32,7 +32,7 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
 
      OR
 
-    * **Code:** 503 SERVICE_UNAVAILABLE <br />
+    * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:**<br />
        `{ "status":"error", "message":"There was an internal file system error deleting file file.scpl." }`<br/>
        `{ "status":"error", "message":"There was an internal file system error deleting folder foldername." }`<br/>
