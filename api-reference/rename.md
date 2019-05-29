@@ -55,4 +55,4 @@ Rename a file or folder specified by 'id'. 'name' is the new name of the file or
 
 * **Notes:**
 
-     This endpoint returns the name of the file because it removes any special characters from the file name for you.
+     This endpoint returns the new name of the file because it removes any special characters from the file name for you.
