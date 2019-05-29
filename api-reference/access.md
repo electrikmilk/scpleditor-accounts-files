@@ -37,7 +37,7 @@ Add collaborators to a file. This will give the selected collaborators read/writ
 
 ```javascript
     $.ajax({
-      url: "/access",
+      url: "https://account.scpl.dev/api/v1/access",
       dataType: "json",
       type: "POST",
       date: {
@@ -53,4 +53,4 @@ Add collaborators to a file. This will give the selected collaborators read/writ
 
 * **Notes:**
 
-  <__>
+  <_No notes._>
