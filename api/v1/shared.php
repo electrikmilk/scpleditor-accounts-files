@@ -22,6 +22,7 @@ while ( $file = mysqli_fetch_array( $shared_files ) ) {
             "type" => "file",
             "name" => $name,
             "size" => $size,
+            "owner" => $file['author'],
             "timestamp" => $timestamp,
             "updated" => $updated,
             "relativeTimestamp" => $relative,
