@@ -28,7 +28,7 @@ No need to send 'name' with '.scpl' at the end, this endpoint will add it for yo
 
   * **Success Response:**
 
-     * **Code:** 200 <br />
+     * **Code:** 200 OK <br />
        **Content:** `{ "id":"3nc8rjfi49dneuc84ir9", "name":"New File.scpl" }`
 
    * **Error Response:**
@@ -40,7 +40,7 @@ No need to send 'name' with '.scpl' at the end, this endpoint will add it for yo
 
      OR
 
-     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+     * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:**<br/>
        `{ "status":"error", "message":"Internal file system error creating file file.scpl." }`<br/>
        `{ "status":"error", "message":"Internal file system error creating folder foldername." }`<br/>
