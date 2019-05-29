@@ -19,7 +19,7 @@ $token = $_POST[ 'token' ];
 
 function json_response( $status, $message ) {
     if ( $status === "success" )http_response_code( 200 );
-    else if(strpos($message,"auth") === false) http_response_code( 503 );
+    else if(strpos($message,"auth") === false && strpos($message,"shared") === false) http_response_code( 503 );
     $json = array( "status" => $status, "message" => $message );
     return json_encode( $json );
 }
