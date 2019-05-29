@@ -4,7 +4,7 @@ Creates a physical file or folder in the users folder and a database record for 
 
 * **URL**
 
-/create
+  /create
 
 * **Method:**
 
@@ -12,30 +12,22 @@ Creates a physical file or folder in the users folder and a database record for 
 
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._>
-
    **Required:**
 
-   `id=[integer]`
+   `token=[alphanumeric]`
+   `type=[file|folder]`
+   `name=[string]`
 
    **Optional:**
 
-   `photo_id=[alphanumeric]`
-
-* **Data Params**
-
-  <_If making a post request, what should the body payload look like? URL Params rules apply here too._>
+   `contents=[scpl]`
 
 * **Success Response:**
-
-  <_What should the status code be on success and is there any returned data? This is useful when people need to to know what their callbacks should expect!_>
 
   * **Code:** 200 <br />
     **Content:** `{ id : 12 }`
 
 * **Error Response:**
-
-  <_Most endpoints will have many ways they can fail. From unauthorized access, to wrongful parameters etc. All of those should be liste d here. It might seem repetitive, but it helps prevent assumptions from being made where they should be._>
 
   * **Code:** 401 UNAUTHORIZED <br />
     **Content:** `{ error : "Log in" }`
