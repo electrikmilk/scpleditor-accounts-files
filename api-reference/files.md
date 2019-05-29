@@ -55,7 +55,7 @@ Get a list of current users files (only owned by the current user).
      OR
 
     * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
+       **Content:** `[]`
 
 * **Sample Call:**
 
