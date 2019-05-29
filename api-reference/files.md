@@ -42,7 +42,7 @@ List of current users files (only owned by the user) in JSON format.
          "updated":null,
          "relativeUpdated":null
         }]
-```
+        ```
 
 * **Error Response:**
 
