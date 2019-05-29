@@ -24,7 +24,7 @@ Move a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
   * **Success Response:**
 
      * **Code:** 200 <br />
-       **Content:** `{ "status" : "success", "message":"File file.scpl has been moved to folder." }`
+       **Content:** `{ "status" : "success", "message":"File file.scpl has been moved to foldername|root." }`
 
    * **Error Response:**
 
