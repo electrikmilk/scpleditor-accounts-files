@@ -34,7 +34,7 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
      * **Code:** 503 SERVICE_UNAVAILABLE <br />
        **Content:** `{ "status":"error", "message":"Internal database, file system, permission error or invalid file or folder ID." }`
 
-   * **Sample Call:**
+* **Sample Call:**
 
 ```javascript
        $.ajax({
