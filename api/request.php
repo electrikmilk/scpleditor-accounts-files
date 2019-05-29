@@ -18,27 +18,27 @@ require( "../../global.php" );
 $token = $_POST[ 'token' ];
 
 function json_response( $status, $message ) {
-    if ( $status === "success" )http_response_code( 200 );
-    else if(stripos($message,"auth") === false && stripos($message,"no files") === false) http_response_code( 503 );
-    $json = array( "status" => $status, "message" => $message );
-    return json_encode( $json );
+	if ( $status === "success" )http_response_code( 200 );
+	else if ( stripos( $message, "auth" ) === false && stripos( $message, "no files" ) === false )http_response_code( 503 );
+	$json = array( "status" => $status, "message" => $message );
+	return json_encode( $json );
 }
 
 if ( $_POST[ 'key' ] ) {
-    $auth = true;
+	$auth = true;
 } else if ( !$token ) {
-    echo json_response( "error", "No authentication token was received." );
-    http_response_code( 401 );
+	echo json_response( "error", "No authentication token was received." );
+	http_response_code( 401 );
 } else {
-    $session = dataArray( "tokens", $token, "token" ); // get user_id from token
-    if ( $session ) {
-        $id = $session[ 'user_id' ];
-        $auth = true;
-        $token = dataArray( "tokens", $token, "token" );
-    } else { // invalid token, return error
-        $id = null;
-        $auth = false;
-        json_response( "error", "Invalid authentication token." );
-        http_response_code( 401 );
-    }
+	$session = dataArray( "tokens", $token, "token" ); // get user_id from token
+	if ( $session ) {
+		$id = $session[ 'user_id' ];
+		$auth = true;
+		$token = dataArray( "tokens", $token, "token" );
+	} else { // invalid token, return error
+		$id = null;
+		$auth = false;
+		json_response( "error", "Invalid authentication token." );
+		http_response_code( 401 );
+	}
 }

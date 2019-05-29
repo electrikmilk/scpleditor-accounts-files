@@ -1,411 +1,411 @@
 var field_count = 0;
 
 $(function () {
-    $(".nav-menu").on('click', function (e) {
-        $(".side-navigation").toggleClass("open-menu");
-        $(this).toggleClass("close-btn");
-    });
-    $(".mask-btn").on('click', function (e) {
-        if ($("#password").prop("type") === "password") {
-            $("#password").prop("type", "text");
-        } else {
-            $("#password").prop("type", "password");
-        }
-        $(this).toggleClass("show-pw");
-    });
-    $('input, textarea').on('input', function () {
-        var thislength = $(this).val().length;
-        var limit = $(this).attr('data-limit');
-        if (thislength > limit) {
-            $(this).addClass("require-input");
-        } else {
-            $(this).removeClass("require-input");
-        }
-        $("#limit-" + this.id).html(thislength + " / " + limit + " character limit");
-    });
+	$(".nav-menu").on('click', function (e) {
+		$(".side-navigation").toggleClass("open-menu");
+		$(this).toggleClass("close-btn");
+	});
+	$(".mask-btn").on('click', function (e) {
+		if ($("#password").prop("type") === "password") {
+			$("#password").prop("type", "text");
+		} else {
+			$("#password").prop("type", "password");
+		}
+		$(this).toggleClass("show-pw");
+	});
+	$('input, textarea').on('input', function () {
+		var thislength = $(this).val().length;
+		var limit = $(this).attr('data-limit');
+		if (thislength > limit) {
+			$(this).addClass("require-input");
+		} else {
+			$(this).removeClass("require-input");
+		}
+		$("#limit-" + this.id).html(thislength + " / " + limit + " character limit");
+	});
 
-    // Sign up / login
-    $("#login-form").on("submit", function (event) {
-        event.preventDefault();
-        $("#login-error").fadeOut();
-        $(".require-error").fadeOut();
-        $(".login-inputs").removeClass("wrong-password");
-        var checkinputs = checkInputs(this.id);
-        var checklimits = checkCount(this.id);
-        var form = $("form#" + this.id);
-        var formdata = form.serialize();
-        if (checkinputs === true && checklimits === true) {
-            $(":input, :button").prop('disabled', true);
-            $.ajax({
-                type: "POST",
-                url: "auth.php",
-                data: formdata,
-                success: function (response) {
-                    console.log(response);
-                    if (response.includes("key") === true) {
-                        window.location = response;
-                    } else {
-                        $(":input, :button").prop('disabled', false);
-                        $("#login-error").html(response);
-                        $("#login-error").fadeIn();
-                        if (response === "Incorrect Password") {
-                            $(".login-inputs").addClass("wrong-password");
-                        }
-                    }
-                },
-                error: function (data) {
-                    $(":input, :button").prop('disabled', false);
-                    $("#login-error").html("Error logging you in, please try again later.");
-                    $("#login-error").fadeIn();
-                }
-            });
-        } else { // do nothing, the error messages are handled by another function
-            $(":input, :button").prop('disabled', false);
-            console.log("Required inputs are empty or an input is beyond it's character limit");
-        }
-        event.preventDefault();
-    });
-    $("#signup-form").on("submit", function (event) {
-        event.preventDefault();
-        $("#signup-error").fadeOut();
-        var checkinputs = checkInputs(this.id);
-        var checklimits = checkCount(this.id);
-        var form = $("form#" + this.id);
-        var formdata = form.serialize();
-        if (checkinputs === true && checklimits === true) {
-            $(":input, :button").prop('disabled', true);
-            $.ajax({
-                type: "POST",
-                url: "auth.php",
-                data: formdata,
-                success: function (response) {
-                    $(":input, :button").prop('disabled', false);
-                    if (response.includes("editor")) {
-                        window.location = response;
-                    } else {
-                        $("#signup-error").html(response);
-                        $("#signup-error").fadeIn();
-                    }
-                },
-                error: function (data) {
-                    $(":input, :button").prop('disabled', false);
-                    $("#signup-error").html("Backend error creating your account.");
-                    $("#signup-error").fadeIn();
-                }
-            });
-        } else { // do nothing, the error messages are handled by another function
-            console.log("Required inputs are empty or an input is beyond it's character limit");
-            $(":input, :button").prop('disabled', false);
-        }
-        event.preventDefault();
-    });
-    $("#user-settings-form").on("submit", function (event) {
-        var form = $("form#" + this.id);
-        var formdata = form.serialize();
-        event.preventDefault();
-        $("#settings-message").fadeOut();
-        $("#settings-message").attr('class', 'message');
-        $(":input, :button").prop('disabled', true);
-        var checkinputs = checkInputs(this.id);
-        var checklimits = checkCount(this.id);
-        if (checkinputs === true && checklimits === true) {
-            $(":input, :button").prop('disabled', true);
-            $.ajax({
-                type: "POST",
-                url: "auth.php",
-                data: formdata,
-                success: function (response) {
-                    $(":input, :button").prop('disabled', false);
-                    if (response === "saved") {
-                        $("#username-title").html($("#username").val());
-                        $("#settings-message").addClass("success");
-                        $("#settings-message").html("Account changes saved!");
-                        $("#settings-message").fadeIn();
-                        setTimeout(function () {
-                            $("#settings-message").fadeOut();
-                        }, 3000);
-                    } else {
-                        $("#settings-message").addClass("error");
-                        $("#settings-message").html(response);
-                        $("#settings-message").fadeIn();
-                    }
-                },
-                error: function (data) {
-                    $(":input, :button").prop('disabled', false);
-                    $("#settings-message").addClass("error");
-                    $("#settings-message").html("Oops! There was an error saving your changes, please try again later.");
-                    $("#settings-message").fadeIn();
-                }
-            });
-        } else { // do nothing, the error messages are handled by another function
-            console.log("Required inputs are empty or an input is beyond it's character limit");
-        }
-        event.preventDefault();
-    });
-    $("#forgot-password-form").on("submit", function (event) {
-        event.preventDefault();
-        $("#forgot-error").fadeOut();
-        var form = $("#forgot-password-form");
-        var formdata = form.serialize();
-        var account = $("#forgot-email").val();
-        if (account) {
-            $(":input, :button").prop('disabled', true);
-            $.ajax({
-                type: "POST",
-                url: "auth.php",
-                data: formdata,
-                success: function (response) {
-                    $(":input, :button").prop('disabled', false);
-                    if (response === "sent") {
-                        $("#forgot-success").fadeIn();
-                        $("#forgot-success").html("Awesome! A reset password link has been sent to your email address. Be sure to check your junk/spam folder.");
-                    } else {
-                        $("#forgot-error").html(response);
-                        $("#forgot-error").fadeIn();
-                    }
-                },
-                error: function (data) {
-                    $(":input, :button").prop('disabled', false);
-                    $("#forgot-error").html("Backend error sending the email. Please try again later.");
-                    $("#forgot-error").fadeIn();
-                }
-            });
-        } else {
-            $("#forgot-error")("Please enter your email address.");
-            $("#forgot-error").fadeIn();
-        }
-    });
-    $("#reset-password-form").on("submit", function (event) {
-        event.preventDefault();
-        $("#reset-error").fadeOut();
-        var form = $("#reset-password-form");
-        var formdata = form.serialize();
-        var password = $("#password").val();
-        if (password) {
-            $(":input, :button").prop('disabled', true);
-            $.ajax({
-                type: "POST",
-                url: "/auth.php",
-                data: formdata,
-                success: function (response) {
-                    $(":input, :button").prop('disabled', false);
-                    if (response === "reset") {
-                        window.location = '/login';
-                    } else {
-                        $("#reset-error").html(response);
-                        $("#reset-error").fadeIn();
-                    }
-                },
-                error: function (data) {
-                    $(":input, :button").prop('disabled', false);
-                    $("#reset-error").html("Backend error resetting your password. Please try again later.");
-                    $("#reset-error").fadeIn();
-                }
-            });
-        } else {
-            $(":input, :button").prop('disabled', false);
-            $("#reset-error")("Please enter a new password.");
-            $("#reset-error").fadeIn();
-        }
-    });
-    $(".move").on('click', function (e) {
-        var token = "kDzZ2d4FRW";
-        $.ajax({
-            type: "POST",
-            url: "/api/v1/move",
-            data: {
-                token: token,
-                item_id: "IrX5DA73t1u3aOQyKnPM",
-                //folder_id: "WQApghH2pQs8O8JWNTUj"
-            },
-            success: function (response) {
-                $(":input, :button").prop('disabled', false);
-                alert("API response: " + JSON.stringify(response));
-            },
-            error: function (data) {
-                $(":input, :button").prop('disabled', false);
-                alert("error moving file");
-            }
-        });
-    });
-    $(".token").on('click', function (e) {
-        $.ajax({
-            type: "POST",
-            url: "/api/v1/token",
-            data: {
-                key: "19"
-            },
-            success: function (response) {
-                $(":input, :button").prop('disabled', false);
-                alert("API response: " + JSON.stringify(response));
-            },
-            error: function (data) {
-                $(":input, :button").prop('disabled', false);
-                alert("error getting token");
-            }
-        });
-    });
-    $(".save").on('click', function (e) {
-        var token = "kDzZ2d4FRW";
-        $.ajax({
-            type: "POST",
-            url: "/api/v1/save",
-            data: {
-                token: token,
-                id: "IrX5DA73t1u3aOQyKnPM",
-                contents: "text 'new contents'"
-            },
-            success: function (response) {
-                $(":input, :button").prop('disabled', false);
-                alert("API response: " + JSON.stringify(response));
-            },
-            error: function (data) {
-                $(":input, :button").prop('disabled', false);
-                alert("error saving");
-            }
-        });
-    });
-    $(".rename").on('click', function (e) {
-        var token = "kDzZ2d4FRW";
-        var name = prompt("Enter a new name for the file:");
-        if (name) {
-            $.ajax({
-                type: "POST",
-                url: "/api/v1/rename",
-                data: {
-                    token: token,
-                    id: "IrX5DA73t1u3aOQyKnPM",
-                    name: name
-                },
-                success: function (response) {
-                    $(":input, :button").prop('disabled', false);
-                    alert("API response: " + JSON.stringify(response));
-                },
-                error: function (data) {
-                    $(":input, :button").prop('disabled', false);
-                    alert("error renaming");
-                }
-            });
-        }
-    });
-    $(".getlist, .upload-btn").on('click', function (e) {
-        var token = "kDzZ2d4FRW";
-        $.ajax({
-            type: "POST",
-            url: "/api/v1/list",
-            data: {
-                token: token
-            },
-            success: function (response) {
-                console.log(response);
-                $(":input, :button").prop('disabled', false);
-                alert("API response: " + JSON.stringify(response));
-            },
-            error: function (data) {
-                console.log("backend-error");
-                $(":input, :button").prop('disabled', false);
-                $("#files-error").html("Backend error resetting your password. Please try again later.");
-                $("#files-error").fadeIn();
-            }
-        });
-    });
-    $(".file").on('click', function (e) {
-        var token = "kDzZ2d4FRW";
-        $.ajax({
-            type: "POST",
-            url: "/api/v1/file",
-            data: {
-                token: token,
-                id: "IrX5DA73t1u3aOQyKnPM"
-            },
-            success: function (response) {
-                $(":input, :button").prop('disabled', false);
-                alert("API response: " + JSON.stringify(response));
-            },
-            error: function (data) {
-                $(":input, :button").prop('disabled', false);
-                $("#reset-error").html("Backend error resetting your password. Please try again later.");
-                $("#reset-error").fadeIn();
-            }
-        });
-    });
-    $(".delete-btn").on('click', function (e) {
-        $(":input, :button").prop('disabled', true);
-        var token = "kDzZ2d4FRW";
-        $.ajax({
-            type: "POST",
-            url: "/api/v1/delete",
-            data: {
-                token: token,
-                id: "uMAsNX6ktQ6ExIAqxoR2",
-                type: "folder"
-            },
-            success: function (response) {
-                $(":input, :button").prop('disabled', false);
-                alert("API response: " + JSON.stringify(response));
-            },
-            error: function (data) {
-                $(":input, :button").prop('disabled', false);
-                $("#reset-error").html("Backend error resetting your password. Please try again later.");
-                $("#reset-error").fadeIn();
-            }
-        });
-    });
-    $(".new-btn").on('click', function (e) {
-        var token = "kDzZ2d4FRW";
-        var filename = prompt("Enter a filename:");
-        if (filename) {
-            $(":input, :button").prop('disabled', true);
-            $.ajax({
-                type: "POST",
-                url: "/api/v1/create",
-                data: {
-                    token: token,
-                    name: filename,
-                    type: "file",
-                    contents: "@Color lightpurple\n@Icon wand"
-                },
-                success: function (response) {
-                    $(":input, :button").prop('disabled', false);
-                    alert("API response: " + JSON.stringify(response));
-                },
-                error: function (data) {
-                    $(":input, :button").prop('disabled', false);
-                    $("#reset-error").html("Backend error resetting your password. Please try again later.");
-                    $("#reset-error").fadeIn();
-                }
-            });
-        } else {
-            showMessage("files-message", "You must enter a file name.", "error");
-        }
-    });
-    $(".newf-btn").on('click', function (e) {
-        var token = "kDzZ2d4FRW";
-        var foldername = prompt("Enter a folder name:");
-        if (foldername) {
-            $(":input, :button").prop('disabled', true);
-            $.ajax({
-                type: "POST",
-                url: "/api/v1/create",
-                data: {
-                    token: token,
-                    name: foldername,
-                    type: "folder"
-                },
-                success: function (response) {
-                    $(":input, :button").prop('disabled', false);
-                    alert("API response: " + JSON.stringify(response));
-                },
-                error: function (data) {
-                    $(":input, :button").prop('disabled', false);
-                    $("#reset-error").html("Backend error resetting your password. Please try again later.");
-                    $("#reset-error").fadeIn();
-                }
-            });
-        } else {
-            showMessage("files-message", "You must enter a folder name.", "error");
-        }
-    });
+	// Sign up / login
+	$("#login-form").on("submit", function (event) {
+		event.preventDefault();
+		$("#login-error").fadeOut();
+		$(".require-error").fadeOut();
+		$(".login-inputs").removeClass("wrong-password");
+		var checkinputs = checkInputs(this.id);
+		var checklimits = checkCount(this.id);
+		var form = $("form#" + this.id);
+		var formdata = form.serialize();
+		if (checkinputs === true && checklimits === true) {
+			$(":input, :button").prop('disabled', true);
+			$.ajax({
+				type: "POST",
+				url: "auth.php",
+				data: formdata,
+				success: function (response) {
+					console.log(response);
+					if (response.includes("key") === true) {
+						window.location = response;
+					} else {
+						$(":input, :button").prop('disabled', false);
+						$("#login-error").html(response);
+						$("#login-error").fadeIn();
+						if (response === "Incorrect Password") {
+							$(".login-inputs").addClass("wrong-password");
+						}
+					}
+				},
+				error: function (data) {
+					$(":input, :button").prop('disabled', false);
+					$("#login-error").html("Error logging you in, please try again later.");
+					$("#login-error").fadeIn();
+				}
+			});
+		} else { // do nothing, the error messages are handled by another function
+			$(":input, :button").prop('disabled', false);
+			console.log("Required inputs are empty or an input is beyond it's character limit");
+		}
+		event.preventDefault();
+	});
+	$("#signup-form").on("submit", function (event) {
+		event.preventDefault();
+		$("#signup-error").fadeOut();
+		var checkinputs = checkInputs(this.id);
+		var checklimits = checkCount(this.id);
+		var form = $("form#" + this.id);
+		var formdata = form.serialize();
+		if (checkinputs === true && checklimits === true) {
+			$(":input, :button").prop('disabled', true);
+			$.ajax({
+				type: "POST",
+				url: "auth.php",
+				data: formdata,
+				success: function (response) {
+					$(":input, :button").prop('disabled', false);
+					if (response.includes("editor")) {
+						window.location = response;
+					} else {
+						$("#signup-error").html(response);
+						$("#signup-error").fadeIn();
+					}
+				},
+				error: function (data) {
+					$(":input, :button").prop('disabled', false);
+					$("#signup-error").html("Backend error creating your account.");
+					$("#signup-error").fadeIn();
+				}
+			});
+		} else { // do nothing, the error messages are handled by another function
+			console.log("Required inputs are empty or an input is beyond it's character limit");
+			$(":input, :button").prop('disabled', false);
+		}
+		event.preventDefault();
+	});
+	$("#user-settings-form").on("submit", function (event) {
+		var form = $("form#" + this.id);
+		var formdata = form.serialize();
+		event.preventDefault();
+		$("#settings-message").fadeOut();
+		$("#settings-message").attr('class', 'message');
+		$(":input, :button").prop('disabled', true);
+		var checkinputs = checkInputs(this.id);
+		var checklimits = checkCount(this.id);
+		if (checkinputs === true && checklimits === true) {
+			$(":input, :button").prop('disabled', true);
+			$.ajax({
+				type: "POST",
+				url: "auth.php",
+				data: formdata,
+				success: function (response) {
+					$(":input, :button").prop('disabled', false);
+					if (response === "saved") {
+						$("#username-title").html($("#username").val());
+						$("#settings-message").addClass("success");
+						$("#settings-message").html("Account changes saved!");
+						$("#settings-message").fadeIn();
+						setTimeout(function () {
+							$("#settings-message").fadeOut();
+						}, 3000);
+					} else {
+						$("#settings-message").addClass("error");
+						$("#settings-message").html(response);
+						$("#settings-message").fadeIn();
+					}
+				},
+				error: function (data) {
+					$(":input, :button").prop('disabled', false);
+					$("#settings-message").addClass("error");
+					$("#settings-message").html("Oops! There was an error saving your changes, please try again later.");
+					$("#settings-message").fadeIn();
+				}
+			});
+		} else { // do nothing, the error messages are handled by another function
+			console.log("Required inputs are empty or an input is beyond it's character limit");
+		}
+		event.preventDefault();
+	});
+	$("#forgot-password-form").on("submit", function (event) {
+		event.preventDefault();
+		$("#forgot-error").fadeOut();
+		var form = $("#forgot-password-form");
+		var formdata = form.serialize();
+		var account = $("#forgot-email").val();
+		if (account) {
+			$(":input, :button").prop('disabled', true);
+			$.ajax({
+				type: "POST",
+				url: "auth.php",
+				data: formdata,
+				success: function (response) {
+					$(":input, :button").prop('disabled', false);
+					if (response === "sent") {
+						$("#forgot-success").fadeIn();
+						$("#forgot-success").html("Awesome! A reset password link has been sent to your email address. Be sure to check your junk/spam folder.");
+					} else {
+						$("#forgot-error").html(response);
+						$("#forgot-error").fadeIn();
+					}
+				},
+				error: function (data) {
+					$(":input, :button").prop('disabled', false);
+					$("#forgot-error").html("Backend error sending the email. Please try again later.");
+					$("#forgot-error").fadeIn();
+				}
+			});
+		} else {
+			$("#forgot-error")("Please enter your email address.");
+			$("#forgot-error").fadeIn();
+		}
+	});
+	$("#reset-password-form").on("submit", function (event) {
+		event.preventDefault();
+		$("#reset-error").fadeOut();
+		var form = $("#reset-password-form");
+		var formdata = form.serialize();
+		var password = $("#password").val();
+		if (password) {
+			$(":input, :button").prop('disabled', true);
+			$.ajax({
+				type: "POST",
+				url: "/auth.php",
+				data: formdata,
+				success: function (response) {
+					$(":input, :button").prop('disabled', false);
+					if (response === "reset") {
+						window.location = '/login';
+					} else {
+						$("#reset-error").html(response);
+						$("#reset-error").fadeIn();
+					}
+				},
+				error: function (data) {
+					$(":input, :button").prop('disabled', false);
+					$("#reset-error").html("Backend error resetting your password. Please try again later.");
+					$("#reset-error").fadeIn();
+				}
+			});
+		} else {
+			$(":input, :button").prop('disabled', false);
+			$("#reset-error")("Please enter a new password.");
+			$("#reset-error").fadeIn();
+		}
+	});
+	$(".move").on('click', function (e) {
+		var token = "kDzZ2d4FRW";
+		$.ajax({
+			type: "POST",
+			url: "/api/v1/move",
+			data: {
+				token: token,
+				item_id: "IrX5DA73t1u3aOQyKnPM",
+				//folder_id: "WQApghH2pQs8O8JWNTUj"
+			},
+			success: function (response) {
+				$(":input, :button").prop('disabled', false);
+				alert("API response: " + JSON.stringify(response));
+			},
+			error: function (data) {
+				$(":input, :button").prop('disabled', false);
+				alert("error moving file");
+			}
+		});
+	});
+	$(".token").on('click', function (e) {
+		$.ajax({
+			type: "POST",
+			url: "/api/v1/token",
+			data: {
+				key: "19"
+			},
+			success: function (response) {
+				$(":input, :button").prop('disabled', false);
+				alert("API response: " + JSON.stringify(response));
+			},
+			error: function (data) {
+				$(":input, :button").prop('disabled', false);
+				alert("error getting token");
+			}
+		});
+	});
+	$(".save").on('click', function (e) {
+		var token = "kDzZ2d4FRW";
+		$.ajax({
+			type: "POST",
+			url: "/api/v1/save",
+			data: {
+				token: token,
+				id: "IrX5DA73t1u3aOQyKnPM",
+				contents: "text 'new contents'"
+			},
+			success: function (response) {
+				$(":input, :button").prop('disabled', false);
+				alert("API response: " + JSON.stringify(response));
+			},
+			error: function (data) {
+				$(":input, :button").prop('disabled', false);
+				alert("error saving");
+			}
+		});
+	});
+	$(".rename").on('click', function (e) {
+		var token = "kDzZ2d4FRW";
+		var name = prompt("Enter a new name for the file:");
+		if (name) {
+			$.ajax({
+				type: "POST",
+				url: "/api/v1/rename",
+				data: {
+					token: token,
+					id: "IrX5DA73t1u3aOQyKnPM",
+					name: name
+				},
+				success: function (response) {
+					$(":input, :button").prop('disabled', false);
+					alert("API response: " + JSON.stringify(response));
+				},
+				error: function (data) {
+					$(":input, :button").prop('disabled', false);
+					alert("error renaming");
+				}
+			});
+		}
+	});
+	$(".getlist, .upload-btn").on('click', function (e) {
+		var token = "kDzZ2d4FRW";
+		$.ajax({
+			type: "POST",
+			url: "/api/v1/list",
+			data: {
+				token: token
+			},
+			success: function (response) {
+				console.log(response);
+				$(":input, :button").prop('disabled', false);
+				alert("API response: " + JSON.stringify(response));
+			},
+			error: function (data) {
+				console.log("backend-error");
+				$(":input, :button").prop('disabled', false);
+				$("#files-error").html("Backend error resetting your password. Please try again later.");
+				$("#files-error").fadeIn();
+			}
+		});
+	});
+	$(".file").on('click', function (e) {
+		var token = "kDzZ2d4FRW";
+		$.ajax({
+			type: "POST",
+			url: "/api/v1/file",
+			data: {
+				token: token,
+				id: "IrX5DA73t1u3aOQyKnPM"
+			},
+			success: function (response) {
+				$(":input, :button").prop('disabled', false);
+				alert("API response: " + JSON.stringify(response));
+			},
+			error: function (data) {
+				$(":input, :button").prop('disabled', false);
+				$("#reset-error").html("Backend error resetting your password. Please try again later.");
+				$("#reset-error").fadeIn();
+			}
+		});
+	});
+	$(".delete-btn").on('click', function (e) {
+		$(":input, :button").prop('disabled', true);
+		var token = "kDzZ2d4FRW";
+		$.ajax({
+			type: "POST",
+			url: "/api/v1/delete",
+			data: {
+				token: token,
+				id: "uMAsNX6ktQ6ExIAqxoR2",
+				type: "folder"
+			},
+			success: function (response) {
+				$(":input, :button").prop('disabled', false);
+				alert("API response: " + JSON.stringify(response));
+			},
+			error: function (data) {
+				$(":input, :button").prop('disabled', false);
+				$("#reset-error").html("Backend error resetting your password. Please try again later.");
+				$("#reset-error").fadeIn();
+			}
+		});
+	});
+	$(".new-btn").on('click', function (e) {
+		var token = "kDzZ2d4FRW";
+		var filename = prompt("Enter a filename:");
+		if (filename) {
+			$(":input, :button").prop('disabled', true);
+			$.ajax({
+				type: "POST",
+				url: "/api/v1/create",
+				data: {
+					token: token,
+					name: filename,
+					type: "file",
+					contents: "@Color lightpurple\n@Icon wand"
+				},
+				success: function (response) {
+					$(":input, :button").prop('disabled', false);
+					alert("API response: " + JSON.stringify(response));
+				},
+				error: function (data) {
+					$(":input, :button").prop('disabled', false);
+					$("#reset-error").html("Backend error resetting your password. Please try again later.");
+					$("#reset-error").fadeIn();
+				}
+			});
+		} else {
+			showMessage("files-message", "You must enter a file name.", "error");
+		}
+	});
+	$(".newf-btn").on('click', function (e) {
+		var token = "kDzZ2d4FRW";
+		var foldername = prompt("Enter a folder name:");
+		if (foldername) {
+			$(":input, :button").prop('disabled', true);
+			$.ajax({
+				type: "POST",
+				url: "/api/v1/create",
+				data: {
+					token: token,
+					name: foldername,
+					type: "folder"
+				},
+				success: function (response) {
+					$(":input, :button").prop('disabled', false);
+					alert("API response: " + JSON.stringify(response));
+				},
+				error: function (data) {
+					$(":input, :button").prop('disabled', false);
+					$("#reset-error").html("Backend error resetting your password. Please try again later.");
+					$("#reset-error").fadeIn();
+				}
+			});
+		} else {
+			showMessage("files-message", "You must enter a folder name.", "error");
+		}
+	});
 });
 
 function showMessage(id, message, type, fade) {
@@ -413,74 +413,74 @@ function showMessage(id, message, type, fade) {
 }
 
 function confirmLogout() {
-    var r = confirm("Are you sure you want to sign out?");
-    if (r === true) window.location.href = '/logout';
+	var r = confirm("Are you sure you want to sign out?");
+	if (r === true) window.location.href = '/logout';
 }
 
 function checkInputs(id) {
-    var filled;
-    var extra;
-    if (id === "submission-form") {
-        var extra = "<p></p>";
-    }
-    $("form#" + id + " input, form#" + id + " textarea").each(function () {
-        if ($(this).attr('data-require') == 'true' && !$(this).val()) {
-            console.log("false");
-            $(this).addClass("require-input");
-            if (!$("#error-" + this.id).length) {
-                if (extra) {
-                    $(this).after(extra + "<br/><div class='require-error' id='error-" + this.id + "'>This field is required</div>");
-                } else {
-                    $(this).after("<br/><div class='require-error' id='error-" + this.id + "'>This field is required</div>");
-                }
-            } else {
-                $("#error-" + this.id).fadeIn();
-            }
-            // if (field_count === 0) {
-            // 	scrollOn(this.id);
-            // }
-            filled = "false";
-        } else {
-            console.log("true");
-            $(this).removeClass("require-input");
-            $("#error-" + this.id).fadeOut();
-            if (filled !== "false") {
-                filled = "true";
-            }
-        }
-        ++field_count;
-    });
-    console.log("all required inputs are filled: " + filled);
-    if (filled === "true") {
-        return true;
-    } else {
-        return false;
-    }
+	var filled;
+	var extra;
+	if (id === "submission-form") {
+		var extra = "<p></p>";
+	}
+	$("form#" + id + " input, form#" + id + " textarea").each(function () {
+		if ($(this).attr('data-require') == 'true' && !$(this).val()) {
+			console.log("false");
+			$(this).addClass("require-input");
+			if (!$("#error-" + this.id).length) {
+				if (extra) {
+					$(this).after(extra + "<br/><div class='require-error' id='error-" + this.id + "'>This field is required</div>");
+				} else {
+					$(this).after("<br/><div class='require-error' id='error-" + this.id + "'>This field is required</div>");
+				}
+			} else {
+				$("#error-" + this.id).fadeIn();
+			}
+			// if (field_count === 0) {
+			// 	scrollOn(this.id);
+			// }
+			filled = "false";
+		} else {
+			console.log("true");
+			$(this).removeClass("require-input");
+			$("#error-" + this.id).fadeOut();
+			if (filled !== "false") {
+				filled = "true";
+			}
+		}
+		++field_count;
+	});
+	console.log("all required inputs are filled: " + filled);
+	if (filled === "true") {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 function checkCount(id) {
-    var limited;
-    $("form#" + id + " input, form#" + id + " textarea").each(function () {
-        if ($(this).attr('data-limit') < $(this).val().length) {
-            var this_limit = $(this).attr('data-limit');
-            $(this).addClass("require-input");
-            if (!$("#error-limit" + this.id).length) {
-                $(this).after("<br/><div class='require-error' id='error-limit" + this.id + "'>Field must be under " + this_limit + " characters</div>");
-            } else {
-                $("#error-limit" + this.id).fadeIn();
-            }
-            limited = "false";
-        } else {
-            $(this).removeClass("require-input");
-            $("#error-limit" + this.id).fadeOut();
-            if (limited !== "false") {
-                limited = "true";
-            }
-        } // console.log("all inputs are under their character limits: " + limited);
-    });
-    if (limited === "true") {
-        return true;
-    } else {
-        return false;
-    }
+	var limited;
+	$("form#" + id + " input, form#" + id + " textarea").each(function () {
+		if ($(this).attr('data-limit') < $(this).val().length) {
+			var this_limit = $(this).attr('data-limit');
+			$(this).addClass("require-input");
+			if (!$("#error-limit" + this.id).length) {
+				$(this).after("<br/><div class='require-error' id='error-limit" + this.id + "'>Field must be under " + this_limit + " characters</div>");
+			} else {
+				$("#error-limit" + this.id).fadeIn();
+			}
+			limited = "false";
+		} else {
+			$(this).removeClass("require-input");
+			$("#error-limit" + this.id).fadeOut();
+			if (limited !== "false") {
+				limited = "true";
+			}
+		} // console.log("all inputs are under their character limits: " + limited);
+	});
+	if (limited === "true") {
+		return true;
+	} else {
+		return false;
+	}
 }

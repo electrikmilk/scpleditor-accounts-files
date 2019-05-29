@@ -1,22 +1,20 @@
 <?php
 if ( $page === "login" ) {
-    $title = "Login";
+	$title = "Login";
 } else if ( $page === "sign-up" ) {
-    $title = "Sign Up";
+	$title = "Sign Up";
 } else if ( $page === "forgot" ) {
-    $title = "Forgot Password";
+	$title = "Forgot Password";
 } else if ( $page === "reset" ) {
-    $title = "Reset Password";
+	$title = "Reset Password";
 } else if ( $page === "confirm" ) {
-    $title = "Email Confirmation";
+	$title = "Email Confirmation";
 } else if ( $page === "files" ) {
-    $title = "Files";
-} else if ( $page === "api" ) {
-    $title = "REST API Reference";
+	$title = "Files";
 }
 if ( !$nav_title )$nav_title = $title;
 if ( $title )echo "<title>$title - ScPL Editor</title>";
 else {
-    $nav_title = "Account Settings";
-    echo "<title>Account Settings - ScPL Editor</title>";
+	$nav_title = "Account Settings";
+	echo "<title>Account Settings - ScPL Editor</title>";
 }
