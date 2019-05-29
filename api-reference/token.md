@@ -1,6 +1,6 @@
 **Get Authentication Token**
 ----
-Send 'key' supplied by '?login_key=' from the accounts backend. Will return the actual token created when the user logged in or signed up that can be used to make requests to the REST API.
+Send a key given from the accounts backend. Will return the actual token created when the user logged in or signed up that can be used to make requests to the Files REST API.
 
 * **URL**
 
