@@ -19,7 +19,7 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
 
 * **Success Response:**
 
-     * **Code:** 200 <br />
+     * **Code:** 200 OK<br />
        **Content:** `{ "contents" : "ShowResult 'Hello ScPL'" }`
 
 * **Error Response:**
@@ -31,7 +31,7 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
 
      OR
 
-     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+     * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:**<br />
        `{ "status":"error", "message":"File file.scpl does not appear to exist." }`<br/>
        `{ "status":"error", "message":"Folder foldername does not appear to exist." }`<br/>
