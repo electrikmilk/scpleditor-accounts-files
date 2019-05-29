@@ -12,20 +12,37 @@ List of current users files (only owned by the user) in JSON format.
 
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._>
-
    **Required:**
 
-   `id=[integer]`
-
-   **Optional:**
-
-   `photo_id=[alphanumeric]`
+   `token=[alphanumeric]`
 
 * **Success Response:**
 
      * **Code:** 200 <br />
-       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
+       **Content:**<br/>
+       ```json
+       [{
+         "id":"n402n4uc84i20ehf73j8",
+         "type":"file",
+         "name":"File.scpl",
+         "size":"8 KB",
+         "timestamp":"2019-04-09 15:05:32",
+         "relativeTimestamp":"Today at 3:05 pm",
+         "updated":null,
+         "relativeUpdated":null
+        },
+        {
+         "id":"2ruc944hfkgutiy930du",
+         "type":"folder",
+         "name":"Folder",
+         "size":"0 bytes",
+         "contents":[ ],
+         "timestamp":"2019-04-09 15:05:32",
+         "relativeTimestamp":"Today at 3:05 pm",
+         "updated":null,
+         "relativeUpdated":null
+        }]
+```
 
 * **Error Response:**
 
