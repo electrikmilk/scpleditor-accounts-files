@@ -28,6 +28,7 @@ function getFiles( $path ) {
                 "type" => "file",
                 "name" => $name,
                 "size" => $size,
+                "collab" => $itemdata['collab'],
                 "timestamp" => $timestamp,
                 "updated" => $updated,
                 "relativeTimestamp" => $relative,
