@@ -21,7 +21,7 @@ Rename a file or folder specified by 'id'. 'name' is the new name of the file or
 * **Success Response:**
 
      * **Code:** 200 <br />
-       **Content:** `{ "name":"renamed file.scpl" }`
+       **Content:** `{ "name":"Renamed file.scpl" }`
 
 * **Error Response:**
 
