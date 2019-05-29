@@ -32,7 +32,11 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
      OR
 
      * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Internal database, file system, permission error or invalid file or folder ID." }`
+       **Content:**<br />
+       `{ "status":"error", "message":"File file.scpl does not appear to exist." }`<br/>
+       `{ "status":"error", "message":"Folder foldername does not appear to exist." }`<br/>
+       `{ "status":"error", "message":"You do not appear to own this file|folder or it has not been shared with you." }`<br/>
+       `{ "status":"error", "message":"Invalid file|folder ID." }`
 
 * **Sample Call:**
 
