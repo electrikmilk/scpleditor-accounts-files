@@ -109,7 +109,7 @@
 
     <?php
     } else {
-        if ( $page === "settings" || $page === "files" || $page === "api"  )header( "Location: /login" );
+        if ( $page === "settings" || $page === "files" )header( "Location: /login" );
         ?>
     <div class="external-form">
         <div>
