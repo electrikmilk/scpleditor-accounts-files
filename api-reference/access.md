@@ -25,10 +25,10 @@ Add collaborators to a file. This will give the selected collaborators read/writ
 
 * **Error Response:**
 
-* **Code:** 401 UNAUTHORIZED <br />
-  **Content:**<br/>
-  `{ "status":"error", "message":"No authentication token was received." }`<br/>
-  `{ "status":"error", "message":"Invalid authentication token." }`
+   * **Code:** 401 UNAUTHORIZED <br />
+    **Content:**<br/>
+    `{ "status":"error", "message":"No authentication token was received." }`<br/>
+    `{ "status":"error", "message":"Invalid authentication token." }`
 
   OR
 
