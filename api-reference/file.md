@@ -4,7 +4,7 @@ Get the contents of a file specified by 'id'. This endpoint is restricted to the
 
 * **URL**
 
-/file
+  /file
 
 * **Method:**
 
