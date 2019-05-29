@@ -40,7 +40,7 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
 
    * **Sample Call:**
 
-   ```javascript
+```javascript
        $.ajax({
          url: "https://account.scpl.dev/api/v1/copy",
          dataType: "json",
@@ -54,8 +54,8 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
            console.log(r);
          }
        });
-     ```
+```
 
-   * **Notes:**
+* **Notes:**
 
-     _No notes._
+_No notes._
