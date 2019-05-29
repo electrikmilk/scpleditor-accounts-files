@@ -4,11 +4,11 @@ Add collaborators to a file. This will give the selected collaborators read/writ
 
 * **URL**
 
-/access
+   /access
 
 * **Method:**
 
-`POST`
+   `POST`
 
 *  **URL Params**
 
