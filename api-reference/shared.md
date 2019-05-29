@@ -2,36 +2,37 @@
 ----
 Returns a JSON formatted list of files shared with the user. Currently only files may be shared until folder sharing is implemented. Current user has read/write access to returned files. However, current user may not delete, rename, copy, move or change access to any files shared with them.
 
-<_This may eventually be deprecated if files can be worked to double as a way to get files shared with the current user._>
-
 * **URL**
 
-/shared
+  /shared
 
 * **Method:**
-
-  <_The request type_>
 
   `POST`
 
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._>
-
    **Required:**
 
-   `id=[integer]`
+   `token=[alphanumeric]`
 
-   **Optional:**
-
-   `photo_id=[alphanumeric]`
-
-   * **Success Response:**
+* **Success Response:**
 
      * **Code:** 200 <br />
-       **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
-
-   * **Error Response:**
+       **Content:**<br/>
+       ```json
+       [{
+         "id":"n402n4uc84i20ehf73j8",
+         "type":"file",
+         "name":"Shared File.scpl",
+         "size":"8 KB",
+         "timestamp":"2019-04-09 15:05:32",
+         "relativeTimestamp":"Today at 3:05 pm",
+         "updated":null,
+         "relativeUpdated":null
+        }]
+        ```
+* **Error Response:**
 
    * **Code:** 401 UNAUTHORIZED <br />
      **Content:**<br/>
@@ -40,20 +41,18 @@ Returns a JSON formatted list of files shared with the user. Currently only file
 
      OR
 
-     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+   * **Code:** 503 SERVICE_UNAVAILABLE <br />
        **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
 
    * **Sample Call:**
 
    ```javascript
        $.ajax({
-         url: "https://account.scpl.dev/api/v1/access",
+         url: "https://account.scpl.dev/api/v1/shared",
          dataType: "json",
          type: "POST",
          date: {
-            token: "AUTH_TOKEN",
-            id: "FILE_ID"
-            users: "4356,3478"
+            token: "AUTH_TOKEN"
          },
          success : function(r) {
            console.log(r);
