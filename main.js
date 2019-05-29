@@ -462,11 +462,13 @@ function goPage(url, newtab) {
 }
 
 function listFiles() {
+	var query = $("#files-search").val();
 	$.ajax({
 		type: "POST",
 		url: "files.php",
 		data: {
-			action: "list"
+			action: "list",
+			query: query
 		},
 		success: function (response) {
 			$(".file-list").html(response);

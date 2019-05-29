@@ -173,12 +173,33 @@ function folderArray( $folder ) {
 	else return $folder_array;
 }
 
-function file_count( $directory ) {
-	$filecount = 0;
-	$files = glob( $directory . "*" );
-	if ( $files )$filecount = numberFormat( count( $files ) );
-	if ( $filecount !== 1 )$s = "s";
-	echo "$filecount file$s and folder$s";
+function count_dir($path){
+    $count['files'] = 0;
+    $count['folders'] = 0;
+    $dir = opendir($path);
+    while (($file = readdir($dir)) !== false) {
+        if($file != "." && $file != "..")  {
+            if(is_file($path."/".$file))
+                $count['files']++;
+            if(is_dir($path."/".$file)) {
+                $count['folders']++;
+                $counts = count_dir($path."/".$file);
+                $count['folders'] += $counts['folders'];
+                $count['files'] += $counts['files'];
+            }
+        }
+    }
+    closedir($dir);
+		$path = realpath($path);
+    $objects = new RecursiveIteratorIterator(
+        new RecursiveDirectoryIterator($path),
+        RecursiveIteratorIterator::SELF_FIRST
+    );
+		$count['total'] = numberFormat(iterator_count($objects));
+		$count['size'] = formatSize( filesize( $path ) );
+		$count['folders'] = numberFormat($count['folders']);
+		$count['files'] = numberFormat($count['files']);
+    return $count;
 }
 
 // Global array function

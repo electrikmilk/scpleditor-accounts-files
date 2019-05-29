@@ -673,6 +673,10 @@ div.spinner div.bar12 {
 	height: -moz-fill-available;
 	height: fill-available;
 }
+.file-list .spinner {
+	margin: 25vh 50%;
+	opacity: .5;
+}
 .file-btn {
 	font-size: 15px;
 	padding: 20px 30px;
@@ -890,4 +894,14 @@ div.spinner div.bar12 {
 	padding: 3px 5px;
 	display: inline-block;
 	margin: 5px 0;
+}
+/* Files Context Menu */
+.context-menu {
+
+}
+.context-menu ul {
+
+}
+.context-menu ul li {
+
 }
