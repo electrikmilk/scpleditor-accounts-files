@@ -23,7 +23,7 @@ Move a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
 
   * **Success Response:**
 
-     * **Code:** 200 <br />
+     * **Code:** 200 OK <br />
        **Content:** `{ "status" : "success", "message":"File file.scpl has been moved to foldername|root." }`
 
    * **Error Response:**
@@ -35,7 +35,7 @@ Move a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
 
      OR
 
-     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+     * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:**<br/>
        `{ "status":"error", "message":"Internal database error moving file file.scpl." }`<br/>
        `{ "status":"error", "message":"Internal database error moving folder foldername." }`<br/>
