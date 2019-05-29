@@ -33,7 +33,12 @@ Rename a file or folder specified by 'id'. 'name' is the new name of the file or
      OR
 
     * **Code:** 503 SERVICE_UNAVAILABLE <br />
-       **Content:** `{ "status":"error", "message":"Permission errors, invalid file ID" }`
+       **Content:**<br/>
+       `{ "status":"error", "message":"There was an internal error renaming file.scpl." }`<br/>
+       `{ "status":"error", "message":"There was a database error renaming file.scpl." }`<br/>
+       `{ "status":"error", "message":"File|Folder does not appear to exist." }`<br/>
+       `{ "status":"error", "message":"You do not appear to own that file|folder" }`<br/>
+       `{ "status":"error", "message":"Invalid file|folder ID" }`
 
 * **Sample Call:**
 
