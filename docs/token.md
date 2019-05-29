@@ -18,12 +18,12 @@ Send a key given from the accounts backend. Will return the actual token created
 
 * **Success Response:**
 
-     * **Code:** 200 <br />
+     * **Code:** 200 OK <br />
        **Content:** `{ "token":"10Em39Vn58f7" }`
 
 * **Error Response:**
 
-   * **Code:** 503 SERVICE_UNAVAILABLE <br />
+   * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:**<br/>
        `{ "status":"error", "message":"No key was received." }`<br/>
        `{ "status":"error", "message":"Invalid token key." }`
