@@ -64,4 +64,4 @@ No need to send 'name' with '.scpl' at the end, this endpoint will add it for yo
 
    * **Notes:**
 
-     _No notes._
+     This endpoint returns the new name of the file because it removes any special characters from the file name for you.
