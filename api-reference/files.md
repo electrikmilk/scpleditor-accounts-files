@@ -60,13 +60,11 @@ List of current users files (only owned by the user) in JSON format.
 
 ```javascript
        $.ajax({
-         url: "https://account.scpl.dev/api/v1/access",
+         url: "https://account.scpl.dev/api/v1/files",
          dataType: "json",
          type: "POST",
          date: {
-            token: "AUTH_TOKEN",
-            id: "FILE_ID"
-            users: "4356,3478"
+            token: "AUTH_TOKEN"
          },
          success : function(r) {
            console.log(r);
