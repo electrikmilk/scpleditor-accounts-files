@@ -4,7 +4,7 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
 
 * **URL**
 
-/delete
+  /delete
 
 * **Method:**
 
@@ -12,22 +12,18 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
 
 *  **URL Params**
 
-   <_If URL params exist, specify them in accordance with name mentioned in URL section. Separate into optional and required. Document data constraints._>
-
    **Required:**
 
-   `id=[integer]`
+   `token=[alphanumeric]`<br/>
+   `type=[file|folder]`<br/>
+   `id=[alphanumeric]`
 
-   **Optional:**
+* **Success Response:**
 
-   `photo_id=[alphanumeric]`
-
-   * **Success Response:**
-
-     * **Code:** 200 <br />
+    * **Code:** 200 <br />
        **Content:** `{ "status" : "success", "message":"Collaborators were set for file.scpl" }`
 
-   * **Error Response:**
+* **Error Response:**
 
    * **Code:** 401 UNAUTHORIZED <br />
      **Content:**<br/>
@@ -36,10 +32,10 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
 
      OR
 
-     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+    * **Code:** 503 SERVICE_UNAVAILABLE <br />
        **Content:** `{ "status":"error", "message":"Internal database, file system, permission error or invalid file or folder ID." }`
 
-   * **Sample Call:**
+* **Sample Call:**
 
    ```javascript
        $.ajax({
