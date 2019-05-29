@@ -23,7 +23,7 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
 
   * **Success Response:**
 
-     * **Code:** 200 <br />
+     * **Code:** 200 OK <br />
        **Content:** `{ "status" : "success", "message":"File file.scpl has been copied to folder." }`
 
    * **Error Response:**
@@ -35,7 +35,7 @@ Copy a file or folder set by 'item_id' to a folder set by 'folder_id'. If no 'fo
 
      OR
 
-     * **Code:** 503 SERVICE_UNAVAILABLE <br />
+     * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:**<br/>
        `{ "status":"error", "message":"Internal database error creating a copy of file.scpl." }`<br/>
        `{ "status":"error", "message":"Internal database error creating a copy of foldername." }`<br/>
