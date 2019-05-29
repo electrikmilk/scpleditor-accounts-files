@@ -21,7 +21,7 @@ Includes user ID for sending to the 'access' endpoint for the owner of a file to
    `token=[alphanumeric]`<br/>
    `query=[string]`
 
-   * **Success Response:**
+* **Success Response:**
 
     * **Code:** 200 <br />
        **Content:** `[{ "id":"1050", "username":"ScPLUser" },{ "id":"2480", "username":"AnotherScPLUser" }]`
