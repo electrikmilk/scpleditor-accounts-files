@@ -1,6 +1,6 @@
 **Get list of users files**
 ----
-Get a list of current users files (only owned by the user).
+Get a list of current users files (only owned by the current user).
 
 * **URL**
 
