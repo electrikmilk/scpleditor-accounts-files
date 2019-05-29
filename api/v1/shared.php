@@ -33,7 +33,7 @@ while ( $file = mysqli_fetch_array( $shared_files ) ) {
     }
 }
 if ( count( $files ) === 0 ) {
-    else echo json_response( "error", "No files are shared with this user." );
+    else echo json_response( "error", "No files have been shared with this user." );
     http_response_code(404);
 } else {
     echo json_encode( $files );
