@@ -902,7 +902,6 @@ div.spinner div.bar12 {
 	padding-left: 1px;
 	background-color: #fff;
 	border-radius: 5px;
-	margin-top: 16px;
 	box-shadow: 0 3px 10px rgba(100, 100, 100, 0.3);
 	min-width: 230px;
 	border: 0.5px solid #c7c7cc;
@@ -915,13 +914,36 @@ div.spinner div.bar12 {
 }
 .context-menu ul li {
 	display: block;
-	padding: 8px 15px;
+	padding: 10px 15px;
 	font-size: 14px;
 	text-decoration: none;
 	transition: 0.2s all;
 	color: #1d1d1c;
+	font-weight: 500;
 	user-select: none;
+	background: 13px center / 20px no-repeat;
+	padding-left: 45px;
+}
+.context-menu ul li.context-disabled {
+	opacity: .5;
+	pointer-events: none;
 }
 .context-menu ul li:hover {
-	background: #e8f6fe;
+	background-image: #e8f6fe;
+}
+#rename-action {
+	background-image: url(img/rename.svg);
+}
+#share-action {
+	background-image: url(img/share.svg);
+}
+#copy-action {
+	background-image: url(img/copy.svg);
+}
+#delete-action {
+	color: #d74c39;
+	background-image: url(img/delete.svg);
+}
+#delete-action:hover {
+	background-color: #d74c3910 !important;
 }

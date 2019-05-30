@@ -1,6 +1,8 @@
 <?php
 $account = dataArray("users",$id,"id");
 $count = count_dir("files/$id");
+if($count['files'] !== 1)$s="s";
+if($count['folders'] !== 1)$fs="s";
 ?>
 <div class="message" id="files-message" style="display: none;"></div>
 <?php if($account['status'] === "0") echo "<div class='message warning'>Your account has not yet been activated. Please check your email. Be sure to check your junk/spam folder.</div>"; ?>
@@ -13,7 +15,7 @@ $(function () {
 
 <h1>Files</h1>
 <p class="subtext" id="files-info">
-	<?php echo $count['files']." files ".$count['folders']." folders. (".$count['size'].")"; ?>
+	<?php echo $count['files']." file$s ".$count['folders']." folder$fs (".$count['size'].")"; ?>
 </p>
 <br/>
 <hr/>

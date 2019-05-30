@@ -2,6 +2,8 @@
 $account = dataArray( "users", $id, "id" );
 $count = count_dir("files/$id");
 if ( $account[ 'status' ] === "0" )echo "<div class='message warning'>Your account has not yet been activated. Please check your email. Be sure to check your junk/spam folder.</div>";
+if($count['files'] !== 1)$s="s";
+if($count['folders'] !== 1)$fs="s";
 ?>
 
 <div class="message" id="settings-message" style="display: none;"></div>
@@ -11,10 +13,10 @@ if ( $account[ 'status' ] === "0" )echo "<div class='message warning'>Your accou
 <h3 id="username-title">
 	<?php echo $account['username']; ?>
 </h3>
-<p class="subtext">Account created
-	<?php echo timeago($account['timestamp']).", last updated ".timeago($account['updated'],true)."."; ?>
+<p class="subtext">
+	<?php echo "Account created ".timeago($account['timestamp']).", last updated ".timeago($account['updated'],true)."."; ?>
 </p>
-<?php echo "<p>".$count['size']." for ".$count['files']." files ".$count['folders']." folders.</p>"; ?>
+<?php echo "<p>".$count['files']." file$s ".$count['folders']." folder$fs (".$count['size'].")</p>"; ?>
 
 <hr/>
 

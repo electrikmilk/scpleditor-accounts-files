@@ -52,7 +52,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			echo "<div class='context-menu'>
 				<ul>
 					<li id='rename-action'>Rename</li>
-					<li class='context-disabled'>Share with...</li>
+					<li class='context-disabled' id='share-action'>Share with...</li>
 					<li id='copy-action'>Copy</li>
 					<li id='delete-action'>Delete</li>
 				</div>
