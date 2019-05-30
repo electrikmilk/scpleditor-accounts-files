@@ -58,7 +58,7 @@
 							</li>
 						</a>
 						<?php
-						if ( !$ismobile ) {
+						if ( !$ismobile && $_SESSION['user_id'] === "1010") {
 							?>
 						<a href="/filebrowser">
 							<li class="file-icon">
