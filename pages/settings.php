@@ -39,7 +39,7 @@ if($count['folders'] !== 1)$fs="s";
 		</div>
 	</div>
 	<div class="form-field">
-		<div>Password</div>
+		<div><br/>Password</div>
 		<div><br/><a href='/forgot-password'>Reset my password</a>
 		</div>
 	</div>

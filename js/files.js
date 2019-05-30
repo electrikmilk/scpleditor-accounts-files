@@ -13,7 +13,10 @@ $(document).ready(function() {
     }
   $(".file-list ul li").contextmenu(function() {
     itemid = this.id;
-    $(".context-menu").show();
+    $(".context-menu").slideDown({
+			duration: 500,
+			easing: "easeInOutQuart"
+		});
     $(".context-menu").css('top',mouseY(event) + 'px');
     $(".context-menu").css('left',mouseX(event) + 'px');
     window.event.returnValue = false;
@@ -23,10 +26,10 @@ $(document).ready(function() {
         });
         $(".list-item-file").dblclick(function () {
           var id = this.id.replace("file-","");
-        goPage("https://editor.scpl.dev/?file="+id,true)
+        goPage("https://editor.scpl.dev/?file="+id,true);
               });
   $( ".file-list ul li" ).sortable({
-        connectWith : ".file-list ul li"
+        connectWith : ".file-list"
       });
   $(".move").on('click', function (e) {
 		var token = "kDzZ2d4FRW";
@@ -55,6 +58,7 @@ $(document).ready(function() {
       var id = split[1];
       var r = confirm("Are you sure you want to delete this "+type+"?");
       if(r === true) {
+        $("#"+itemid).addClass("loading");
         $(":input, :button").prop('disabled', true);
         $.ajax({
           type: "POST",
@@ -90,6 +94,7 @@ $(document).ready(function() {
       var type = split[0];
       var id = split[1];
       if(newname) {
+        $("#"+itemid).addClass("loading");
         $(":input, :button").prop('disabled', true);
         $.ajax({
           type: "POST",
@@ -120,7 +125,10 @@ $(document).ready(function() {
 });
 
 $(document).bind("click", function(event) {
-    $(".context-menu").hide();
+    $(".context-menu").fadeOut({
+      duration: 500,
+			easing: "easeInOutQuart"
+    });
 });
 
 function mouseX(evt) {
@@ -145,4 +153,70 @@ function mouseY(evt) {
     } else {
         return null;
     }
+}
+
+function newFile() {
+	showMessage("files-message",false);
+	var filename = prompt("Enter a filename:");
+	if (filename) {
+		$(":input, :button").prop('disabled', true);
+		$.ajax({
+			type: "POST",
+			url: "files.php",
+			data: {
+				action: "create",
+				name: filename,
+				type: "file",
+				contents: "@Color lightpurple\n@Icon wand"
+			},
+			success: function (response) {
+				$(":input, :button").prop('disabled', false);
+				console.log(response);
+				if(response.includes(".scpl")) {
+					listFiles();
+					showMessage("files-message",true, "Created file "+filename+".", "success");
+				} else {
+					showMessage("files-message",true, response, "error");
+				}
+			},
+			error: function (data) {
+				$(":input, :button").prop('disabled', false);
+				showMessage("files-message",true, "There was a backend error creating the file.", "error");
+			}
+		});
+	} else {
+		showMessage("files-message", true, "You must enter a file name.", "error");
+	}
+}
+
+function newFolder() {
+	showMessage("files-message",false);
+	var foldername = prompt("Enter a folder name:");
+	if (foldername) {
+		$(":input, :button").prop('disabled', true);
+		$.ajax({
+			type: "POST",
+			url: "files.php",
+			data: {
+				action: "create",
+				name: foldername,
+				type: "folder"
+			},
+			success: function (response) {
+				$(":input, :button").prop('disabled', false);
+				if(response.includes(".")) {
+          showMessage("files-message",true, response, "error");
+        } else {
+          listFiles();
+  				showMessage("files-message",true, "Created folder "+foldername+".", "success");
+        }
+			},
+			error: function (data) {
+				$(":input, :button").prop('disabled', false);
+				showMessage("files-message",true, "There was a backend error creating the folder.", "error");
+			}
+		});
+	} else {
+		showMessage("files-message", true,"You must enter a folder name.", "error");
+	}
 }

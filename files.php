@@ -30,7 +30,7 @@ function getFiles( $path, $query = null ) {
 				$files .= "<li class='list-item-file' id='file-$fid' data-name='$name'><div class='item-name'>$load$name</div></li>";
 			} else {
 				$contents = getFiles( $path );
-				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name'><div class='item-name'>$load$name</div><ul>$contents</ul></li>";
+				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name'><div class='item-name'>$load$name</div><ul id='dir-$fid'>$contents</ul></li>";
 			}
 		}
 	}
@@ -48,7 +48,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 		if ( $files === false ) {
 			echo "No files.";
 		} else {
-			echo "<ul>" . getFiles( "files/$id", $_POST['query'] ) . "</ul>";
+			echo "<ul id='root'>" . getFiles( "files/$id", $_POST['query'] ) . "</ul>";
 			echo "<div class='context-menu'>
 				<ul>
 					<li id='rename-action'>Rename</li>
@@ -65,8 +65,8 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 		if ( $type === "file" )$name = e( special( str_replace( ".scpl", "", $_POST[ 'name' ] ) ) ) . ".scpl";
 		else $name = e( special( str_replace( ".scpl", "", $_POST[ 'name' ] ) ) );
 		if ( !$name || !$type ) {
-			if ( !$name )echo json_response( "error", "No item name was recieved." );
-			else if ( !$type )echo json_response( "error", "No item type was recieved." );
+			if ( !$name )echo "No item name was recieved.";
+			else if ( !$type )echo "No item type was recieved.";
 		} else {
 			$file_check = mysqli_query( $connect, "select * from data.files where name = '$name' and type = '$type'" );
 			if ( mysqli_num_rows( $file_check ) === 0 ) {
@@ -74,19 +74,17 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				if ( mysqli_query( $connect, "insert into data.files (id,name,type,author) values ('" . $file_id . "','" . $name . "','$type','$id')" ) ) {
 					if ( $type === "file" ) {
 						if ( file_put_contents( "files/$id/$name", $contents ) !== false ) {
-							$newfile = array( "id" => $file_id, "name" => $name );
-							echo json_encode( $newfile );
-							http_response_code( 200 );
-						} else echo json_response( "error", "Internal file system error creating file $name." );
+							echo $name;
+						} else echo "Internal file system error creating file $name.";
 					} else {
 						if ( makeFolder( "files/$id/$name" ) ) {
 							$newfile = array( "id" => $file_id, "name" => $name );
 							echo json_encode( $newfile );
 							http_response_code( 200 );
-						} else echo json_response( "error", "Internal file system error creating folder $name." );
+						} else echo "Internal file system error creating folder $name.";
 					}
-				} else echo json_response( "error", "Internal database error creating file $name." );
-			} else echo json_response( "error", "File with name $name already exists." );
+				} else echo "Internal database error creating file $name.";
+			} else echo "File with name $name already exists.";
 		}
 	}
 	if($action === "rename") {

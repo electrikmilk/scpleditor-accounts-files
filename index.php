@@ -10,8 +10,8 @@
 	<?php include("metadata.php"); ?>
 
 	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
+	<script type="text/javascript" src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script type="text/javascript" src="/js/main.js"></script>
-	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<link rel="stylesheet" href="/main.css"/>
 
@@ -48,21 +48,21 @@
 		<div class="main-container">
 			<div class="side-navigation">
 				<div class="navigation-subhead">
-					<div>Account</div>
+					<div>Settings</div>
 				</div>
 				<div class="menu-container">
 					<ul>
 						<a href="/settings">
-							<li class="gear-icon">
-								<div>Account Settings</div>
+							<li class="profile-icon">
+								<div>Account</div>
 							</li>
 						</a>
 						<?php
-						if ( $_SESSION[ 'user_id' ] === "1010" ) {
+						if ( !$ismobile ) {
 							?>
 						<a href="/filebrowser">
 							<li class="file-icon">
-								<div>Your Files</div>
+								<div>Files</div>
 							</li>
 						</a>
 						<?php
@@ -70,7 +70,7 @@
 						?>
 						<a href="https://editor.scpl.dev/" target="_blank" rel="noopener">
 							<li class="editor-icon">
-								<div>Open Editor</div>
+								<div>Editor</div>
 							</li>
 						</a>
 						<a href="javascript:;" onclick="confirmLogout();">
