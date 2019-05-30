@@ -10,7 +10,8 @@
 	<?php include("metadata.php"); ?>
 
 	<script type="text/javascript" src="//code.jquery.com/jquery-latest.js"></script>
-	<script type="text/javascript" src="/main.js"></script>
+	<script type="text/javascript" src="/js/main.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<link rel="stylesheet" href="/main.css"/>
 

@@ -897,11 +897,31 @@ div.spinner div.bar12 {
 }
 /* Files Context Menu */
 .context-menu {
-
+	position: absolute;
+	padding: 10px 0;
+	padding-left: 1px;
+	background-color: #fff;
+	border-radius: 5px;
+	margin-top: 16px;
+	box-shadow: 0 3px 10px rgba(100, 100, 100, 0.3);
+	min-width: 230px;
+	border: 0.5px solid #c7c7cc;
+	display: none;
 }
 .context-menu ul {
-
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
 }
 .context-menu ul li {
-
+	display: block;
+	padding: 8px 15px;
+	font-size: 14px;
+	text-decoration: none;
+	transition: 0.2s all;
+	color: #1d1d1c;
+	user-select: none;
+}
+.context-menu ul li:hover {
+	background: #e8f6fe;
 }

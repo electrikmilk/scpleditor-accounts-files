@@ -42,11 +42,3 @@ $(function () {
 		<div class='bar12'></div>
 	</div>
 </div>
-<div class="context-menu">
-<ul>
-	<li>Rename</li>
-	<li class="context-disabled">Share with...</li>
-	<li>Copy</li>
-	<li>Delete</li>
-</div>
-<script type="text/javascript" src="files.js"></script>

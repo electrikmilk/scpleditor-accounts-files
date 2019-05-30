@@ -27,10 +27,10 @@ function getFiles( $path, $query = null ) {
 		$path = "files/$id$path";
 		if(!$query || stripos($name,$query) !== false) {
 			if ( is_dir( $path ) === false ) {
-				$files .= "<li class='list-item-file' id='file-$fid'><div class='item-name'>$load$name</div></li>";
+				$files .= "<li class='list-item-file' id='file-$fid' data-name='$name'><div class='item-name'>$load$name</div></li>";
 			} else {
 				$contents = getFiles( $path );
-				$files .= "<li class='list-item-folder' id='file-$fid'><div class='item-name'>$load$name</div><ul>$contents</ul></li>";
+				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name'><div class='item-name'>$load$name</div><ul>$contents</ul></li>";
 			}
 		}
 	}
@@ -42,12 +42,21 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 	$this->output->set_status_header( 400, 'No Remote Access Allowed' );
 	exit; //just for good measure
 } else if ( $_SESSION ) {
+	echo '<script type="text/javascript" src="/js/files.js"></script>';
 	if ( $action === "list" ) {
 		$user_files = folderArray( "files/$id" );
 		if ( $files === false ) {
 			echo "No files.";
 		} else {
 			echo "<ul>" . getFiles( "files/$id", $_POST['query'] ) . "</ul>";
+			echo "<div class='context-menu'>
+				<ul>
+					<li id='rename-action'>Rename</li>
+					<li class='context-disabled'>Share with...</li>
+					<li id='copy-action'>Copy</li>
+					<li id='delete-action'>Delete</li>
+				</div>
+			</div>";
 		}
 	}
 	if ( $action === "create" ) {
@@ -78,6 +87,103 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					}
 				} else echo json_response( "error", "Internal database error creating file $name." );
 			} else echo json_response( "error", "File with name $name already exists." );
+		}
+	}
+	if($action === "rename") {
+		$item_id = $_POST[ 'id' ];
+		$new_name = $_POST[ 'name' ];
+		if ( !$item_id || !$new_name ) {
+			if ( !$item_id )echo "No item id was recieved.";
+			else echo "No new name for the file was recieved.";
+		} else {
+			$itemdata = dataArray( "files", $item_id, "id" );
+			if ( $itemdata ) {
+				$owner = $itemdata[ 'author' ];
+				$type = ucfirst( $itemdata[ 'type' ] );
+				$itemtype = $itemdata[ 'type' ];
+				if ( $owner === $id ) {
+					if ( $itemdata[ 'type' ] === "file" )$new_name = e( special( str_replace( ".scpl", "",  $_POST[ 'name' ] ) ) ) . ".scpl";
+					else $new_name = e( special( str_replace( ".scpl", "",  $_POST[ 'name' ] ) ) );
+					$name = $itemdata[ 'name' ];
+					if ( $itemdata[ 'path' ] )$itempath = $itemdata[ 'path' ] . "/";
+					$path = "files/$id/$itempath$name";
+					$newpath = str_replace( $name, $new_name, $path );
+					if ( file_exists( $path ) ) {
+						if ( mysqli_query( $connect, "update data.files set name = '$new_name' where id = '$item_id'" ) ) {
+							if ( rename( $path, $newpath ) ) {
+								echo "Renamed $name to $new_name";
+							} else echo "There was an internal file system error renaming $name.";
+						} else echo "There was an internal file system error renaming $name.";
+					} else echo "$type does not appear to exist.";
+				} else echo "You do not appear to own that $itemtype.";
+			} else echo "Invalid $itemtype ID.";
+		}
+	}
+	if($action === "delete") {
+		$file_id = $_POST[ 'id' ];
+		$type = $_POST[ 'type' ];
+		if ( !$file_id ) {
+			echo "No item id was recieved.";
+		} else {
+			$itemdata = dataArray( "files", $file_id, "id" );
+			if ( $itemdata ) {
+				$owner = $itemdata[ 'author' ];
+				if ( $owner === $id ) {
+					$name = $itemdata[ 'name' ];
+					$type = ucfirst( $itemdata[ 'type' ] );
+					$itemtype = $itemdata[ 'type' ];
+					if ( $itemdata[ 'path' ] )$itempath = $itemdata[ 'path' ] . "/";
+					$path = "files/$id/$itempath$name";
+					if ( file_exists( $path ) ) {
+						if ( mysqli_query( $connect, "delete from data.files where id = '" . $file_id . "'" ) ) {
+							if ( $itemtype === "file" ) {
+								if ( unlink( $path ) ) echo "File $name was deleted.";
+								else echo "There was an internal file system error deleting file $name.";
+							} else {
+								if ( deleteDir( $path ) )echo "Folder $name was deleted.";
+								else echo "There was an internal file system error deleting folder $name.";
+							}
+						} else echo "There was a internal database error deleting $itemtype $name.";
+					} else echo "$type does not appear to exist.";
+				} else echo "You do not appear to own that $itemtype.";
+			} else echo "Invalid $itemtype ID.";
+		}
+	}
+	if($action === "copy") {
+		$item_id = $_POST[ 'item_id' ];
+		$folder_id = $_POST[ 'folder_id' ];
+		if ( !$item_id ) {
+			echo json_response( "error", "No 'item_id' was recieved." );
+		} else {
+			$itemdata = dataArray( "files", $item_id, "id" );
+			if ( $itemdata ) {
+				$owner = $itemdata[ 'author' ];
+				if ( $owner === $id ) {
+					$item = $itemdata[ 'name' ];
+					$itemtype = $itemdata[ 'type' ];
+					$type = ucfirst( $itemdata[ 'type' ] );
+					if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
+					$oldpath = "files/$id/$filepath$item";
+					if ( $folder_id ) {
+						$folderdata = dataArray( "files", $folder_id, "id" );
+						if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
+						$path = "files/$id/$folderpath" . $folderdata[ 'name' ] . "/$item";
+						$folder_name = $folderdata[ 'name' ];
+						$db_path = "$folderpath" . $folderdata[ 'name' ];
+					} else {
+						$folder_name = "root";
+						$path = "files/$id/$item";
+						$db_path = "";
+					}
+					if ( file_exists( $oldpath ) ) {
+						if ( copy( $oldpath, $path ) === true ) {
+							$file_id = randString( 20 );
+							if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $item . "','$itemtype','" . $path . "','$id')" ) )echo json_response( "success", "$type $item has been copied to $folder_name." );
+							else echo json_response( "error", "Internal database error creating a copy of $item." );
+						} else echo json_response( "error", "Internal file system error copying $item to $folder_name." );
+					} else echo json_response( "error", "$type $item does not appear to exist." );
+				} else echo json_response( "error", "You do not appear to own that $itemtype." );
+			} else echo json_response( "error", "Invalid $itemtype ID." );
 		}
 	}
 } else echo "user is logged out";
