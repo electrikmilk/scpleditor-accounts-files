@@ -1,4 +1,5 @@
 var field_count = 0;
+var load = "<div class='spinner'><div class='bar1'/><div class='bar2'/><div class='bar3'/><div class='bar4'/><div class='bar5'/><div class='bar6'/><div class='bar7'/><div class='bar8'/><div class='bar9'/><div class='bar10'/><div class='bar11'/><div class='bar12'/></div>";
 
 $(function () {
 	$(".nav-menu").on('click', function (e) {
@@ -23,7 +24,6 @@ $(function () {
 		}
 		$("#limit-" + this.id).html(thislength + " / " + limit + " character limit");
 	});
-
 	// Sign up / login
 	$("#login-form").on("submit", function (event) {
 		event.preventDefault();
@@ -320,6 +320,7 @@ function goPage(url, newtab) {
 
 function listFiles() {
 	var query = $("#files-search").val();
+	$(".file-list").html(load);
 	$.ajax({
 		type: "POST",
 		url: "files.php",

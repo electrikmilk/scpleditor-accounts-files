@@ -37,6 +37,25 @@
 
 	if ( $_SESSION ) {
 		?>
+		<div class="modals-container">
+
+<div class="modal" id="share-dialog">
+<h2>Share ScPL file</h2>
+<p>Search below for users to add as collaborators to this file. Keep in mind users you add as collaborators will be able to open and save changes to this file, but they will not be allowed to delete, rename or change access to this file.</p>
+<input type="search" id="users-search" class="search-input width-stretch" placeholder="Search Users" onchange="listUsers();" onkeyup="listUsers();" onblur="listUsers();" />
+<div class="users-list"></div>
+<div class="navigation-subhead">
+	<div>Currently shared with...</div>
+</div>
+<div class="collab-list"></div>
+<input type="hidden" id="file-collab"/>
+<div class="btn-group">
+	<button type="submit" class="modal-btn primary-btn">Change Access</button>
+	<button type="submit" class="modal-btn" onclick="modal('share-dialog');">Cancel</button>
+</div>
+</div>
+
+		</div>
 	<div class="config-container">
 		<div class="main-navigation">
 			<div class="nav-menu"></div>
@@ -82,7 +101,7 @@
 				</div>
 
 				<div class="navigation-subhead">
-					<div>Documentation</div>
+					<div>Help</div>
 				</div>
 				<div class="menu-container">
 					<ul>
@@ -94,6 +113,16 @@
 						<a href="https://docs.scpl.dev/" target="_blank" rel="noopener">
 							<li class="web-icon">
 								<div>ScPL Documentation</div>
+							</li>
+						</a>
+						<a href="https://github.com/internetgho5t/scpleditor-accounts-files" target="_blank" rel="noopener">
+							<li class="web-icon">
+								<div>Github</div>
+							</li>
+						</a>
+						<a href="https://discord.gg/2qqfFKc" target="_blank" rel="noopener">
+							<li class="web-icon">
+								<div>Discord</div>
 							</li>
 						</a>
 					</ul>

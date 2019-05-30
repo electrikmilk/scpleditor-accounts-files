@@ -52,8 +52,8 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			echo "<div class='context-menu'>
 				<ul>
 					<li id='rename-action'>Rename</li>
-					<li class='context-disabled' id='share-action'>Share with...</li>
 					<li class='context-disabled' id='copy-action'>Copy</li>
+					<li class='context-disabled' id='share-action'>Share with...</li>
 					<li id='delete-action'>Delete</li>
 				</div>
 			</div>";
@@ -184,4 +184,15 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			} else echo json_response( "error", "Invalid $itemtype ID." );
 		}
 	}
-} else echo "user is logged out";
+	if($action === "users") {
+		$query = $_POST[ 'query' ];
+		if ( !$query ) {
+			echo "<div class='empty-list'>Enter a query</div>";
+		} else {
+			$users = mysqli_query( $connect, "select * from data.users where username like '%$query%' order by username asc limit 50" );
+			while ( $user = mysqli_fetch_array( $users ) ) {
+				echo "<div class='user' id='".$user['id']."'>".$user['username']."</div>";
+			}
+		}
+	}
+} else echo "Logged out";

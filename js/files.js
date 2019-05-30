@@ -220,3 +220,71 @@ function newFolder() {
 		showMessage("files-message", true,"You must enter a folder name.", "error");
 	}
 }
+
+function changeAccess(id) {
+  $.ajax({
+		type: "POST",
+		url: "files.php",
+		data: {
+			action: "collab",
+			id: id
+		},
+		success: function (response) {
+			$(".users-list").html(response);
+			$(":input, :button").prop('disabled', false);
+      $(".users-list .user").on('click', function (e) {
+        var user = $(this).html();
+        var collab = $("#file-collab").val();
+        var id = this.id;
+        if(!collab.includes(id)) {
+          if(collab !== "") {
+            $("#file-collab").val(collab+","+id);
+          } else {
+            $("#file-collab").val(id);
+          }
+          $(".collab-list").append("<div class='file-collaborator'><div>"+user+"</div><div class='collab-close'>&times;</div></div>");
+        }
+      });
+		},
+		error: function (data) {
+      $(".users-list").html("<div class='empty-list'>Error loading list.</div>");
+			$(":input, :button").prop('disabled', false);
+			showMessage("files-message",false, "There was an error loading user list.", "error");
+		}
+	});
+}
+
+function listUsers() {
+	var query = $("#users-search").val();
+	$(".users-list").html(load);
+	$.ajax({
+		type: "POST",
+		url: "files.php",
+		data: {
+			action: "users",
+			query: query
+		},
+		success: function (response) {
+			$(".users-list").html(response);
+			$(":input, :button").prop('disabled', false);
+      $(".users-list .user").on('click', function (e) {
+        var user = $(this).html();
+        var collab = $("#file-collab").val();
+        var id = this.id;
+        if(!collab.includes(id)) {
+          if(collab !== "") {
+            $("#file-collab").val(collab+","+id);
+          } else {
+            $("#file-collab").val(id);
+          }
+          $(".collab-list").append("<div class='file-collaborator'><div>"+user+"</div><div class='collab-close'>&times;</div></div>");
+        }
+      });
+		},
+		error: function (data) {
+      $(".users-list").html("<div class='empty-list'>Error loading list.</div>");
+			$(":input, :button").prop('disabled', false);
+			showMessage("files-message",false, "There was an error loading user list.", "error");
+		}
+	});
+}

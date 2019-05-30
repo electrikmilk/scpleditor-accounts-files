@@ -181,13 +181,18 @@ function folderArray( $folder ) {
 function count_dir($path){
     $count['files'] = 0;
     $count['folders'] = 0;
+		$count['total'] = 0;
+		$path = realpath($path);
     $dir = opendir($path);
     while (($file = readdir($dir)) !== false) {
         if($file != "." && $file != "..")  {
-            if(is_file($path."/".$file))
-                $count['files']++;
+            if(is_file($path."/".$file)) {
+							$count['files']++;
+							$count['total']++;
+						}
             if(is_dir($path."/".$file)) {
                 $count['folders']++;
+								$count['total']++;
                 $counts = count_dir($path."/".$file);
                 $count['folders'] += $counts['folders'];
                 $count['files'] += $counts['files'];
@@ -195,12 +200,6 @@ function count_dir($path){
         }
     }
     closedir($dir);
-		$path = realpath($path);
-    $objects = new RecursiveIteratorIterator(
-        new RecursiveDirectoryIterator($path),
-        RecursiveIteratorIterator::SELF_FIRST
-    );
-		$count['total'] = numberFormat(iterator_count($objects));
 		$count['size'] = formatSize( filesize( $path ) );
 		$count['folders'] = numberFormat($count['folders']);
 		$count['files'] = numberFormat($count['files']);
