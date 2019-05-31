@@ -19,21 +19,21 @@ function getFiles( $path, $query = null ) {
 		$fid = $itemdata[ 'id' ];
 		$size = formatSize( filesize( $path ) );
 		$timestamp = $itemdata[ 'timestamp' ];
-		$collab = $itemdata['collab'];
-		$itemtype = $itemdata['type'];
+		$collab = $itemdata[ 'collab' ];
+		$itemtype = $itemdata[ 'type' ];
 		$relative = timeago( $timestamp );
 		if ( $itemdata[ 'updated' ] ) {
 			$updated = $itemdata[ 'updated' ];
 			$relative_updated = timeago( $updated );
 		}
 		$name = $file;
-		if($itemdata['path'])$filepath = $itemdata['path']."/";
+		if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
 		$path = "files/$id/$filepath$file";
-		if($_POST['moveid'] && $fid === $_POST['moveid'])$disabled = " disabled";
+		if ( $_POST[ 'moveid' ] && $fid === $_POST[ 'moveid' ] )$disabled = " disabled";
 		//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
-		if(!$query || stripos($name,$query) !== false) {
+		if ( !$query || stripos( $name, $query ) !== false ) {
 			if ( is_dir( $path ) === false ) {
-				if(!$_POST['movelist'])$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid' title='$size'>$load$name</div>$actions</div></li>";
+				if ( !$_POST[ 'movelist' ] )$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid' title='$size'>$load$name</div>$actions</div></li>";
 			} else {
 				$contents = getFiles( $path );
 				$files .= "<li class='list-item-folder$disabled' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid' title='$size'>$load$name</div>$actions</div><ul id='dir-$fid'>$contents</ul></li>";
@@ -54,8 +54,8 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 		if ( $files === false ) {
 			echo "<div class='empty-list'>No files were found.</div>";
 		} else {
-			if($_POST['movelist'])echo "<ul><li class='list-item-folder' id='folder-root' data-name='Root'><div><div class='item-name' id='folder-root'>$load Your Files</div></div><ul id='dir-root'>" . getFiles( "files/$id", $_POST['query'] ) . "</ul></li></ul>";
-			else echo "<ul id='dir-root'>" . getFiles( "files/$id", $_POST['query'] ) . "</ul>";
+			if ( $_POST[ 'movelist' ] )echo "<ul><li class='list-item-folder' id='folder-root' data-name='Root'><div><div class='item-name' id='folder-root'>$load Your Files</div></div><ul id='dir-root'>" . getFiles( "files/$id", $_POST[ 'query' ] ) . "</ul></li></ul>";
+			else echo "<ul id='dir-root'>" . getFiles( "files/$id", $_POST[ 'query' ] ) . "</ul>";
 			echo "<div class='context-menu'>
 				<ul>
 					<li id='rename-action' onclick='rename();'>Rename</li>
@@ -67,11 +67,11 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			</div>";
 		}
 	}
-	if($action === "count") {
-		$count = count_dir("files/$id");
-		if($count['files'] !== 1)$s="s";
-		if($count['folders'] !== 1)$fs="s";
-		echo $count['files']." file$s ".$count['folders']." folder$fs (".$count['size'].")";
+	if ( $action === "count" ) {
+		$count = count_dir( "files/$id" );
+		if ( $count[ 'files' ] !== 1 )$s = "s";
+		if ( $count[ 'folders' ] !== 1 )$fs = "s";
+		echo $count[ 'files' ] . " file$s " . $count[ 'folders' ] . " folder$fs (" . $count[ 'size' ] . ")";
 	}
 	if ( $action === "create" ) {
 		if ( $_POST[ 'contents' ] )$contents = $_POST[ 'contents' ];
@@ -101,7 +101,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			} else echo "File with name $name already exists.";
 		}
 	}
-	if($action === "rename") {
+	if ( $action === "rename" ) {
 		$item_id = $_POST[ 'id' ];
 		$new_name = $_POST[ 'name' ];
 		if ( !$item_id || !$new_name ) {
@@ -114,8 +114,8 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				$type = ucfirst( $itemdata[ 'type' ] );
 				$itemtype = $itemdata[ 'type' ];
 				if ( $owner === $id ) {
-					if ( $itemdata[ 'type' ] === "file" )$new_name = e( special( str_replace( ".scpl", "",  $_POST[ 'name' ] ) ) ) . ".scpl";
-					else $new_name = e( special( str_replace( ".scpl", "",  $_POST[ 'name' ] ) ) );
+					if ( $itemdata[ 'type' ] === "file" )$new_name = e( special( str_replace( ".scpl", "", $_POST[ 'name' ] ) ) ) . ".scpl";
+					else $new_name = e( special( str_replace( ".scpl", "", $_POST[ 'name' ] ) ) );
 					$name = $itemdata[ 'name' ];
 					if ( $itemdata[ 'path' ] )$itempath = $itemdata[ 'path' ] . "/";
 					$path = "files/$id/$itempath$name";
@@ -131,7 +131,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			} else echo "Invalid $itemtype ID.";
 		}
 	}
-	if($action === "delete") {
+	if ( $action === "delete" ) {
 		$file_id = $_POST[ 'id' ];
 		if ( !$file_id ) {
 			echo "No item id was recieved.";
@@ -148,7 +148,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					if ( file_exists( $path ) ) {
 						if ( mysqli_query( $connect, "delete from data.files where id = '" . $file_id . "'" ) ) {
 							if ( $itemtype === "file" ) {
-								if ( unlink( $path ) ) echo "File $name was deleted.";
+								if ( unlink( $path ) )echo "File $name was deleted.";
 								else echo "There was an internal file system error deleting file $name.";
 							} else {
 								if ( deleteDir( $path ) )echo "Folder $name was deleted.";
@@ -160,7 +160,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			} else echo "Invalid $itemtype ID.";
 		}
 	}
-	if($action === "copy") {
+	if ( $action === "copy" ) {
 		$item_id = $_POST[ 'id' ];
 		$folder_id = $_POST[ 'folder' ];
 		if ( !$item_id ) {
@@ -177,24 +177,24 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					$oldpath = "files/$id/$filepath$item";
 					if ( $folder_id ) {
 						$folderdata = dataArray( "files", $folder_id, "id" );
-						if(stripos($filepath,$folderdata['name'])) {
-							if($itemtype === "file")$item = str_replace(".scpl","",$itemdata[ 'name' ])." copy.scpl";
-							else $item = $itemdata[ 'name' ]." copy";
+						if ( stripos( $filepath, $folderdata[ 'name' ] ) ) {
+							if ( $itemtype === "file" )$item = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
+							else $item = $itemdata[ 'name' ] . " copy";
 						}
 						if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
 						$path = "files/$id/$folderpath" . $folderdata[ 'name' ] . "/$item";
 						$folder_name = $folderdata[ 'name' ];
-						$db_path = "'$folderpath" . $folderdata[ 'name' ]."'";
+						$db_path = "'$folderpath" . $folderdata[ 'name' ] . "'";
 						$newitem = $item;
 					} else {
 						$folder_name = "root";
-						if($itemtype === "file")$newitem = str_replace(".scpl","",$itemdata[ 'name' ])." copy.scpl";
-						else $newitem = $itemdata[ 'name' ]." copy";
+						if ( $itemtype === "file" )$newitem = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
+						else $newitem = $itemdata[ 'name' ] . " copy";
 						$path = "files/$id/$newitem";
 						$db_path = "NULL";
 					}
 					if ( file_exists( $oldpath ) ) {
-						if($itemtype === "file")$copy_function = copy( $oldpath, $path );
+						if ( $itemtype === "file" )$copy_function = copy( $oldpath, $path );
 						else $copy_function = copy_dir( $oldpath, $path );
 						if ( $copy_function ) {
 							$file_id = randString( 20 );
@@ -206,7 +206,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			} else echo "Invalid $itemtype ID.";
 		}
 	}
-	if($action === "move") {
+	if ( $action === "move" ) {
 		$item_id = $_POST[ 'id' ];
 		$folder_id = $_POST[ 'folder' ];
 		if ( !$item_id ) {
@@ -242,27 +242,27 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			} else echo "Invalid $itemtype ID.";
 		}
 	}
-	if($action === "users") {
+	if ( $action === "users" ) {
 		$query = $_POST[ 'query' ];
 		if ( !$query ) {
 			echo "<div class='empty-list'>Enter a username...</div>";
 		} else {
 			$users = mysqli_query( $connect, "select * from data.users where username like '%$query%' and id<>'$id' order by username asc limit 50" );
 			while ( $user = mysqli_fetch_array( $users ) ) {
-				echo "<div class='user' id='".$user['id']."'>".$user['username']."</div>";
+				echo "<div class='user' id='" . $user[ 'id' ] . "'>" . $user[ 'username' ] . "</div>";
 			}
 		}
 	}
-	if($action === "collab") {
-		$file = dataArray("files",$_POST['id'],"id");
-		if(!$file) {
+	if ( $action === "collab" ) {
+		$file = dataArray( "files", $_POST[ 'id' ], "id" );
+		if ( !$file ) {
 			echo "Invalid file ID";
 		} else {
-			$users = explode(",",$file['collab']);
-			if($file['collab']) {
-				foreach($users as $user) {
-					$this_user = dataArray("users",$user,"id");
-					$username = $this_user['username'];
+			$users = explode( ",", $file[ 'collab' ] );
+			if ( $file[ 'collab' ] ) {
+				foreach ( $users as $user ) {
+					$this_user = dataArray( "users", $user, "id" );
+					$username = $this_user[ 'username' ];
 					echo "<div class='file-collaborator' id='user-$user'><div>$username</div><div class='collab-close' data-user='$user'>&times;</div></div>";
 				}
 			} else {
@@ -270,16 +270,16 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			}
 		}
 	}
-	if($action === "access") {
-		$file = dataArray("files",$_POST['id'],"id");
-		$file_id = $_POST['id'];
-		if(!$file) {
+	if ( $action === "access" ) {
+		$file = dataArray( "files", $_POST[ 'id' ], "id" );
+		$file_id = $_POST[ 'id' ];
+		if ( !$file ) {
 			echo "Invalid file ID";
 		} else {
-			$collab = $_POST['collab'];
-			if($collab !== "NULL")$collab = implode(",",explode(",",$_POST['collab']));
-			if($file['author'] === $id) {
-				if(setValue("files",$collab,"collab","id = '$file_id'") === true) {
+			$collab = $_POST[ 'collab' ];
+			if ( $collab !== "NULL" )$collab = implode( ",", explode( ",", $_POST[ 'collab' ] ) );
+			if ( $file[ 'author' ] === $id ) {
+				if ( setValue( "files", $collab, "collab", "id = '$file_id'" ) === true ) {
 					echo "success";
 				} else {
 					echo "Error changing file access.";
@@ -289,8 +289,8 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			}
 		}
 	}
-	if($action === "shared") {
-		$query = $_POST['query'];
+	if ( $action === "shared" ) {
+		$query = $_POST[ 'query' ];
 		$shared_files = mysqli_query( $connect, "select * from data.files where type = 'file'" );
 		while ( $file = mysqli_fetch_array( $shared_files ) ) {
 			$collab = explode( ",", $file[ 'collab' ] );
@@ -304,11 +304,11 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					$updated = $file[ 'updated' ];
 					$relative_updated = timeago( $updated );
 				}
-				$name = $file['name'];
+				$name = $file[ 'name' ];
 				if ( $file[ 'path' ] )$itempath = $file[ 'path' ] . "/";
 				$path = "../../files/$id/$itempath$name";
 				$size = formatSize( filesize( $path ) );
-				if(!$query || stripos($name,$query) !== false) {
+				if ( !$query || stripos( $name, $query ) !== false ) {
 					$files .= "<li class='list-item-file' id='file-$fid'><div class='item-name'>$load$name</div></li>";
 				}
 			}

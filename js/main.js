@@ -216,8 +216,8 @@ function showMessage(id, toggle = true, newtext = false, type = false, fade = tr
 		if (timeout !== 3000) {
 			timeout = timeout + '000';
 		}
-		if(type !== false) {
-			$(element).attr("class","message");
+		if (type !== false) {
+			$(element).attr("class", "message");
 			$(element).addClass(type);
 		}
 		if (newtext !== false) {
@@ -237,13 +237,17 @@ function showMessage(id, toggle = true, newtext = false, type = false, fade = tr
 }
 
 function modal(id) {
-	if($(".modals-container").css('display') === "none") {
-		$(".modals-container").css('display','flex');
+	if ($(".modals-container").css('display') === "none") {
+		$(".modals-container").css('display', 'flex');
 	} else {
-		$(".modals-container").fadeOut({duration: 200});
+		$(".modals-container").fadeOut({
+			duration: 200
+		});
 	}
-	$(".modal:not(#"+id+")").hide();
-	$(".modal#"+id).fadeToggle({duration: 200});
+	$(".modal:not(#" + id + ")").hide();
+	$(".modal#" + id).fadeToggle({
+		duration: 200
+	});
 }
 
 function confirmLogout() {
@@ -293,16 +297,16 @@ function checkInputs(id) {
 }
 
 function removeValue(list, value) {
-  return list.replace(new RegExp(",?" + value + ",?"), function(match) {
-      var first_comma = match.charAt(0) === ',',
-          second_comma;
+	return list.replace(new RegExp(",?" + value + ",?"), function (match) {
+		var first_comma = match.charAt(0) === ',',
+			second_comma;
 
-      if (first_comma &&
-          (second_comma = match.charAt(match.length - 1) === ',')) {
-        return ',';
-      }
-      return '';
-    });
+		if (first_comma &&
+			(second_comma = match.charAt(match.length - 1) === ',')) {
+			return ',';
+		}
+		return '';
+	});
 }
 
 function checkCount(id) {
@@ -355,7 +359,7 @@ function listFiles() {
 			$(".file-list").html(response);
 		},
 		error: function (data) {
-			showMessage("files-message",false, "There was an error loading your files.", "error");
+			showMessage("files-message", false, "There was an error loading your files.", "error");
 		}
 	});
 	$.ajax({
@@ -372,6 +376,7 @@ function listFiles() {
 		}
 	});
 }
+
 function listShared() {
 	var query = $("#files-search").val();
 	$(".file-list").html(load);
@@ -386,13 +391,13 @@ function listShared() {
 			$(".file-list").html(response);
 			$(":input, :button").prop('disabled', false);
 			$(".list-item-file").dblclick(function () {
-				var id = this.id.replace("file-","");
-			goPage("https://editor.scpl.dev/?file="+id,true);
-						});
+				var id = this.id.replace("file-", "");
+				goPage("https://editor.scpl.dev/?file=" + id, true);
+			});
 		},
 		error: function (data) {
 			$(":input, :button").prop('disabled', false);
-			showMessage("files-message",false, "There was an error loading files shared with you.", "error");
+			showMessage("files-message", false, "There was an error loading files shared with you.", "error");
 		}
 	});
 }

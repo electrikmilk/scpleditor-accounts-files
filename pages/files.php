@@ -1,8 +1,8 @@
 <?php
-$account = dataArray("users",$id,"id");
-$count = count_dir("files/$id");
-if($count['files'] !== 1)$s="s";
-if($count['folders'] !== 1)$fs="s";
+$account = dataArray( "users", $id, "id" );
+$count = count_dir( "files/$id" );
+if ( $count[ 'files' ] !== 1 )$s = "s";
+if ( $count[ 'folders' ] !== 1 )$fs = "s";
 ?>
 <div class="messages-container">
 	<div class="message" id="files-message" style="display: none;"></div>
@@ -10,9 +10,9 @@ if($count['folders'] !== 1)$fs="s";
 <?php if($account['status'] === "0") echo "<div class='message warning'>Your account has not yet been activated. Please check your email. Be sure to check your junk/spam folder.</div>"; ?>
 
 <script>
-$(function () {
-	listFiles();
-});
+	$( function () {
+		listFiles();
+	} );
 </script>
 
 <h1>Files</h1>

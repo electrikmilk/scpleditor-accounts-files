@@ -77,9 +77,9 @@ function dataArray( $db, $val, $col ) {
 function setValue( $db, $val, $col, $where ) {
 	global $connect;
 	if ( $db && $val && $col && $where ) {
-		if($val === "NULL")$set = "$col = NULL";
+		if ( $val === "NULL" )$set = "$col = NULL";
 		else {
-			$val = e($val);
+			$val = e( $val );
 			$set = "$col = '$val'";
 		}
 		if ( mysqli_query( $connect, "update data.$db set $set where $where" ) ) return true;
@@ -182,48 +182,48 @@ function folderArray( $folder ) {
 	else return $folder_array;
 }
 
-function count_dir($path){
-    $count['files'] = 0;
-    $count['folders'] = 0;
-		$count['total'] = 0;
-		$path = realpath($path);
-    $dir = opendir($path);
-    while (($file = readdir($dir)) !== false) {
-        if($file != "." && $file != "..")  {
-            if(is_file($path."/".$file)) {
-							$count['files']++;
-							$count['total']++;
-						}
-            if(is_dir($path."/".$file)) {
-                $count['folders']++;
-								$count['total']++;
-                $counts = count_dir($path."/".$file);
-                $count['folders'] += $counts['folders'];
-                $count['files'] += $counts['files'];
-            }
-        }
-    }
-    closedir($dir);
-		$count['size'] = formatSize( filesize( $path ) );
-		$count['folders'] = numberFormat($count['folders']);
-		$count['files'] = numberFormat($count['files']);
-    return $count;
+function count_dir( $path ) {
+	$count[ 'files' ] = 0;
+	$count[ 'folders' ] = 0;
+	$count[ 'total' ] = 0;
+	$path = realpath( $path );
+	$dir = opendir( $path );
+	while ( ( $file = readdir( $dir ) ) !== false ) {
+		if ( $file != "." && $file != ".." ) {
+			if ( is_file( $path . "/" . $file ) ) {
+				$count[ 'files' ]++;
+				$count[ 'total' ]++;
+			}
+			if ( is_dir( $path . "/" . $file ) ) {
+				$count[ 'folders' ]++;
+				$count[ 'total' ]++;
+				$counts = count_dir( $path . "/" . $file );
+				$count[ 'folders' ] += $counts[ 'folders' ];
+				$count[ 'files' ] += $counts[ 'files' ];
+			}
+		}
+	}
+	closedir( $dir );
+	$count[ 'size' ] = formatSize( filesize( $path ) );
+	$count[ 'folders' ] = numberFormat( $count[ 'folders' ] );
+	$count[ 'files' ] = numberFormat( $count[ 'files' ] );
+	return $count;
 }
 
-function copy_dir($src,$dst) {
-    $dir = opendir($src);
-    @mkdir($dst);
-    while(false !== ( $file = readdir($dir)) ) {
-        if (( $file != '.' ) && ( $file != '..' )) {
-            if ( is_dir($src . '/' . $file) ) {
-                copy_dir($src . '/' . $file,$dst . '/' . $file);
-            } else {
-                copy($src . '/' . $file,$dst . '/' . $file);
-            }
-        }
-    }
-    closedir($dir);
-		return true;
+function copy_dir( $src, $dst ) {
+	$dir = opendir( $src );
+	@mkdir( $dst );
+	while ( false !== ( $file = readdir( $dir ) ) ) {
+		if ( ( $file != '.' ) && ( $file != '..' ) ) {
+			if ( is_dir( $src . '/' . $file ) ) {
+				copy_dir( $src . '/' . $file, $dst . '/' . $file );
+			} else {
+				copy( $src . '/' . $file, $dst . '/' . $file );
+			}
+		}
+	}
+	closedir( $dir );
+	return true;
 }
 
 // Global array function

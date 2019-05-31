@@ -17,7 +17,7 @@ if ( $auth === true ) {
 			$itemtype = $itemdata[ 'type' ];
 			if ( $owner === $id ) {
 				if ( $itemdata[ 'type' ] === "file" )$new_name = e( special( str_replace( ".scpl", "", $_POST[ 'name' ] ) ) ) . ".scpl";
-				else $new_name = e( special( str_replace( ".scpl", "",  $_POST[ 'name' ] ) ) );
+				else $new_name = e( special( str_replace( ".scpl", "", $_POST[ 'name' ] ) ) );
 				$name = $itemdata[ 'name' ];
 				if ( $itemdata[ 'path' ] )$itempath = $itemdata[ 'path' ] . "/";
 				$path = "../../files/$id/$itempath$name";

@@ -20,7 +20,7 @@ function getFiles( $path ) {
 			$updated = $itemdata[ 'updated' ];
 			$relative_updated = timeago( $updated );
 		}
-		if($itemdata['path'])$filepath = $itemdata['path']."/";
+		if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
 		$path = "../../files/$id/$filepath$file";
 		$name = $file;
 		if ( is_dir( $path ) === false ) {

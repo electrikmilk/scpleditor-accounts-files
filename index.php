@@ -37,38 +37,42 @@
 
 	if ( $_SESSION ) {
 		?>
-		<div class="modals-container">
+	<div class="modals-container">
 
-<div class="modal" id="share-dialog">
-<h2>Share ScPL file</h2>
-<p>Collaborators will only be able to open and make changes to this file.</p>
-<input type="search" id="users-search" class="search-input width-stretch" placeholder="Search Users" onchange="listUsers();" onkeyup="listUsers();" onblur="listUsers();" />
-<div class="users-list"><div class="empty-list">Enter a username...</div></div>
-<div class="navigation-subhead">
-	<div>Shared with</div>
-</div>
-<div class="collab-list">No one</div>
-<input type="hidden" id="file-collab"/>
-<br/>
-<div class="btn-group">
-	<button type="submit" class="modal-btn primary-btn" onclick="changeAccess();">Change Access</button>
-	<button type="submit" class="modal-btn" id="cancel-share">Cancel</button>
-</div>
-</div>
-
-<div class="modal" id="move-dialog">
-<h2>Move to...</h2>
-<p>Choose a folder below to move this item to.</p>
-<input type="search" id="move-search" class="search-input width-stretch" placeholder="Search Files" onchange="listMove();" onkeyup="listMove();" onblur="listMove();" />
-<div class="users-list moveto-list"><div class="empty-list">No files found.</div></div>
-<br/>
-<div class="btn-group">
-	<button type="submit" class="modal-btn primary-btn" onclick="moveTo();">Move Item</button>
-	<button type="submit" class="modal-btn" onclick="modal('move-dialog');">Cancel</button>
-</div>
-</div>
-
+		<div class="modal" id="share-dialog">
+			<h2>Share ScPL file</h2>
+			<p>Collaborators will only be able to open and make changes to this file.</p>
+			<input type="search" id="users-search" class="search-input width-stretch" placeholder="Search Users" onchange="listUsers();" onkeyup="listUsers();" onblur="listUsers();"/>
+			<div class="users-list">
+				<div class="empty-list">Enter a username...</div>
+			</div>
+			<div class="navigation-subhead">
+				<div>Shared with</div>
+			</div>
+			<div class="collab-list">No one</div>
+			<input type="hidden" id="file-collab"/>
+			<br/>
+			<div class="btn-group">
+				<button type="submit" class="modal-btn primary-btn" onclick="changeAccess();">Change Access</button>
+				<button type="submit" class="modal-btn" id="cancel-share">Cancel</button>
+			</div>
 		</div>
+
+		<div class="modal" id="move-dialog">
+			<h2>Move to...</h2>
+			<p>Choose a folder below to move this item to.</p>
+			<input type="search" id="move-search" class="search-input width-stretch" placeholder="Search Files" onchange="listMove();" onkeyup="listMove();" onblur="listMove();"/>
+			<div class="users-list moveto-list">
+				<div class="empty-list">No files found.</div>
+			</div>
+			<br/>
+			<div class="btn-group">
+				<button type="submit" class="modal-btn primary-btn" onclick="moveTo();">Move Item</button>
+				<button type="submit" class="modal-btn" onclick="modal('move-dialog');">Cancel</button>
+			</div>
+		</div>
+
+	</div>
 	<div class="config-container">
 		<div class="main-navigation">
 			<div class="nav-menu"></div>
@@ -90,7 +94,7 @@
 							</li>
 						</a>
 						<?php
-						if ( !$ismobile && $_SESSION['user_id'] === "1010") {
+						if ( !$ismobile && $_SESSION[ 'user_id' ] === "1010" ) {
 							?>
 						<a href="/filebrowser">
 							<li class="file-icon">
