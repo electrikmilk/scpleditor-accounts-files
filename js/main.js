@@ -236,6 +236,12 @@ function showMessage(id, toggle = true, newtext = false, type = false, fade = tr
 	}
 }
 
+function modal(id) {
+	$(".modals-container").css('display','flex');
+	$(".modal").hide();
+	$(".modal#"+id).toggle();
+}
+
 function confirmLogout() {
 	var r = confirm("Are you sure you want to sign out?");
 	if (r === true) window.location.href = '/logout';

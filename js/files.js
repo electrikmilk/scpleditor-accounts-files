@@ -116,7 +116,7 @@ $(document).ready(function() {
       var type = split[0];
       var id = split[1];
       var collab = $("#"+type+"-"+id).attr('data-collab');
-      $(".modals-container").css('display','flex');
+      modal('share-dialog');
       $(".collab-list").html("Loading...");
     $.ajax({
   		type: "POST",
