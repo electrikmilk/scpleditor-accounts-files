@@ -9,10 +9,10 @@ function getFiles( $path, $query = null ) {
 	$folder = folderArray( $path );
 	sort( $folder );
 	foreach ( $folder as $file ) {
-		unset( $path );
-		$path = "$path/$file";
 		$file = pathinfo( $file, PATHINFO_BASENAME );
+		unset( $path );
 		unset( $contents );
+		unset( $disabled );
 		unset( $updated );
 		unset( $relative_updated );
 		$itemdata = dataArray( "files", $file, "name" );
@@ -27,14 +27,16 @@ function getFiles( $path, $query = null ) {
 			$relative_updated = timeago( $updated );
 		}
 		$name = $file;
-		$path = "files/$id$path";
+		if($itemdata['path'])$filepath = $itemdata['path']."/";
+		$path = "files/$id/$filepath$file";
+		if($_POST['moveid'] && $fid === $_POST['moveid'])$disabled = " disabled";
 		//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
 		if(!$query || stripos($name,$query) !== false) {
 			if ( is_dir( $path ) === false ) {
-				if(!$_POST['movelist'])$files .= "<li class='list-item-file' id='file-$fid' data-name='$name' data-collab='$collab' $disabled><div><div class='item-name' id='file-$fid'>$load$name</div>$actions</div></li>";
+				if(!$_POST['movelist'])$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid' title='$size'>$load$name</div>$actions</div></li>";
 			} else {
 				$contents = getFiles( $path );
-				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name' $disabled><div><div class='item-name' id='folder-$fid'>$load$name</div>$actions</div><ul id='dir-$fid'>$contents</ul></li>";
+				$files .= "<li class='list-item-folder$disabled' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid' title='$size'>$load$name</div>$actions</div><ul id='dir-$fid'>$contents</ul></li>";
 			}
 		}
 	}
@@ -56,11 +58,11 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			else echo "<ul id='dir-root'>" . getFiles( "files/$id", $_POST['query'] ) . "</ul>";
 			echo "<div class='context-menu'>
 				<ul>
-					<li id='rename-action'>Rename</li>
-					<li id='copy-action'>Copy</li>
-					<li id='move-action'>Move to</li>
-					<li id='share-action'>Manage collaborators</li>
-					<li id='delete-action'>Delete</li>
+					<li id='rename-action' onclick='rename();'>Rename</li>
+					<li id='copy-action' onclick='copy();'>Copy</li>
+					<li id='move-action' onclick='move();'>Move to</li>
+					<li id='share-action' onclick='share();'>Manage collaborators</li>
+					<li id='delete-action' onclick='deleteItem();'>Delete</li>
 				</div>
 			</div>";
 		}
@@ -191,7 +193,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					if ( file_exists( $oldpath ) ) {
 						if($itemtype === "file")$copy_function = copy( $oldpath, $path );
 						else $copy_function = copy_dir( $oldpath, $path );
-						if ( $copy_function === true ) {
+						if ( $copy_function ) {
 							$file_id = randString( 20 );
 							if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $newitem . "','$itemtype'," . $db_path . ",'$id')" ) )echo "$type $item has been copied to $folder_name.";
 							else echo "Internal database error creating a copy of $item.";

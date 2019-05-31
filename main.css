@@ -771,8 +771,15 @@ div.spinner div.bar12 {
 	background: #eee url(img/new_folder.png) center / 25px no-repeat;
 }
 /* File list */
-.file-list li, .moveto-list li {
+.file-list li {
 	padding: 8px 10px;
+	padding-left: 25px;
+	cursor: pointer;
+	user-select: none;
+	transition: 0.3s background-color;
+}
+.moveto-list li {
+	padding: 0 10px;
 	padding-left: 25px;
 	cursor: pointer;
 	user-select: none;
@@ -920,8 +927,10 @@ div.spinner div.bar12 {
 	background-image: url(img/delete_w.svg);
 }
 .moveto-list li.selected-location {
-	background-color: #007aff;
-	color: #fff;
+	background-color: #007aff10;
+	border: 2px solid #007aff50;
+	border-radius: 3px;
+	padding-top: 3px;
 }
 /* API ref page */
 .endpoint-item {

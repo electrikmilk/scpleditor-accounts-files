@@ -7,7 +7,6 @@ function getFiles( $path ) {
 	$files = array();
 	sort( $folder );
 	foreach ( $folder as $file ) {
-		$path = "$path/$file";
 		$file = pathinfo( $file, PATHINFO_BASENAME );
 		unset( $contents );
 		unset( $updated );
@@ -21,6 +20,8 @@ function getFiles( $path ) {
 			$updated = $itemdata[ 'updated' ];
 			$relative_updated = timeago( $updated );
 		}
+		if($itemdata['path'])$filepath = $itemdata['path']."/";
+		$path = "../../files/$id/$filepath$file";
 		$name = $file;
 		if ( is_dir( $path ) === false ) {
 			$this_file = array(

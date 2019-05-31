@@ -11,191 +11,34 @@ $(document).ready(function() {
             window.event.returnValue = false;
         });
     }
-  $(".file-list ul li .item-name").contextmenu(function() {
-    itemid = this.id;
-    var split = this.id.split("-");
-    var type = split[0];
-    var id = split[1];
-    if(type === "folder") {
-      $("#share-action").html("Can't share folders yet").addClass("context-disabled");
-    } else {
-      $("#share-action").html("Manage collaborators").removeClass("context-disabled");
-    }
-    $(".context-menu").slideDown({
-			duration: 500,
-			easing: "easeInOutQuart"
-		});
-    $(".context-menu").css('top',mouseY(event) + 'px');
-    $(".context-menu").css('left',mouseX(event) + 'px');
-    window.event.returnValue = false;
-  });
-  $(".file-list ul li:not(.list-item-file,.disabled) > div").dblclick(function () {
-            $(this).closest("li").toggleClass("open-folder");
-        });
-        $(".list-item-file").dblclick(function () {
-          var id = this.id.replace("file-","");
-        goPage("https://editor.scpl.dev/?file="+id,true);
-              });
       $( "#cancel-share" ).on('click', function (e) {
             $(".modals-container").hide();
           });
-  $("#copy-action").on('click', function (e) {
-    if(itemid) {
-      var split = itemid.split("-");
-      var type = split[0];
-      var id = split[1];
-      var ulid = $("li#"+type+"-"+id).closest('ul').attr('id').replace("dir-","");
-      if(ulid !== "root") {
-        var folderid = ulid;
-      }
-        $("#"+itemid).addClass("loading");
-        $(":input, :button").prop('disabled', true);
-        $.ajax({
-          type: "POST",
-          url: "files.php",
-          data: {
-            action: "copy",
-            id: id,
-            folder: folderid
-          },
-          success: function (response) {
-            $(":input, :button").prop('disabled', false);
-            listFiles();
-            if(response.includes("copied")) {
-              showMessage("files-message",true, response, "success");
+          $(".file-list ul li .item-name").contextmenu(function() {
+            itemid = this.id;
+            var split = this.id.split("-");
+            var type = split[0];
+            var id = split[1];
+            if(type === "folder") {
+              $("#share-action").html("Can't share folders yet").addClass("disabled");
             } else {
-              showMessage("files-message",true, response, "error");
+              $("#share-action").html("Manage collaborators").removeClass("disabled");
             }
-          },
-          error: function (data) {
-            console.log(data);
-            $(":input, :button").prop('disabled', false);
-            showMessage("files-message",true, "There was an error copying the "+type+".", "error");
-          }
-        });
-    }
-  });
-  $("#delete-action").on('click', function (e) {
-    if(itemid) {
-      var split = itemid.split("-");
-      var type = split[0];
-      var id = split[1];
-      var r = confirm("Are you sure you want to delete this "+type+"?");
-      if(r === true) {
-        $("li#"+itemid).addClass("loading");
-        $(":input, :button").prop('disabled', true);
-        $.ajax({
-          type: "POST",
-          url: "files.php",
-          data: {
-            action: "delete",
-            type: type,
-            id: id
-          },
-          success: function (response) {
-            $(":input, :button").prop('disabled', false);
-            listFiles();
-            if(response.includes("deleted")) {
-              showMessage("files-message",true, response, "success");
-            } else {
-              showMessage("files-message",true, response, "error");
-            }
-          },
-          error: function (data) {
-            console.log(data);
-            $(":input, :button").prop('disabled', false);
-            showMessage("files-message",true, "There was an error deleting the "+type+".", "error");
-          }
-        });
-      }
-    }
-  });
-  $("#share-action").on('click', function (e) {
-    if(itemid) {
-      var split = itemid.split("-");
-      var type = split[0];
-      var id = split[1];
-      var collab = $("li#"+type+"-"+id).attr('data-collab');
-      modal('share-dialog');
-      $(".collab-list").html("Loading...");
-    $.ajax({
-  		type: "POST",
-  		url: "files.php",
-  		data: {
-  			action: "collab",
-  			id: id
-  		},
-  		success: function (response) {
-  			$(".collab-list").html(response);
-        $("#file-collab").val(collab);
-        $( ".collab-close" ).on('click', function (e) {
-          var id = $(this).attr('data-user');
-          $("#user-"+id).remove();
-              if($("#file-collab").val().includes(",")) {
-                $("#file-collab").val(removeValue($("#file-collab").val(), id));
-              } else {
-                $("#file-collab").val("");
-              }
-              if($(".collab-list" ).html() === "") {
-                $(".collab-list").html("No one");
-              }
+            $(".context-menu").slideDown({
+              duration: 500,
+              easing: "easeInOutQuart"
             });
-  		},
-  		error: function (data) {
-        $(".collab-list").html("<div class='empty-list'>Error loading collaborators.</div>");
-  			$(":input, :button").prop('disabled', false);
-  			showMessage("files-message",false, "There was an error loading user list.", "error");
-  		}
-  	});
-    }
-});
-$("#move-action").on('click', function (e) {
-  if(itemid) {
-    var split = itemid.split("-");
-    var type = split[0];
-    var id = split[1];
-    var collab = $("li#"+type+"-"+id).attr('data-collab');
-    modal('move-dialog');
-    $(".moveto-list").html("<div class='empty-list'>Loading...</div>");
-    listMove(id);
-  }
-});
-  $("#rename-action").on('click', function (e) {
-    if(itemid) {
-      var name = $("li#"+itemid).attr("data-name");
-      var newname = prompt("New name for the file",name);
-      var split = itemid.split("-");
-      var type = split[0];
-      var id = split[1];
-      if(newname) {
-        $("li#"+itemid).addClass("loading");
-        $(":input, :button").prop('disabled', true);
-        $.ajax({
-          type: "POST",
-          url: "files.php",
-          data: {
-            action: "rename",
-            name: newname,
-            id: id
-          },
-          success: function (response) {
-            $(":input, :button").prop('disabled', false);
-            listFiles();
-            if(response.includes("Renamed")) {
-              showMessage("files-message",true, response, "success");
-            } else {
-              showMessage("files-message",true, response, "error");
-            }
-          },
-          error: function (data) {
-            console.log(data);
-            $(":input, :button").prop('disabled', false);
-            showMessage("files-message",true, "There was an error renaming the "+type+".", "error");
-          }
-        });
-      }
-    }
-  });
+            $(".context-menu").css('top',mouseY(event) + 'px');
+            $(".context-menu").css('left',mouseX(event) + 'px');
+            window.event.returnValue = false;
+          });
+          $(".file-list ul li:not(.list-item-file,.disabled) > div").dblclick(function () {
+                    $(this).closest("li").toggleClass("open-folder");
+                });
+                $(".list-item-file").dblclick(function () {
+                  var id = this.id.replace("file-","");
+                goPage("https://editor.scpl.dev/?file="+id,true);
+                      });
 });
 
 $(document).bind("click", function(event) {
@@ -399,7 +242,7 @@ function listMove(id) {
   });
 }
 
-function moveTo() {
+function moveTo(id) {
   if(itemid) {
     var split = itemid.split("-");
     var type = split[0];
@@ -433,5 +276,168 @@ function moveTo() {
           $(":input, :button").prop('disabled', false);
         }
       });
+  }
+}
+
+function copy() {
+  if(itemid) {
+    var split = itemid.split("-");
+    var type = split[0];
+    var id = split[1];
+    var ulid = $("li#"+itemid).closest('ul').attr('id').replace("dir-","");
+    if(ulid !== "root") {
+      var folderid = ulid;
+    }
+      $("#"+itemid).addClass("loading");
+      $(":input, :button").prop('disabled', true);
+      $.ajax({
+        type: "POST",
+        url: "files.php",
+        data: {
+          action: "copy",
+          id: id,
+          folder: folderid
+        },
+        success: function (response) {
+          $(":input, :button").prop('disabled', false);
+          listFiles();
+          if(response.includes("copied")) {
+            showMessage("files-message",true, response, "success");
+          } else {
+            showMessage("files-message",true, response, "error");
+          }
+        },
+        error: function (data) {
+          console.log(data);
+          $(":input, :button").prop('disabled', false);
+          showMessage("files-message",true, "There was an error copying the "+type+".", "error");
+        }
+      });
+  }
+}
+
+function deleteItem() {
+  if(itemid) {
+    var split = itemid.split("-");
+    var type = split[0];
+    var id = split[1];
+    var r = confirm("Are you sure you want to delete this "+type+"?");
+    if(r === true) {
+      $("li#"+itemid).addClass("loading");
+      $(":input, :button").prop('disabled', true);
+      $.ajax({
+        type: "POST",
+        url: "files.php",
+        data: {
+          action: "delete",
+          type: type,
+          id: id
+        },
+        success: function (response) {
+          $(":input, :button").prop('disabled', false);
+          listFiles();
+          if(response.includes("deleted")) {
+            showMessage("files-message",true, response, "success");
+          } else {
+            showMessage("files-message",true, response, "error");
+          }
+        },
+        error: function (data) {
+          console.log(data);
+          $(":input, :button").prop('disabled', false);
+          showMessage("files-message",true, "There was an error deleting the "+type+".", "error");
+        }
+      });
+    }
+  }
+}
+
+function share() {
+  if(itemid) {
+    var split = itemid.split("-");
+    var type = split[0];
+    var id = split[1];
+    var collab = $("li#"+type+"-"+id).attr('data-collab');
+    modal('share-dialog');
+    $(".collab-list").html("Loading...");
+  $.ajax({
+    type: "POST",
+    url: "files.php",
+    data: {
+      action: "collab",
+      id: id
+    },
+    success: function (response) {
+      $(".collab-list").html(response);
+      $("#file-collab").val(collab);
+      $( ".collab-close" ).on('click', function (e) {
+        var id = $(this).attr('data-user');
+        $("#user-"+id).remove();
+            if($("#file-collab").val().includes(",")) {
+              $("#file-collab").val(removeValue($("#file-collab").val(), id));
+            } else {
+              $("#file-collab").val("");
+            }
+            if($(".collab-list" ).html() === "") {
+              $(".collab-list").html("No one");
+            }
+          });
+    },
+    error: function (data) {
+      $(".collab-list").html("<div class='empty-list'>Error loading collaborators.</div>");
+      $(":input, :button").prop('disabled', false);
+      showMessage("files-message",false, "There was an error loading user list.", "error");
+    }
+  });
+  }
+}
+
+
+function rename() {
+  if(itemid) {
+    var name = $("li#"+itemid).attr("data-name");
+    var newname = prompt("New name for the file",name);
+    var split = itemid.split("-");
+    var type = split[0];
+    var id = split[1];
+    if(newname) {
+      $("li#"+itemid).addClass("loading");
+      $(":input, :button").prop('disabled', true);
+      $.ajax({
+        type: "POST",
+        url: "files.php",
+        data: {
+          action: "rename",
+          name: newname,
+          id: id
+        },
+        success: function (response) {
+          $(":input, :button").prop('disabled', false);
+          listFiles();
+          if(response.includes("Renamed")) {
+            showMessage("files-message",true, response, "success");
+          } else {
+            showMessage("files-message",true, response, "error");
+          }
+        },
+        error: function (data) {
+          console.log(data);
+          $(":input, :button").prop('disabled', false);
+          showMessage("files-message",true, "There was an error renaming the "+type+".", "error");
+        }
+      });
+    }
+  }
+}
+
+function move() {
+  if(itemid) {
+    var split = itemid.split("-");
+    var type = split[0];
+    var id = split[1];
+    var collab = $("li#"+type+"-"+id).attr('data-collab');
+    modal('move-dialog');
+    $(".moveto-list").html("<div class='empty-list'>Loading...</div>");
+    listMove(id);
   }
 }

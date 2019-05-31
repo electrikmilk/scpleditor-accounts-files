@@ -216,7 +216,7 @@ function copy_dir($src,$dst) {
     while(false !== ( $file = readdir($dir)) ) {
         if (( $file != '.' ) && ( $file != '..' )) {
             if ( is_dir($src . '/' . $file) ) {
-                recurse_copy($src . '/' . $file,$dst . '/' . $file);
+                copy_dir($src . '/' . $file,$dst . '/' . $file);
             } else {
                 copy($src . '/' . $file,$dst . '/' . $file);
             }
