@@ -237,9 +237,13 @@ function showMessage(id, toggle = true, newtext = false, type = false, fade = tr
 }
 
 function modal(id) {
-	$(".modals-container").css('display','flex');
-	$(".modal").hide();
-	$(".modal#"+id).toggle();
+	if($(".modals-container").css('display') === "none") {
+		$(".modals-container").css('display','flex');
+	} else {
+		$(".modals-container").fadeOut({duration: 200});
+	}
+	$(".modal:not(#"+id+")").hide();
+	$(".modal#"+id).fadeToggle({duration: 200});
 }
 
 function confirmLogout() {

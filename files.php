@@ -31,10 +31,10 @@ function getFiles( $path, $query = null ) {
 		//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
 		if(!$query || stripos($name,$query) !== false) {
 			if ( is_dir( $path ) === false ) {
-				$files .= "<li class='list-item-file' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid'>$load$name</div>$actions</div></li>";
+				if(!$_POST['movelist'])$files .= "<li class='list-item-file' id='file-$fid' data-name='$name' data-collab='$collab' $disabled><div><div class='item-name' id='file-$fid'>$load$name</div>$actions</div></li>";
 			} else {
 				$contents = getFiles( $path );
-				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid'>$load$name</div>$actions</div><ul id='dir-$fid'>$contents</ul></li>";
+				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name' $disabled><div><div class='item-name' id='folder-$fid'>$load$name</div>$actions</div><ul id='dir-$fid'>$contents</ul></li>";
 			}
 		}
 	}
@@ -52,12 +52,13 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 		if ( $files === false ) {
 			echo "<div class='empty-list'>No files were found.</div>";
 		} else {
-			echo "<ul id='dir-root'>" . getFiles( "files/$id", $_POST['query'] ) . "</ul>";
+			if($_POST['movelist'])echo "<ul><li class='list-item-folder' id='folder-root' data-name='Root'><div><div class='item-name' id='folder-root'>$load Your Files</div></div><ul id='dir-root'>" . getFiles( "files/$id", $_POST['query'] ) . "</ul></li></ul>";
+			else echo "<ul id='dir-root'>" . getFiles( "files/$id", $_POST['query'] ) . "</ul>";
 			echo "<div class='context-menu'>
 				<ul>
 					<li id='rename-action'>Rename</li>
 					<li id='copy-action'>Copy</li>
-					<li class='context-disabled' id='move-action'>Move to</li>
+					<li id='move-action'>Move to</li>
 					<li id='share-action'>Manage collaborators</li>
 					<li id='delete-action'>Delete</li>
 				</div>

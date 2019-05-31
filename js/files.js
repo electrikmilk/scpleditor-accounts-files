@@ -11,7 +11,7 @@ $(document).ready(function() {
             window.event.returnValue = false;
         });
     }
-  $(".file-list ul li div .item-name").contextmenu(function() {
+  $(".file-list ul li .item-name").contextmenu(function() {
     itemid = this.id;
     var split = this.id.split("-");
     var type = split[0];
@@ -44,7 +44,7 @@ $(document).ready(function() {
       var split = itemid.split("-");
       var type = split[0];
       var id = split[1];
-      var ulid = $("#"+type+"-"+id).closest('ul').attr('id').replace("dir-","");
+      var ulid = $("li#"+type+"-"+id).closest('ul').attr('id').replace("dir-","");
       if(ulid !== "root") {
         var folderid = ulid;
       }
@@ -82,7 +82,7 @@ $(document).ready(function() {
       var id = split[1];
       var r = confirm("Are you sure you want to delete this "+type+"?");
       if(r === true) {
-        $("#"+itemid).addClass("loading");
+        $("li#"+itemid).addClass("loading");
         $(":input, :button").prop('disabled', true);
         $.ajax({
           type: "POST",
@@ -115,7 +115,7 @@ $(document).ready(function() {
       var split = itemid.split("-");
       var type = split[0];
       var id = split[1];
-      var collab = $("#"+type+"-"+id).attr('data-collab');
+      var collab = $("li#"+type+"-"+id).attr('data-collab');
       modal('share-dialog');
       $(".collab-list").html("Loading...");
     $.ajax({
@@ -142,22 +142,33 @@ $(document).ready(function() {
             });
   		},
   		error: function (data) {
-        $(".collab-list").html("Error loading collaborators.");
+        $(".collab-list").html("<div class='empty-list'>Error loading collaborators.</div>");
   			$(":input, :button").prop('disabled', false);
   			showMessage("files-message",false, "There was an error loading user list.", "error");
   		}
   	});
     }
 });
+$("#move-action").on('click', function (e) {
+  if(itemid) {
+    var split = itemid.split("-");
+    var type = split[0];
+    var id = split[1];
+    var collab = $("li#"+type+"-"+id).attr('data-collab');
+    modal('move-dialog');
+    $(".moveto-list").html("<div class='empty-list'>Loading...</div>");
+    listMove(id);
+  }
+});
   $("#rename-action").on('click', function (e) {
     if(itemid) {
-      var name = $("#"+itemid).attr("data-name");
+      var name = $("li#"+itemid).attr("data-name");
       var newname = prompt("New name for the file",name);
       var split = itemid.split("-");
       var type = split[0];
       var id = split[1];
       if(newname) {
-        $("#"+itemid).addClass("loading");
+        $("li#"+itemid).addClass("loading");
         $(":input, :button").prop('disabled', true);
         $.ajax({
           type: "POST",
@@ -183,41 +194,6 @@ $(document).ready(function() {
           }
         });
       }
-    }
-  });
-  $("#move-action").on('click', function (e) {
-    if(itemid) {
-      var split = itemid.split("-");
-      var type = split[0];
-      var id = split[1];
-      var ulid = $("#"+type+"-"+id).closest('ul').attr('id').replace("dir-","");
-      if(ulid !== "root") {
-        var folderid = ulid;
-      }
-        $("#"+itemid).addClass("loading");
-        $(":input, :button").prop('disabled', true);
-        $.ajax({
-          type: "POST",
-          url: "files.php",
-          data: {
-            action: "move",
-            id: id,
-            folder: folderid
-          },
-          success: function (response) {
-            $(":input, :button").prop('disabled', false);
-            listFiles();
-            if(response.includes("moved")) {
-              showMessage("files-message",true, response, "success");
-            } else {
-              showMessage("files-message",true, response, "error");
-            }
-          },
-          error: function (data) {
-            showMessage("files-message",true, "Error moving item.", "error");
-            $(":input, :button").prop('disabled', false);
-          }
-        });
     }
   });
 });
@@ -396,4 +372,66 @@ function changeAccess() {
       $(":input, :button").prop('disabled', false);
     }
   });
+}
+
+function listMove(id) {
+  var query = $("move-search").val();
+  $.ajax({
+    type: "POST",
+    url: "files.php",
+    data: {
+      action: "list",
+      movelist: "true",
+      moveid: id
+    },
+    success: function (response) {
+      $(".moveto-list").html(response);
+      $(".moveto-list ul li .item-name").on('click', function (e) {
+        $(".selected-location").removeClass("selected-location");
+        $(this).closest("li").addClass("selected-location");
+      });
+    },
+    error: function (data) {
+      $(".moveto-list").html("<div class='empty-list'>Error loading files.</div>");
+      $(":input, :button").prop('disabled', false);
+      showMessage("files-message",false, "There was an error loading user list.", "error");
+    }
+  });
+}
+
+function moveTo() {
+  if(itemid) {
+    var split = itemid.split("-");
+    var type = split[0];
+    var id = split[1];
+    var ulid = $(".selected-location").attr("id").replace("folder-","").replace("file-","");
+    if(ulid !== "root") {
+      var folderid = ulid;
+    }
+      $("#"+itemid).addClass("loading");
+      $(":input, :button").prop('disabled', true);
+      $.ajax({
+        type: "POST",
+        url: "files.php",
+        data: {
+          action: "move",
+          id: id,
+          folder: folderid
+        },
+        success: function (response) {
+          $(":input, :button").prop('disabled', false);
+          listFiles();
+          modal('move-dialog');
+          if(response.includes("moved")) {
+            showMessage("files-message",true, response, "success");
+          } else {
+            showMessage("files-message",true, response, "error");
+          }
+        },
+        error: function (data) {
+          showMessage("files-message",true, "Error moving item.", "error");
+          $(":input, :button").prop('disabled', false);
+        }
+      });
+  }
 }
