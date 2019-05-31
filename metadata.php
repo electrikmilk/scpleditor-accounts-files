@@ -11,6 +11,8 @@ if ( $page === "login" ) {
 	$title = "Email Confirmation";
 } else if ( $page === "files" ) {
 	$title = "Files";
+} else if ( $page === "shared" ) {
+	$title = "Shared with me";
 }
 if ( !$nav_title )$nav_title = $title;
 if ( $title )echo "<title>$title - ScPL Editor</title>";
