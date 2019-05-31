@@ -33,10 +33,10 @@ function getFiles( $path, $query = null ) {
 		//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
 		if ( !$query || stripos( $name, $query ) !== false ) {
 			if ( is_dir( $path ) === false ) {
-				if ( !$_POST[ 'movelist' ] )$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div class='item-name' id='file-$fid' title='$size'>$load$name</div>$actions<span class='file-size'>$size</span></li>";
+				if ( !$_POST[ 'movelist' ] )$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid' draggable='true' ondragstart='drag(event);'>$load$name</div><span class='file-size'>$size</span></div></li>";
 			} else {
 				$contents = getFiles( $path );
-				$files .= "<li class='list-item-folder$disabled' id='folder-$fid' data-name='$name'><div class='item-name' id='folder-$fid' title='$size'>$load$name</div>$actions</div><span class='file-size'>$size</span><ul id='dir-$fid'>$contents</ul></li>";
+				$files .= "<li class='list-item-folder$disabled' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid' draggable='true' ondragstart='drag(event);' ondrop='drop(event, this);' ondragover='allowDrop(event);'>$load$name</div><span class='file-size'>$size</span></div></div><ul id='dir-$fid'>$contents</ul></li>";
 			}
 		}
 	}

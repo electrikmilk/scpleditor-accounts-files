@@ -440,3 +440,42 @@ function move() {
 		listMove(id);
 	}
 }
+
+function allowDrop(ev) {
+		ev.preventDefault();
+}
+
+function drag(ev) {
+		ev.dataTransfer.setData('text', ev.target.id);
+}
+
+function drop(ev, target) {
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+		var target = target.id.replace("folder-", "");
+		var item = data.replace("folder-", "").replace("file-", "");
+			$("#" + data).addClass("loading");
+			$(":input, :button").prop('disabled', true);
+			$.ajax({
+				type: "POST",
+				url: "files.php",
+				data: {
+					action: "move",
+					id: item,
+					folder: target
+				},
+				success: function (response) {
+					$(":input, :button").prop('disabled', false);
+					listFiles();
+					if (response.includes("moved")) {
+						showMessage("files-message", true, response, "success");
+					} else {
+						showMessage("files-message", true, response, "error");
+					}
+				},
+				error: function (data) {
+					showMessage("files-message", true, "Error moving item.", "error");
+					$(":input, :button").prop('disabled', false);
+				}
+			});
+}

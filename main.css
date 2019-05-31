@@ -777,12 +777,17 @@ div.spinner div.bar12 {
 	cursor: pointer;
 	user-select: none;
 	transition: 0.3s background-color;
+}
+.file-list li > div {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
+	grid-template-columns: 1fr 0fr;
 }
 .file-size {
 	font-size: 13px;
 	color: #888;
+	line-height: 22px;
+	width: 65px;
+	text-align: right;
 }
 .moveto-list {
 	padding: 10px 0;
@@ -801,7 +806,7 @@ div.spinner div.bar12 {
 	background-color: #daeffc !important;
 }
 .file-list li.open-folder > ul > li {
-	width: 94%;
+	width: 97%;
 }
 .file-list ul, .moveto-list ul {
 	list-style-type: none;
@@ -810,7 +815,8 @@ div.spinner div.bar12 {
 }
 .file-list ul ul, .moveto-list ul ul {
 	border-left: 1px solid #ddd;
-	margin: 5px 10px;
+	margin: 5px 0;
+	margin-left: 10px;
 }
 .list-item-file > div, .list-item-folder > div {
 	padding-left: 27px;
