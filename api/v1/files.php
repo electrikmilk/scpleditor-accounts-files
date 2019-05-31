@@ -13,7 +13,6 @@ function getFiles( $path ) {
 		unset( $relative_updated );
 		$itemdata = dataArray( "files", $file, "name" );
 		$fid = $itemdata[ 'id' ];
-		$size = formatSize( filesize( $path ) );
 		$timestamp = $itemdata[ 'timestamp' ];
 		$relative = timeago( $timestamp );
 		if ( $itemdata[ 'updated' ] ) {
@@ -22,6 +21,7 @@ function getFiles( $path ) {
 		}
 		if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
 		$path = "../../files/$id/$filepath$file";
+		$size = formatSize( filesize( $path ) );
 		$name = $file;
 		if ( is_dir( $path ) === false ) {
 			$this_file = array(

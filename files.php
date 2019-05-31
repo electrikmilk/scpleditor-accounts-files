@@ -17,7 +17,6 @@ function getFiles( $path, $query = null ) {
 		unset( $relative_updated );
 		$itemdata = dataArray( "files", $file, "name" );
 		$fid = $itemdata[ 'id' ];
-		$size = formatSize( filesize( $path ) );
 		$timestamp = $itemdata[ 'timestamp' ];
 		$collab = $itemdata[ 'collab' ];
 		$itemtype = $itemdata[ 'type' ];
@@ -29,6 +28,7 @@ function getFiles( $path, $query = null ) {
 		$name = $file;
 		if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
 		$path = "files/$id/$filepath$file";
+		$size = formatSize( filesize( $path ) );
 		if ( $_POST[ 'moveid' ] && $fid === $_POST[ 'moveid' ] )$disabled = " disabled";
 		//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
 		if ( !$query || stripos( $name, $query ) !== false ) {
