@@ -209,6 +209,12 @@ a:hover, a:active, a:focus {
 .file-collaborator > div:first-child {
 	padding-right: 10px;
 	line-height: 20px;
+	user-select: none;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-align: center;
+	max-width: 110px;
 }
 .collab-close {
 	font-size: 20px;
@@ -549,7 +555,6 @@ div.spinner div.bar12 {
 	display: flex;
 	align-items: center;
 }
-.form-field div:last-child {}
 .navigation-subhead {
 	text-transform: uppercase;
 	color: #6e6d73;

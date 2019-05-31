@@ -343,10 +343,8 @@ function listFiles() {
 		},
 		success: function (response) {
 			$(".file-list").html(response);
-			$(":input, :button").prop('disabled', false);
 		},
 		error: function (data) {
-			$(":input, :button").prop('disabled', false);
 			showMessage("files-message",false, "There was an error loading your files.", "error");
 		}
 	});
