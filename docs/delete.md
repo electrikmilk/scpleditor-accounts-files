@@ -50,7 +50,6 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
          type: "POST",
          date: {
             token: "AUTH_TOKEN",
-            type: "file",
             id: "FILE_ID"
          },
          success : function(r) {
