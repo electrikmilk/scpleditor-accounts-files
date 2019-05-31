@@ -31,10 +31,10 @@ function getFiles( $path, $query = null ) {
 		//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
 		if(!$query || stripos($name,$query) !== false) {
 			if ( is_dir( $path ) === false ) {
-				$files .= "<li class='list-item-file' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name'>$load$name</div>$actions</div></li>";
+				$files .= "<li class='list-item-file' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid'>$load$name</div>$actions</div></li>";
 			} else {
 				$contents = getFiles( $path );
-				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name'><div><div class='item-name'>$load$name</div>$actions</div><ul id='dir-$fid'>$contents</ul></li>";
+				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid'>$load$name</div>$actions</div><ul id='dir-$fid'>$contents</ul></li>";
 			}
 		}
 	}
@@ -57,8 +57,8 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				<ul>
 					<li id='rename-action'>Rename</li>
 					<li id='copy-action'>Copy</li>
-					<!--<li class='context-disabled' id='move-action'>Move to</li>-->
-					<li id='share-action'>Share with...</li>
+					<li class='context-disabled' id='move-action'>Move to</li>
+					<li id='share-action'>Manage collaborators</li>
 					<li id='delete-action'>Delete</li>
 				</div>
 			</div>";
@@ -195,6 +195,42 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 							if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $newitem . "','$itemtype'," . $db_path . ",'$id')" ) )echo "$type $item has been copied to $folder_name.";
 							else echo "Internal database error creating a copy of $item.";
 						} else echo "Internal file system error copying $item to $folder_name.";
+					} else echo "$type $item does not appear to exist.";
+				} else echo "You do not appear to own that $itemtype.";
+			} else echo "Invalid $itemtype ID.";
+		}
+	}
+	if($action === "move") {
+		$item_id = $_POST[ 'id' ];
+		$folder_id = $_POST[ 'folder' ];
+		if ( !$item_id ) {
+			echo "No 'item_id' was recieved.";
+		} else {
+			$itemdata = dataArray( "files", $item_id, "id" );
+			if ( $itemdata ) {
+				$owner = $itemdata[ 'author' ];
+				if ( $owner === $id ) {
+					$item = $itemdata[ 'name' ];
+					$type = ucfirst( $itemdata[ 'type' ] );
+					$itemtype = $itemdata[ 'type' ];
+					if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
+					$oldpath = "files/$id/$filepath$item";
+					if ( $folder_id ) {
+						$folderdata = dataArray( "files", $folder_id, "id" );
+						if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
+						$path = "files/$id/$folderpath" . $folderdata[ 'name' ] . "/$item";
+						$folder_name = $folderdata[ 'name' ];
+						$db_path = "'$folderpath" . $folderdata[ 'name' ] . "'";
+					} else {
+						$folder_name = "root";
+						$path = "files/$id/$item";
+						$db_path = "NULL";
+					}
+					if ( file_exists( $oldpath ) ) {
+						if ( rename( $oldpath, $path ) ) {
+							if ( mysqli_query( $connect, "update data.files set path = $db_path where id = '$item_id'" ) )echo "$type $item has been moved to $folder_name.";
+							else echo "Internal database error moving $itemtype $item.";
+						} else echo "Internal file system error moving $item to $folder_name.";
 					} else echo "$type $item does not appear to exist.";
 				} else echo "You do not appear to own that $itemtype.";
 			} else echo "Invalid $itemtype ID.";

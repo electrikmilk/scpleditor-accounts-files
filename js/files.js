@@ -11,15 +11,15 @@ $(document).ready(function() {
             window.event.returnValue = false;
         });
     }
-  $(".file-list ul li").contextmenu(function() {
+  $(".file-list ul li div .item-name").contextmenu(function() {
     itemid = this.id;
     var split = this.id.split("-");
     var type = split[0];
     var id = split[1];
     if(type === "folder") {
-      $("#share-action").html("Cannot share folders").addClass("context-disabled");
+      $("#share-action").html("Can't share folders yet").addClass("context-disabled");
     } else {
-      $("#share-action").html("Change collaborators").removeClass("context-disabled");
+      $("#share-action").html("Manage collaborators").removeClass("context-disabled");
     }
     $(".context-menu").slideDown({
 			duration: 500,
@@ -36,32 +36,9 @@ $(document).ready(function() {
           var id = this.id.replace("file-","");
         goPage("https://editor.scpl.dev/?file="+id,true);
               });
-  $( ".file-list ul li" ).sortable({
-        connectWith : ".file-list"
-      });
       $( "#cancel-share" ).on('click', function (e) {
             $(".modals-container").hide();
           });
-  $(".move").on('click', function (e) {
-		var token = "kDzZ2d4FRW";
-		$.ajax({
-			type: "POST",
-			url: "/api/v1/move",
-			data: {
-				token: token,
-				item_id: "IrX5DA73t1u3aOQyKnPM",
-				//folder_id: "WQApghH2pQs8O8JWNTUj"
-			},
-			success: function (response) {
-				$(":input, :button").prop('disabled', false);
-				alert("API response: " + JSON.stringify(response));
-			},
-			error: function (data) {
-				$(":input, :button").prop('disabled', false);
-				alert("error moving file");
-			}
-		});
-	});
   $("#copy-action").on('click', function (e) {
     if(itemid) {
       var split = itemid.split("-");
@@ -206,6 +183,41 @@ $(document).ready(function() {
           }
         });
       }
+    }
+  });
+  $("#move-action").on('click', function (e) {
+    if(itemid) {
+      var split = itemid.split("-");
+      var type = split[0];
+      var id = split[1];
+      var ulid = $("#"+type+"-"+id).closest('ul').attr('id').replace("dir-","");
+      if(ulid !== "root") {
+        var folderid = ulid;
+      }
+        $("#"+itemid).addClass("loading");
+        $(":input, :button").prop('disabled', true);
+        $.ajax({
+          type: "POST",
+          url: "files.php",
+          data: {
+            action: "move",
+            id: id,
+            folder: folderid
+          },
+          success: function (response) {
+            $(":input, :button").prop('disabled', false);
+            listFiles();
+            if(response.includes("moved")) {
+              showMessage("files-message",true, response, "success");
+            } else {
+              showMessage("files-message",true, response, "error");
+            }
+          },
+          error: function (data) {
+            showMessage("files-message",true, "Error moving item.", "error");
+            $(":input, :button").prop('disabled', false);
+          }
+        });
     }
   });
 });

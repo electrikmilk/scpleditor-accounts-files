@@ -26,7 +26,7 @@ if ( $auth === true ) {
 					$db_path = "'$folderpath" . $folderdata[ 'name' ] . "'";
 				} else {
 					$folder_name = "root";
-					$path = dirname( __DIR__, 2 ) . "/files/$id/$item";
+					$path = "../../files/$id/$item";
 					$db_path = "NULL";
 				}
 				if ( file_exists( $oldpath ) ) {
