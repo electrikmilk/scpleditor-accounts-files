@@ -76,9 +76,10 @@ function dataArray( $db, $val, $col ) {
 // Quickly update one column in a row in the database.
 function setValue( $db, $val, $col, $where ) {
 	global $connect;
+	$val = e($val);
 	if ( $db && $val && $col && $where ) {
 		$set = "$col = '$val'";
-		if ( mysqli_query( $connect, "update $db set $set where $where" ) ) return true;
+		if ( mysqli_query( $connect, "update data.$db set $set where $where" ) ) return true;
 		else return false;
 	} else return false;
 }

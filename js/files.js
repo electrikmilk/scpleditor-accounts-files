@@ -13,6 +13,14 @@ $(document).ready(function() {
     }
   $(".file-list ul li").contextmenu(function() {
     itemid = this.id;
+    var split = this.id.split("-");
+    var type = split[0];
+    var id = split[1];
+    if(type === "folder") {
+      $("#share-action").html("Cannot share folders").addClass("context-disabled");
+    } else {
+      $("#share-action").html("Share with...").removeClass("context-disabled");
+    }
     $(".context-menu").slideDown({
 			duration: 500,
 			easing: "easeInOutQuart"
@@ -31,6 +39,9 @@ $(document).ready(function() {
   $( ".file-list ul li" ).sortable({
         connectWith : ".file-list"
       });
+      $( "#cancel-share" ).on('click', function (e) {
+            $(".modals-container").hide();
+          });
   $(".move").on('click', function (e) {
 		var token = "kDzZ2d4FRW";
 		$.ajax({
@@ -86,6 +97,45 @@ $(document).ready(function() {
       }
     }
   });
+  $("#share-action").on('click', function (e) {
+    if(itemid) {
+      var split = itemid.split("-");
+      var type = split[0];
+      var id = split[1];
+      var collab = $("#"+type+"-"+id).attr('data-collab');
+      $(".modals-container").css('display','flex');
+      $(".collab-list").html("Loading...");
+    $.ajax({
+  		type: "POST",
+  		url: "files.php",
+  		data: {
+  			action: "collab",
+  			id: id
+  		},
+  		success: function (response) {
+  			$(".collab-list").html(response);
+        $("#file-collab").val(collab);
+        $( ".collab-close" ).on('click', function (e) {
+          var id = $(this).attr('data-user');
+          $("#user-"+id).remove();
+              if($("#file-collab").val().includes(",")) {
+                $("#file-collab").val(removeValue($("#file-collab").val(), id));
+              } else {
+                $("#file-collab").val("");
+              }
+              if($(".collab-list" ).html() === "") {
+                $(".collab-list").html("No one");
+              }
+            });
+  		},
+  		error: function (data) {
+        $(".collab-list").html("Error loading collaborators.");
+  			$(":input, :button").prop('disabled', false);
+  			showMessage("files-message",false, "There was an error loading user list.", "error");
+  		}
+  	});
+    }
+});
   $("#rename-action").on('click', function (e) {
     if(itemid) {
       var name = $("#"+itemid).attr("data-name");
@@ -221,39 +271,6 @@ function newFolder() {
 	}
 }
 
-function changeAccess(id) {
-  $.ajax({
-		type: "POST",
-		url: "files.php",
-		data: {
-			action: "collab",
-			id: id
-		},
-		success: function (response) {
-			$(".users-list").html(response);
-			$(":input, :button").prop('disabled', false);
-      $(".users-list .user").on('click', function (e) {
-        var user = $(this).html();
-        var collab = $("#file-collab").val();
-        var id = this.id;
-        if(!collab.includes(id)) {
-          if(collab !== "") {
-            $("#file-collab").val(collab+","+id);
-          } else {
-            $("#file-collab").val(id);
-          }
-          $(".collab-list").append("<div class='file-collaborator'><div>"+user+"</div><div class='collab-close'>&times;</div></div>");
-        }
-      });
-		},
-		error: function (data) {
-      $(".users-list").html("<div class='empty-list'>Error loading list.</div>");
-			$(":input, :button").prop('disabled', false);
-			showMessage("files-message",false, "There was an error loading user list.", "error");
-		}
-	});
-}
-
 function listUsers() {
 	var query = $("#users-search").val();
 	$(".users-list").html(load);
@@ -268,6 +285,9 @@ function listUsers() {
 			$(".users-list").html(response);
 			$(":input, :button").prop('disabled', false);
       $(".users-list .user").on('click', function (e) {
+        if($(".collab-list").html() === "No one") {
+          $(".collab-list").html("");
+        }
         var user = $(this).html();
         var collab = $("#file-collab").val();
         var id = this.id;
@@ -277,7 +297,7 @@ function listUsers() {
           } else {
             $("#file-collab").val(id);
           }
-          $(".collab-list").append("<div class='file-collaborator'><div>"+user+"</div><div class='collab-close'>&times;</div></div>");
+          $(".collab-list").append("<div class='file-collaborator' id='user-"+id+"'><div>"+user+"</div><div class='collab-close' data-user='"+id+"'>&times;</div></div>");
         }
       });
 		},
@@ -287,4 +307,42 @@ function listUsers() {
 			showMessage("files-message",false, "There was an error loading user list.", "error");
 		}
 	});
+}
+
+function changeAccess() {
+  var collab = $("#file-collab").val();
+  if(collab) {
+    $(":input, :button").prop('disabled', true);
+    var split = itemid.split("-");
+    var type = split[0];
+    var id = split[1];
+    $.ajax({
+      type: "POST",
+      url: "files.php",
+      data: {
+        action: "access",
+        id: id,
+        collab: collab
+      },
+      success: function (response) {
+        $(":input, :button").prop('disabled', false);
+        if(response === "success") {
+          $(".modals-container").hide();
+          showMessage("files-message",true, "File collaborators changed.", "success");
+        } else {
+          $(".modals-container").hide();
+          showMessage("files-message",true, response, "error");
+        }
+        $(".collab-list").html("");
+        $("#file-collab").val("");
+      },
+      error: function (data) {
+        $(".modals-container").hide();
+        showMessage("files-message",true, "Error changing file access.", "error");
+        $(":input, :button").prop('disabled', false);
+      }
+    });
+  } else {
+    $(".modals-container").hide();
+  }
 }

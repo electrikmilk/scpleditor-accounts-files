@@ -18,6 +18,7 @@ function getFiles( $path, $query = null ) {
 		$fid = $itemdata[ 'id' ];
 		$size = formatSize( filesize( $path ) );
 		$timestamp = $itemdata[ 'timestamp' ];
+		$collab = $itemdata['collab'];
 		$relative = timeago( $timestamp );
 		if ( $itemdata[ 'updated' ] ) {
 			$updated = $itemdata[ 'updated' ];
@@ -27,7 +28,7 @@ function getFiles( $path, $query = null ) {
 		$path = "files/$id$path";
 		if(!$query || stripos($name,$query) !== false) {
 			if ( is_dir( $path ) === false ) {
-				$files .= "<li class='list-item-file' id='file-$fid' data-name='$name'><div class='item-name'>$load$name</div></li>";
+				$files .= "<li class='list-item-file' id='file-$fid' data-name='$name' data-collab='$collab'><div class='item-name'>$load$name</div></li>";
 			} else {
 				$contents = getFiles( $path );
 				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name'><div class='item-name'>$load$name</div><ul id='dir-$fid'>$contents</ul></li>";
@@ -42,8 +43,8 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 	$this->output->set_status_header( 400, 'No Remote Access Allowed' );
 	exit; //just for good measure
 } else if ( $_SESSION ) {
-	echo '<script type="text/javascript" src="/js/files.js"></script>';
 	if ( $action === "list" ) {
+		echo '<script type="text/javascript" src="/js/files.js"></script>';
 		$user_files = folderArray( "files/$id" );
 		if ( $files === false ) {
 			echo "No files.";
@@ -53,7 +54,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				<ul>
 					<li id='rename-action'>Rename</li>
 					<li class='context-disabled' id='copy-action'>Copy</li>
-					<li class='context-disabled' id='share-action'>Share with...</li>
+					<li id='share-action'>Share with...</li>
 					<li id='delete-action'>Delete</li>
 				</div>
 			</div>";
@@ -187,11 +188,46 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 	if($action === "users") {
 		$query = $_POST[ 'query' ];
 		if ( !$query ) {
-			echo "<div class='empty-list'>Enter a query</div>";
+			echo "<div class='empty-list'>Enter a username...</div>";
 		} else {
 			$users = mysqli_query( $connect, "select * from data.users where username like '%$query%' order by username asc limit 50" );
 			while ( $user = mysqli_fetch_array( $users ) ) {
 				echo "<div class='user' id='".$user['id']."'>".$user['username']."</div>";
+			}
+		}
+	}
+	if($action === "collab") {
+		$file = dataArray("files",$_POST['id'],"id");
+		if(!$file) {
+			echo "Invalid file ID";
+		} else {
+			$users = explode(",",$file['collab']);
+			if($file['collab']) {
+				foreach($users as $user) {
+					$this_user = dataArray("users",$user,"id");
+					$username = $this_user['username'];
+					echo "<div class='file-collaborator' id='user-$user'><div>$username</div><div class='collab-close' data-user='$user'>&times;</div></div>";
+				}
+			} else {
+				echo "No one";
+			}
+		}
+	}
+	if($action === "access") {
+		$file = dataArray("files",$_POST['id'],"id");
+		$file_id = $_POST['id'];
+		if(!$file) {
+			echo "Invalid file ID";
+		} else {
+			$collab = implode(",",explode(",",$_POST['collab']));
+			if($file['author'] === $id) {
+				if(setValue("files",$collab,"collab","id = '$file_id'") === true) {
+					echo "success";
+				} else {
+					echo "Error changing file access.";
+				}
+			} else {
+				echo "You do not own that file.";
 			}
 		}
 	}

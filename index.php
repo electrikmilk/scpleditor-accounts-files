@@ -41,17 +41,18 @@
 
 <div class="modal" id="share-dialog">
 <h2>Share ScPL file</h2>
-<p>Search below for users to add as collaborators to this file. Keep in mind users you add as collaborators will be able to open and save changes to this file, but they will not be allowed to delete, rename or change access to this file.</p>
+<p>Collaborators will only be able to open and make changes to this file.</p>
 <input type="search" id="users-search" class="search-input width-stretch" placeholder="Search Users" onchange="listUsers();" onkeyup="listUsers();" onblur="listUsers();" />
-<div class="users-list"></div>
+<div class="users-list"><div class="empty-list">Enter a username...</div></div>
 <div class="navigation-subhead">
-	<div>Currently shared with...</div>
+	<div>Shared with</div>
 </div>
-<div class="collab-list"></div>
+<div class="collab-list">No one</div>
 <input type="hidden" id="file-collab"/>
+<br/>
 <div class="btn-group">
-	<button type="submit" class="modal-btn primary-btn">Change Access</button>
-	<button type="submit" class="modal-btn" onclick="modal('share-dialog');">Cancel</button>
+	<button type="submit" class="modal-btn primary-btn" onclick="changeAccess();">Change Access</button>
+	<button type="submit" class="modal-btn" id="cancel-share">Cancel</button>
 </div>
 </div>
 

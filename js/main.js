@@ -282,6 +282,19 @@ function checkInputs(id) {
 	}
 }
 
+function removeValue(list, value) {
+  return list.replace(new RegExp(",?" + value + ",?"), function(match) {
+      var first_comma = match.charAt(0) === ',',
+          second_comma;
+
+      if (first_comma &&
+          (second_comma = match.charAt(match.length - 1) === ',')) {
+        return ',';
+      }
+      return '';
+    });
+}
+
 function checkCount(id) {
 	var limited;
 	$("form#" + id + " input, form#" + id + " textarea").each(function () {
