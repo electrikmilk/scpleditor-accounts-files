@@ -1001,6 +1001,9 @@ div.spinner div.bar12 {
 #copy-action {
 	background-image: url(img/copy.svg);
 }
+#move-action {
+	background-image: url(img/move.svg);
+}
 #delete-action {
 	color: #d74c39;
 	background-image: url(img/delete.svg);

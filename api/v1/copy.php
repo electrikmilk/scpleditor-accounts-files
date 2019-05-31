@@ -26,16 +26,17 @@ if ( $auth === true ) {
 					if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
 					$path = "../../files/$id/$folderpath" . $folderdata[ 'name' ] . "/$item";
 					$folder_name = $folderdata[ 'name' ];
-					$db_path = "$folderpath" . $folderdata[ 'name' ];
+					$db_path = "'$folderpath" . $folderdata[ 'name' ]."'";
 				} else {
 					$folder_name = "root";
-					$path = "../../files/$id/$item";
-					$db_path = "";
+					$newitem = str_replace(".scpl","",$itemdata[ 'name' ])." copy.scpl";
+					$path = "../../files/$id/$newitem";
+					$db_path = "NULL";
 				}
 				if ( file_exists( $oldpath ) ) {
 					if ( copy( $oldpath, $path ) === true ) {
 						$file_id = randString( 20 );
-						if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $item . "','$itemtype','" . $path . "','$id')" ) )echo json_response( "success", "$type $item has been copied to $folder_name." );
+						if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $item . "','$itemtype'," . $db_path . ",'$id')" ) )echo json_response( "success", "$type $item has been copied to $folder_name." );
 						else echo json_response( "error", "Internal database error creating a copy of $item." );
 					} else echo json_response( "error", "Internal file system error copying $item to $folder_name." );
 				} else echo json_response( "error", "$type $item does not appear to exist." );

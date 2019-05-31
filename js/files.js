@@ -62,6 +62,42 @@ $(document).ready(function() {
 			}
 		});
 	});
+  $("#copy-action").on('click', function (e) {
+    if(itemid) {
+      var split = itemid.split("-");
+      var type = split[0];
+      var id = split[1];
+      var ulid = $("#"+type+"-"+id).closest('ul').attr('id').replace("dir-","");
+      if(ulid !== "root") {
+        var folderid = ulid;
+      }
+        $("#"+itemid).addClass("loading");
+        $(":input, :button").prop('disabled', true);
+        $.ajax({
+          type: "POST",
+          url: "files.php",
+          data: {
+            action: "copy",
+            id: id,
+            folder: folderid
+          },
+          success: function (response) {
+            $(":input, :button").prop('disabled', false);
+            listFiles();
+            if(response.includes("copied")) {
+              showMessage("files-message",true, response, "success");
+            } else {
+              showMessage("files-message",true, response, "error");
+            }
+          },
+          error: function (data) {
+            console.log(data);
+            $(":input, :button").prop('disabled', false);
+            showMessage("files-message",true, "There was an error copying the "+type+".", "error");
+          }
+        });
+    }
+  });
   $("#delete-action").on('click', function (e) {
     if(itemid) {
       var split = itemid.split("-");

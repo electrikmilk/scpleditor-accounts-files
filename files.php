@@ -50,11 +50,12 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 		if ( $files === false ) {
 			echo "<div class='empty-list'>No files were found.</div>";
 		} else {
-			echo "<ul id='root'>" . getFiles( "files/$id", $_POST['query'] ) . "</ul>";
+			echo "<ul id='dir-root'>" . getFiles( "files/$id", $_POST['query'] ) . "</ul>";
 			echo "<div class='context-menu'>
 				<ul>
 					<li id='rename-action'>Rename</li>
-					<li class='context-disabled' id='copy-action'>Copy</li>
+					<li id='copy-action'>Copy</li>
+					<li class='context-disabled' id='move-action'>Move to</li>
 					<li id='share-action'>Share with...</li>
 					<li id='delete-action'>Delete</li>
 				</div>
@@ -150,10 +151,10 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 		}
 	}
 	if($action === "copy") {
-		$item_id = $_POST[ 'item_id' ];
-		$folder_id = $_POST[ 'folder_id' ];
+		$item_id = $_POST[ 'id' ];
+		$folder_id = $_POST[ 'folder' ];
 		if ( !$item_id ) {
-			echo json_response( "error", "No 'item_id' was recieved." );
+			echo "No 'item_id' was recieved.";
 		} else {
 			$itemdata = dataArray( "files", $item_id, "id" );
 			if ( $itemdata ) {
@@ -169,21 +170,23 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 						if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
 						$path = "files/$id/$folderpath" . $folderdata[ 'name' ] . "/$item";
 						$folder_name = $folderdata[ 'name' ];
-						$db_path = "$folderpath" . $folderdata[ 'name' ];
+						$db_path = "'$folderpath" . $folderdata[ 'name' ]."'";
+						$newitem = $item;
 					} else {
 						$folder_name = "root";
-						$path = "files/$id/$item";
-						$db_path = "";
+						$newitem = str_replace(".scpl","",$itemdata[ 'name' ])." copy.scpl";
+						$path = "files/$id/$newitem";
+						$db_path = "NULL";
 					}
 					if ( file_exists( $oldpath ) ) {
 						if ( copy( $oldpath, $path ) === true ) {
 							$file_id = randString( 20 );
-							if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $item . "','$itemtype','" . $path . "','$id')" ) )echo json_response( "success", "$type $item has been copied to $folder_name." );
-							else echo json_response( "error", "Internal database error creating a copy of $item." );
-						} else echo json_response( "error", "Internal file system error copying $item to $folder_name." );
-					} else echo json_response( "error", "$type $item does not appear to exist." );
-				} else echo json_response( "error", "You do not appear to own that $itemtype." );
-			} else echo json_response( "error", "Invalid $itemtype ID." );
+							if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $newitem . "','$itemtype'," . $db_path . ",'$id')" ) )echo "$type $item has been copied to $folder_name.";
+							else echo "Internal database error creating a copy of $item.";
+						} else echo "Internal file system error copying $item to $folder_name $oldpath to $path.";
+					} else echo "$type $item does not appear to exist.";
+				} else echo "You do not appear to own that $itemtype.";
+			} else echo "Invalid $itemtype ID.";
 		}
 	}
 	if($action === "users") {
