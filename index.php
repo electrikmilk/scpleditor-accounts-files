@@ -88,6 +88,11 @@
 						<?php
 						}
 						?>
+						<a href="/shared">
+							<li class="shared-icon">
+								<div>Shared with me</div>
+							</li>
+						</a>
 						<a href="https://editor.scpl.dev/" target="_blank" rel="noopener">
 							<li class="editor-icon">
 								<div>Editor</div>

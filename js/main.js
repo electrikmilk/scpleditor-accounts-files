@@ -351,3 +351,27 @@ function listFiles() {
 		}
 	});
 }
+function listShared() {
+	var query = $("#files-search").val();
+	$(".file-list").html(load);
+	$.ajax({
+		type: "POST",
+		url: "files.php",
+		data: {
+			action: "shared",
+			query: query
+		},
+		success: function (response) {
+			$(".file-list").html(response);
+			$(":input, :button").prop('disabled', false);
+			$(".list-item-file").dblclick(function () {
+				var id = this.id.replace("file-","");
+			goPage("https://editor.scpl.dev/?file="+id,true);
+						});
+		},
+		error: function (data) {
+			$(":input, :button").prop('disabled', false);
+			showMessage("files-message",false, "There was an error loading files shared with you.", "error");
+		}
+	});
+}

@@ -1,10 +1,11 @@
 <?php
 require( "global.php" );
 $session_token = randString( 10 );
+$load = "<div class='spinner'><div class='bar1'/><div class='bar2'/><div class='bar3'/><div class='bar4'/><div class='bar5'/><div class='bar6'/><div class='bar7'/><div class='bar8'/><div class='bar9'/><div class='bar10'/><div class='bar11'/><div class='bar12'/></div>";
 
 function getFiles( $path, $query = null ) {
 	global $id;
-	$load = "<div class='spinner'><div class='bar1'/><div class='bar2'/><div class='bar3'/><div class='bar4'/><div class='bar5'/><div class='bar6'/><div class='bar7'/><div class='bar8'/><div class='bar9'/><div class='bar10'/><div class='bar11'/><div class='bar12'/></div>";
+	global $load;
 	$folder = folderArray( $path );
 	sort( $folder );
 	foreach ( $folder as $file ) {
@@ -47,7 +48,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 		echo '<script type="text/javascript" src="/js/files.js"></script>';
 		$user_files = folderArray( "files/$id" );
 		if ( $files === false ) {
-			echo "No files.";
+			echo "<div class='empty-list'>No files were found.</div>";
 		} else {
 			echo "<ul id='root'>" . getFiles( "files/$id", $_POST['query'] ) . "</ul>";
 			echo "<div class='context-menu'>
@@ -230,6 +231,36 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			} else {
 				echo "You do not own that file.";
 			}
+		}
+	}
+	if($action === "shared") {
+		$query = $_POST['query'];
+		$shared_files = mysqli_query( $connect, "select * from data.files where type = 'file'" );
+		while ( $file = mysqli_fetch_array( $shared_files ) ) {
+			$collab = explode( ",", $file[ 'collab' ] );
+			if ( in_array( $id, $collab ) === true ) {
+				unset( $updated );
+				unset( $relative_updated );
+				$fid = $file[ 'id' ];
+				$timestamp = $file[ 'timestamp' ];
+				$relative = timeago( $timestamp );
+				if ( $file[ 'updated' ] ) {
+					$updated = $file[ 'updated' ];
+					$relative_updated = timeago( $updated );
+				}
+				$name = $file['name'];
+				if ( $file[ 'path' ] )$itempath = $file[ 'path' ] . "/";
+				$path = "../../files/$id/$itempath$name";
+				$size = formatSize( filesize( $path ) );
+				if(!$query || stripos($name,$query) !== false) {
+					$files .= "<li class='list-item-file' id='file-$fid'><div class='item-name'>$load$name</div></li>";
+				}
+			}
+		}
+		if ( !$files ) {
+			echo "<div class='empty-list'>No shared files were found.</div>";
+		} else {
+			echo "<ul>$files</ul>";
 		}
 	}
 } else echo "Logged out";
