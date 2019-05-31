@@ -43,6 +43,20 @@ function getFiles( $path, $query = null ) {
 	return $files;
 }
 
+function fixPaths($name,$new) {
+	global $connect;
+	$files = mysqli_query($connect,"select * from data.files");
+	while($file = mysqli_fetch_array($files)) {
+		if(stripos($file['path'],$name) !== false) {
+			$file_id = $file['id'];
+			$newpath = str_replace($name,$new,$file['path']);
+			if(setValue("files",$newpath,"path","where id = '$file_id'"))if($result !== false)$result = true;
+			else $result = false;
+		}
+	}
+	return $result;
+}
+
 // Account files backend
 if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 	$this->output->set_status_header( 400, 'No Remote Access Allowed' );
@@ -123,6 +137,9 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					if ( file_exists( $path ) ) {
 						if ( mysqli_query( $connect, "update data.files set name = '$new_name' where id = '$item_id'" ) ) {
 							if ( rename( $path, $newpath ) ) {
+								if($itemtype === "folder") {
+									fixPaths($name,$new_name);
+								}
 								echo "Renamed$new_name";
 							} else echo "There was an internal file system error renaming $name.";
 						} else echo "There was an internal file system error renaming $name.";
@@ -196,7 +213,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					if ( file_exists( $oldpath ) ) {
 						if ( $itemtype === "file" )$copy_function = copy( $oldpath, $path );
 						else $copy_function = copy_dir( $oldpath, $path );
-						if ( $copy_function ) {
+						if ( $copy_function || $copy_function === true ) {
 							$file_id = randString( 20 );
 							if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $newitem . "','$itemtype'," . $db_path . ",'$id')" ) )echo "$type $item has been copied to $folder_name.";
 							else echo "Internal database error creating a copy of $item.";
