@@ -20,6 +20,7 @@ function getFiles( $path, $query = null ) {
 		$size = formatSize( filesize( $path ) );
 		$timestamp = $itemdata[ 'timestamp' ];
 		$collab = $itemdata['collab'];
+		$itemtype = $itemdata['type'];
 		$relative = timeago( $timestamp );
 		if ( $itemdata[ 'updated' ] ) {
 			$updated = $itemdata[ 'updated' ];
@@ -27,12 +28,13 @@ function getFiles( $path, $query = null ) {
 		}
 		$name = $file;
 		$path = "files/$id$path";
+		//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
 		if(!$query || stripos($name,$query) !== false) {
 			if ( is_dir( $path ) === false ) {
-				$files .= "<li class='list-item-file' id='file-$fid' data-name='$name' data-collab='$collab'><div class='item-name'>$load$name</div></li>";
+				$files .= "<li class='list-item-file' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name'>$load$name</div>$actions</div></li>";
 			} else {
 				$contents = getFiles( $path );
-				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name'><div class='item-name'>$load$name</div><ul id='dir-$fid'>$contents</ul></li>";
+				$files .= "<li class='list-item-folder' id='folder-$fid' data-name='$name'><div><div class='item-name'>$load$name</div>$actions</div><ul id='dir-$fid'>$contents</ul></li>";
 			}
 		}
 	}
@@ -61,6 +63,12 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				</div>
 			</div>";
 		}
+	}
+	if($action === "count") {
+		$count = count_dir("files/$id");
+		if($count['files'] !== 1)$s="s";
+		if($count['folders'] !== 1)$fs="s";
+		echo $count['files']." file$s ".$count['folders']." folder$fs (".$count['size'].")";
 	}
 	if ( $action === "create" ) {
 		if ( $_POST[ 'contents' ] )$contents = $_POST[ 'contents' ];
@@ -174,16 +182,19 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 						$newitem = $item;
 					} else {
 						$folder_name = "root";
-						$newitem = str_replace(".scpl","",$itemdata[ 'name' ])." copy.scpl";
+						if($itemtype === "file")$newitem = str_replace(".scpl","",$itemdata[ 'name' ])." copy.scpl";
+						else $newitem = $itemdata[ 'name' ]." copy";
 						$path = "files/$id/$newitem";
 						$db_path = "NULL";
 					}
 					if ( file_exists( $oldpath ) ) {
-						if ( copy( $oldpath, $path ) === true ) {
+						if($itemtype === "file")$copy_function = copy( $oldpath, $path );
+						else $copy_function = copy_dir( $oldpath, $path );
+						if ( $copy_function === true ) {
 							$file_id = randString( 20 );
 							if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $newitem . "','$itemtype'," . $db_path . ",'$id')" ) )echo "$type $item has been copied to $folder_name.";
 							else echo "Internal database error creating a copy of $item.";
-						} else echo "Internal file system error copying $item to $folder_name $oldpath to $path.";
+						} else echo "Internal file system error copying $item to $folder_name.";
 					} else echo "$type $item does not appear to exist.";
 				} else echo "You do not appear to own that $itemtype.";
 			} else echo "Invalid $itemtype ID.";

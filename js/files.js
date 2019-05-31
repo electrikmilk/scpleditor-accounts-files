@@ -217,6 +217,10 @@ $(document).bind("click", function(event) {
     });
 });
 
+function setID(id) {
+  itemid = id;
+}
+
 function mouseX(evt) {
     if (evt.pageX) {
         return evt.pageX;

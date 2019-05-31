@@ -68,7 +68,7 @@
 		<div class="main-container">
 			<div class="side-navigation">
 				<div class="navigation-subhead">
-					<div>Settings</div>
+					<div>Manage Account</div>
 				</div>
 				<div class="menu-container">
 					<ul>

@@ -348,6 +348,19 @@ function listFiles() {
 			showMessage("files-message",false, "There was an error loading your files.", "error");
 		}
 	});
+	$.ajax({
+		type: "POST",
+		url: "files.php",
+		data: {
+			action: "count"
+		},
+		success: function (response) {
+			$("#files-info").html(response);
+		},
+		error: function (data) {
+			//showMessage("files-message",false, "There was an error loading your files.", "error");
+		}
+	});
 }
 function listShared() {
 	var query = $("#files-search").val();

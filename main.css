@@ -15,6 +15,9 @@
 		background-size: cover !important;
 		background-position: left center !important;
 	}
+	.action-btns {
+		display: block !important;
+	}
 	.modal {
 		border-radius: 0 !important;
 		position: fixed;
@@ -886,12 +889,13 @@ div.spinner div.bar12 {
 /* Rename and delete btns */
 .action-btns {
 	float: right;
+	display: none;
 	margin-top: -3px;
 }
 .file-list ul ul ul .action-btns {
 	margin-right: 3px;
 }
-.edit-btn, .delete-btn {
+.rename-btn, .delete-btn {
 	background: url() center / 20px no-repeat;
 	padding: 15px;
 	float: right;
@@ -901,14 +905,14 @@ div.spinner div.bar12 {
 .action-btns div:active {
 	background-color: #8c99b3;
 }
-.edit-btn {
-	background-image: url(img/edit.svg);
+.rename-btn {
+	background-image: url(img/rename_g.svg);
 }
-.edit-btn:active {
-	background-image: url(img/edit_w.svg);
+.rename-btn:active {
+	background-image: url(img/rename_w.svg);
 }
 .delete-btn {
-	background-image: url(img/delete.svg);
+	background-image: url(img/delete_g.svg);
 	margin-left: 3px;
 }
 .delete-btn:active {
