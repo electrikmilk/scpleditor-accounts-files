@@ -33,10 +33,10 @@ function getFiles( $path, $query = null ) {
 		//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
 		if ( !$query || stripos( $name, $query ) !== false ) {
 			if ( is_dir( $path ) === false ) {
-				if ( !$_POST[ 'movelist' ] )$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid' draggable='true' ondragstart='drag(event);'>$load$name</div><span class='file-size'>$size</span></div></li>";
+				if ( !$_POST[ 'movelist' ] )$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid' draggable='true' ondragstart='drag(event);'>$load $name</div><span class='file-size'>$size</span></div></li>";
 			} else {
 				$contents = getFiles( $path );
-				$files .= "<li class='list-item-folder$disabled' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid' draggable='true' ondragstart='drag(event);' ondrop='drop(event, this);' ondragover='allowDrop(event);'>$load$name</div><span class='file-size'>$size</span></div></div><ul id='dir-$fid'>$contents</ul></li>";
+				$files .= "<li class='list-item-folder$disabled' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid' draggable='true' ondragstart='drag(event);' ondrop='drop(event, this);' ondragover='allowDrop(event);'>$load $name</div><span class='file-size'>$size</span></div></div><ul id='dir-$fid'>$contents</ul></li>";
 			}
 		}
 	}
@@ -60,7 +60,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				<ul>
 					<li id='rename-action' onclick='rename();'>Rename</li>
 					<li id='copy-action' onclick='copy();'>Copy</li>
-					<!--<li id='move-action' onclick='move();'>Move to</li>-->
+					<li id='move-action' onclick='move();'>Move to</li>
 					<li id='share-action' onclick='share();'>Manage collaborators</li>
 					<li id='delete-action' onclick='deleteItem();'>Delete</li>
 				</div>
@@ -123,7 +123,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					if ( file_exists( $path ) ) {
 						if ( mysqli_query( $connect, "update data.files set name = '$new_name' where id = '$item_id'" ) ) {
 							if ( rename( $path, $newpath ) ) {
-								echo "Renamed $name to $new_name";
+								echo "Renamed$new_name";
 							} else echo "There was an internal file system error renaming $name.";
 						} else echo "There was an internal file system error renaming $name.";
 					} else echo "$type does not appear to exist.";
