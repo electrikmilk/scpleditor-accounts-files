@@ -105,7 +105,6 @@ $(function () {
 		event.preventDefault();
 		$("#settings-message").fadeOut();
 		$("#settings-message").attr('class', 'message');
-		$(":input, :button").prop('disabled', true);
 		var checkinputs = checkInputs(this.id);
 		var checklimits = checkCount(this.id);
 		if (checkinputs === true && checklimits === true) {
