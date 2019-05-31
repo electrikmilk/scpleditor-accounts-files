@@ -714,7 +714,8 @@ div.spinner div.bar12 {
 	grid-template-columns: 0fr 1fr;
 }
 .nav-btns {
-	width: 130px;
+	width: 70px;
+	/* width: 130px; */
 }
 .files-header {
 	position: sticky;

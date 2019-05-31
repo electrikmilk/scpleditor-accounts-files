@@ -55,7 +55,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				<ul>
 					<li id='rename-action'>Rename</li>
 					<li id='copy-action'>Copy</li>
-					<li class='context-disabled' id='move-action'>Move to</li>
+					<!--<li class='context-disabled' id='move-action'>Move to</li>-->
 					<li id='share-action'>Share with...</li>
 					<li id='delete-action'>Delete</li>
 				</div>
