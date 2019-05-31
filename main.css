@@ -777,6 +777,12 @@ div.spinner div.bar12 {
 	cursor: pointer;
 	user-select: none;
 	transition: 0.3s background-color;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+}
+.file-size {
+	font-size: 13px;
+	color: #888;
 }
 .moveto-list {
 	padding: 10px 0;
