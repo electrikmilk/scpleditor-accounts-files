@@ -457,6 +457,7 @@ function drag(ev) {
 function drop(ev, target) {
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("text");
+		var targetid = target.id;
 		var target = target.id.replace("folder-", "");
 		var item = data.replace("folder-", "").replace("file-", "");
 			$("#" + data).addClass("loading");
@@ -471,7 +472,9 @@ function drop(ev, target) {
 				},
 				success: function (response) {
 					$(":input, :button").prop('disabled', false);
-					listFiles();
+					$("#"+data).appendTo("#dir-"+target);
+					//$("li#"+data).remove();
+					$("#" + data).removeClass("loading");
 					if (response.includes("moved")) {
 						showMessage("files-message", true, response, "success");
 					} else {
