@@ -778,6 +778,9 @@ div.spinner div.bar12 {
 	user-select: none;
 	transition: 0.3s background-color;
 }
+.moveto-list {
+	padding: 10px 0;
+}
 .moveto-list li {
 	padding: 0 10px;
 	padding-left: 25px;
