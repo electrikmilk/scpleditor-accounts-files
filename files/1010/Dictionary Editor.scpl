@@ -1,2 +1,22 @@
-@Color lightpurple
-@Icon wand
+@Icon list
+@Color teal
+ChoosefromMenu prompt="Dictionary Source" items=["From iCloud", "From Dropbox", "Paste JSON"]
+Case
+	GetFile
+Case
+	GetFile service=Dropbox -> mv:"Get File"
+Case
+	AskforInput question="Paste JSON" defaultAnswer=s:clipboard
+End -> mv:"Choose from Menu"
+GetDictionaryfromInput -> mv:"Get Dictionary from Input"
+GetDictionaryValue get="All Keys" -> mv:"Get Dictionary Value"
+AddtoVariable keys
+Text "Done Editing" -> mv:Text
+SplitText -> mv:"Split Text"
+AddtoVariable keys
+GetVariable v:keys
+ChoosefromList prompt="Choose key to edit" selectMultiple=true -> mv:"Choose from List"
+RepeatwithEach
+    GetDictionaryValue "Value" "\(v:"Repeat Item")" -> mv:keyvalue
+    AskforInput "\(v:"Repeat Item")" "\(mv:keyvalue)"
+End -> mv:"Repeat with Each"

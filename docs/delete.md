@@ -15,7 +15,6 @@ Delete a file or folder specified by 'id'. This endpoint is restricted to the ow
    **Required:**
 
    `token=[alphanumeric]`<br/>
-   `type=[file|folder]`<br/>
    `id=[alphanumeric]`
 
 * **Success Response:**

@@ -60,7 +60,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				<ul>
 					<li id='rename-action' onclick='rename();'>Rename</li>
 					<li id='copy-action' onclick='copy();'>Copy</li>
-					<li id='move-action' onclick='move();'>Move to</li>
+					<!--<li id='move-action' onclick='move();'>Move to</li>-->
 					<li id='share-action' onclick='share();'>Manage collaborators</li>
 					<li id='delete-action' onclick='deleteItem();'>Delete</li>
 				</div>
@@ -133,7 +133,6 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 	}
 	if($action === "delete") {
 		$file_id = $_POST[ 'id' ];
-		$type = $_POST[ 'type' ];
 		if ( !$file_id ) {
 			echo "No item id was recieved.";
 		} else {
@@ -178,6 +177,10 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					$oldpath = "files/$id/$filepath$item";
 					if ( $folder_id ) {
 						$folderdata = dataArray( "files", $folder_id, "id" );
+						if(stripos($filepath,$folderdata['name'])) {
+							if($itemtype === "file")$item = str_replace(".scpl","",$itemdata[ 'name' ])." copy.scpl";
+							else $item = $itemdata[ 'name' ]." copy";
+						}
 						if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
 						$path = "files/$id/$folderpath" . $folderdata[ 'name' ] . "/$item";
 						$folder_name = $folderdata[ 'name' ];

@@ -5,7 +5,6 @@ header( "Access-Control-Max-Age: 3600" );
 header( "Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With" );
 if ( $auth === true ) {
 	$file_id = $_POST[ 'id' ];
-	$type = $_POST[ 'type' ];
 	if ( !$file_id ) {
 		echo json_response( "error", "No item id was recieved." );
 	} else {

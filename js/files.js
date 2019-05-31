@@ -330,7 +330,6 @@ function deleteItem() {
         url: "files.php",
         data: {
           action: "delete",
-          type: type,
           id: id
         },
         success: function (response) {
