@@ -19,7 +19,7 @@ $(document).ready(function() {
     if(type === "folder") {
       $("#share-action").html("Cannot share folders").addClass("context-disabled");
     } else {
-      $("#share-action").html("Share with...").removeClass("context-disabled");
+      $("#share-action").html("Change collaborators").removeClass("context-disabled");
     }
     $(".context-menu").slideDown({
 			duration: 500,
@@ -311,38 +311,37 @@ function listUsers() {
 
 function changeAccess() {
   var collab = $("#file-collab").val();
-  if(collab) {
-    $(":input, :button").prop('disabled', true);
-    var split = itemid.split("-");
-    var type = split[0];
-    var id = split[1];
-    $.ajax({
-      type: "POST",
-      url: "files.php",
-      data: {
-        action: "access",
-        id: id,
-        collab: collab
-      },
-      success: function (response) {
-        $(":input, :button").prop('disabled', false);
-        if(response === "success") {
-          $(".modals-container").hide();
-          showMessage("files-message",true, "File collaborators changed.", "success");
-        } else {
-          $(".modals-container").hide();
-          showMessage("files-message",true, response, "error");
-        }
-        $(".collab-list").html("");
-        $("#file-collab").val("");
-      },
-      error: function (data) {
-        $(".modals-container").hide();
-        showMessage("files-message",true, "Error changing file access.", "error");
-        $(":input, :button").prop('disabled', false);
-      }
-    });
-  } else {
-    $(".modals-container").hide();
+  if(!$("#file-collab").val()) {
+    collab = "NULL";
   }
+  $(":input, :button").prop('disabled', true);
+  var split = itemid.split("-");
+  var type = split[0];
+  var id = split[1];
+  $.ajax({
+    type: "POST",
+    url: "files.php",
+    data: {
+      action: "access",
+      id: id,
+      collab: collab
+    },
+    success: function (response) {
+      $(":input, :button").prop('disabled', false);
+      if(response === "success") {
+        $(".modals-container").hide();
+        showMessage("files-message",true, "File collaborators changed.", "success");
+      } else {
+        $(".modals-container").hide();
+        showMessage("files-message",true, response, "error");
+      }
+      $(".collab-list").html("");
+      $("#file-collab").val("");
+    },
+    error: function (data) {
+      $(".modals-container").hide();
+      showMessage("files-message",true, "Error changing file access.", "error");
+      $(":input, :button").prop('disabled', false);
+    }
+  });
 }

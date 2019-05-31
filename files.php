@@ -190,7 +190,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 		if ( !$query ) {
 			echo "<div class='empty-list'>Enter a username...</div>";
 		} else {
-			$users = mysqli_query( $connect, "select * from data.users where username like '%$query%' order by username asc limit 50" );
+			$users = mysqli_query( $connect, "select * from data.users where username like '%$query%' and id<>'$id' order by username asc limit 50" );
 			while ( $user = mysqli_fetch_array( $users ) ) {
 				echo "<div class='user' id='".$user['id']."'>".$user['username']."</div>";
 			}
@@ -219,7 +219,8 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 		if(!$file) {
 			echo "Invalid file ID";
 		} else {
-			$collab = implode(",",explode(",",$_POST['collab']));
+			$collab = $_POST['collab'];
+			if($collab !== "NULL")$collab = implode(",",explode(",",$_POST['collab']));
 			if($file['author'] === $id) {
 				if(setValue("files",$collab,"collab","id = '$file_id'") === true) {
 					echo "success";
