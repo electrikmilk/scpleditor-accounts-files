@@ -336,7 +336,7 @@ function deleteItem() {
 				success: function (response) {
 					$(":input, :button").prop('disabled', false);
 					$("li#"+itemid).remove();
-					//listFiles();
+					itemCount();
 					if (response.includes("deleted")) {
 						showMessage("files-message", true, response, "success");
 					} else {
@@ -393,7 +393,6 @@ function share() {
 	}
 }
 
-
 function rename() {
 	if (itemid) {
 		var name = $("li#" + itemid).attr("data-name");
@@ -414,7 +413,7 @@ function rename() {
 				},
 				success: function (response) {
 					$(":input, :button").prop('disabled', false);
-					//listFiles();
+					itemCount();
 					if (response.includes("Renamed")) {
 						newname = response.replace("Renamed","");
 						$("li#"+itemid).attr("data-name",newname);
@@ -474,7 +473,6 @@ function drop(ev, target) {
 				success: function (response) {
 					$(":input, :button").prop('disabled', false);
 					$("#"+data).appendTo("#dir-"+target);
-					//$("li#"+data).remove();
 					$("#" + data).removeClass("loading");
 					if (response.includes("moved")) {
 						showMessage("files-message", true, response, "success");

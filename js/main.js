@@ -361,6 +361,10 @@ function listFiles() {
 			showMessage("files-message", false, "There was an error loading your files.", "error");
 		}
 	});
+	itemCount();
+}
+
+function itemCount() {
 	$.ajax({
 		type: "POST",
 		url: "files.php",

@@ -183,11 +183,12 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 							if ( $itemtype === "file" )$item = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
 							else $item = $itemdata[ 'name' ] . " copy";
 						}
+						if ( $itemtype === "file" )$item = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
+						else $item = $itemdata[ 'name' ] . " copy";
 						if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
 						$path = "files/$id/$folderpath" . $folderdata[ 'name' ] . "/$item";
 						$folder_name = $folderdata[ 'name' ];
 						$db_path = "'$folderpath" . $folderdata[ 'name' ] . "'";
-						$newitem = $item;
 					} else {
 						$folder_name = "root";
 						if ( $itemtype === "file" )$newitem = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
@@ -195,6 +196,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 						$path = "files/$id/$newitem";
 						$db_path = "NULL";
 					}
+					$newitem = e(special($newitem));
 					if ( file_exists( $oldpath ) ) {
 						if ( $itemtype === "file" )$copy_function = copy( $oldpath, $path );
 						else $copy_function = copy_dir( $oldpath, $path );
@@ -202,7 +204,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 							$file_id = randString( 20 );
 							if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $newitem . "','$itemtype'," . $db_path . ",'$id')" ) )echo "$type $item has been copied to $folder_name.";
 							else echo "Internal database error creating a copy of $item.";
-						} else echo "Internal file system error copying $item to $folder_name.";
+						} else echo "Internal file system error copying $item to $folder_name from $oldpath to $path.";
 					} else echo "$type $item does not appear to exist.";
 				} else echo "You do not appear to own that $itemtype.";
 			} else echo "Invalid $itemtype ID.";

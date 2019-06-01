@@ -27,11 +27,12 @@ if ( $auth === true ) {
 						if ( $itemtype === "file" )$item = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
 						else $item = $itemdata[ 'name' ] . " copy";
 					}
+					if ( $itemtype === "file" )$item = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
+					else $item = $itemdata[ 'name' ] . " copy";
 					if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
 					$path = "../../files/$id/$folderpath" . $folderdata[ 'name' ] . "/$item";
 					$folder_name = $folderdata[ 'name' ];
 					$db_path = "'$folderpath" . $folderdata[ 'name' ] . "'";
-					$newitem = $item;
 				} else {
 					$folder_name = "root";
 					if ( $itemtype === "file" )$newitem = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
