@@ -7,7 +7,7 @@ if ( $auth === true ) {
 		echo json_response( "error", "No query was recieved." );
 	} else {
 		$response = array();
-		$users = mysqli_query( $connect, "select * from data.users where username like '%$query%' order by username asc limit 50" );
+		$users = mysqli_query( $connect, "select * from data.users where username like '%$query%' and id<>'$id' order by username asc limit 50" );
 		while ( $user = mysqli_fetch_array( $users ) ) {
 			$this_user = array(
 				"id" => $user[ 'id' ],

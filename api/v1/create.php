@@ -12,7 +12,7 @@ if ( $auth === true ) {
 		if ( !$name )echo json_response( "error", "No item name was recieved." );
 		else if ( !$type )echo json_response( "error", "No item type was recieved." );
 	} else {
-		$file_check = mysqli_query( $connect, "select * from data.files where name = '$name' and type = '$type'" );
+		$file_check = mysqli_query( $connect, "select * from data.files where name = '$name'" );
 		if ( mysqli_num_rows( $file_check ) === 0 ) {
 			$file_id = randString( 20 );
 			if ( mysqli_query( $connect, "insert into data.files (id,name,type,author) values ('" . $file_id . "','" . $name . "','$type','$id')" ) ) {

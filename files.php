@@ -92,9 +92,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 						} else echo "Internal file system error creating file $name.";
 					} else {
 						if ( makeFolder( "files/$id/$name" ) ) {
-							$newfile = array( "id" => $file_id, "name" => $name );
-							echo json_encode( $newfile );
-							http_response_code( 200 );
+							echo $name;
 						} else echo "Internal file system error creating folder $name.";
 					}
 				} else echo "Internal database error creating file $name.";
