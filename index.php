@@ -72,6 +72,17 @@
 			</div>
 		</div>
 
+		<div class="modal" id="new-file-dialog">
+			<h2>New ScPL File</h2>
+			<p>Enter a filename</p>
+			<input type="text" id="new-filename" class="width-stretch" placeholder="Shortcut Name" autofocus/>
+			<br/>
+			<div class="btn-group">
+				<button type="submit" class="modal-btn primary-btn" onclick="newFile(true);">Create</button>
+				<button type="submit" class="modal-btn" onclick="modal('new-file-dialog');">Cancel</button>
+			</div>
+		</div>
+
 	</div>
 	<div class="config-container">
 		<div class="main-navigation">
@@ -144,7 +155,7 @@
 						</a>
 						<a href="https://discord.gg/2qqfFKc" target="_blank" rel="noopener">
 							<li class="web-icon">
-								<div>Discord</div>
+								<div>ScPL Discord</div>
 							</li>
 						</a>
 					</ul>

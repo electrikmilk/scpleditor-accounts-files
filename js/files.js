@@ -396,10 +396,10 @@ function share() {
 function rename() {
 	if (itemid) {
 		var name = $("li#" + itemid).attr("data-name");
-		var newname = prompt("New name for the file", name);
 		var split = itemid.split("-");
 		var type = split[0];
 		var id = split[1];
+		var newname = prompt("New name for the "+type, name);
 		if (newname) {
 			$("li#" + itemid).addClass("loading");
 			$(":input, :button").prop('disabled', true);

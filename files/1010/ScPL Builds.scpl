@@ -1,0 +1,79 @@
+@Icon hammer
+@Color blue
+Text "builds/"
+SetVariable path
+GetFile showDocumentPicker=false filePath="\(v:path)/" errorIfNotFound=false -> mv:"Get File"
+Count Items
+If input=Equals value=0
+	CreateFolder path=v:path
+End -> mv:If
+GetVariable s:shortcutinput
+Count Items
+If input="Is Greater Than" number=0 value=0
+	GetVariable s:shortcutinput
+	ReplaceText findText="https://www.icloud.com/shortcuts/" replaceWith="https://www.icloud.com/shortcuts/api/records/" caseSensitive=false
+	GetContentsofURL advanced=false headers=false
+	GetDictionaryValue key=fields -> mv:"Get Dictionary Value"
+	GetDictionaryValue key=name -> mv:"Get Dictionary Value1"
+	GetDictionaryValue key=value -> mv:"Get Dictionary Value2"
+	URLEncode Decode -> mv:"URL Encode"
+	SetVariable Name
+	GetVariable mv:"Get Dictionary Value"
+	GetDictionaryValue key=shortcut -> mv:"Get Dictionary Value3"
+	GetDictionaryValue key=value -> mv:"Get Dictionary Value4"
+	GetDictionaryValue key=downloadURL -> mv:"Get Dictionary Value5"
+	GetContentsofURL -> mv:"Get Contents of URL2"
+	SetName name="\(v:Name).shortcut"
+	SaveFile askWheretoSave=false destinationPath=v:path overwriteIfFileExists=true -> mv:"Save File"
+	ShowAlert title="Upload Successful" message="\(v:Name) has been uploaded to \(v:path)." showCancelButton=false
+Otherwise
+	ChoosefromMenu prompt="ScPL Builds" items=["View Builds", "Upload Shortcuts", "Check for Updates"]
+	Case
+		GetFile service="iCloud Drive" showDocumentPicker=false filePath=v:path errorIfNotFound=false -> mv:File
+		FilterFiles sortby="Last Modified Date" order="Newest First" -> mv:"Filter Files"
+		Count Items -> mv:Count2
+		If input="Is Less Than" number=1
+			ShowAlert title="No shortcuts" message="Didn't find any .shortcut files in \(v:path)." showCancelButton=false
+		Otherwise
+			GetVariable mv:File
+			ChoosefromList prompt="Choose Shortcut" -> mv:selected
+			ChoosefromMenu prompt=mv:selected items=["Add to Library", "Share Link", Delete]
+			Case
+				OpenIn showOpenInMenu=false app="is.workflow.my.app"
+			Case
+				GetLinktoFile -> mv:"Get Link to File"
+				Share
+				Nothing
+				RunShortcut shortcut="ScPL Builds" showWhileRunning=false
+			Case
+				DeleteFiles
+				Nothing
+				RunShortcut shortcut="ScPL Builds" showWhileRunning=false
+			End -> mv:"Choose from Menu"
+		End -> mv:If1
+	Case
+		GetMyShortcuts -> mv:"Get My Shortcuts"
+		ChoosefromList prompt="Choose shortcut(s) to upload" selectMultiple=true -> mv:"Choose from List"
+		SaveFile askWheretoSave=false destinationPath=v:path overwriteIfFileExists=true -> mv:"Save File1"
+		ShowAlert title="Upload Successful" message="Selected shortcuts have been uploaded to \(v:path)." showCancelButton=false
+		Nothing
+		RunShortcut shortcut="ScPL Builds" showWhileRunning=false -> mv:"Run Shortcut1"
+	Case
+		GetMyShortcuts -> mv:"Get My Shortcuts1"
+		If input=Contains value=UpdateKit
+			Dictionary {"Shortcut Name": "ScPL Builds", "Current Version": "1.6.3", "RoutineHub ID": "2225"}
+			RunShortcut shortcut=UpdateKit showWhileRunning=false
+			GetDictionaryfromInput
+			GetDictionaryValue key="Exit Mode"
+			If input=Equals value="Up To Date"
+				ShowAlert title="Up-To-Date" message="You're already using the latest version of this shortcut." showCancelButton=false
+				Nothing
+				RunShortcut shortcut="ScPL Builds" showWhileRunning=false
+			End
+		Otherwise
+			ShowAlert title="UpdateKit Not Installed" message="This shortcut uses UpdateKit to keep it up to date. Press 'OK' to install UpdateKit."
+			URL "http://www.mikebeas.com/updatekit/"
+			OpenURLs
+		End -> mv:If3
+	End -> mv:"Choose from Menu1"
+End -> mv:If4
