@@ -76,13 +76,14 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 	if ( $action === "create" ) {
 		if ( $_POST[ 'contents' ] )$contents = $_POST[ 'contents' ];
 		$type = $_POST[ 'type' ];
+		$oname = $_POST['name'];
 		if ( $type === "file" )$name = e( special( str_replace( ".scpl", "", $_POST[ 'name' ] ) ) ) . ".scpl";
 		else $name = e( special( str_replace( ".scpl", "", $_POST[ 'name' ] ) ) );
 		if ( !$name || !$type ) {
 			if ( !$name )echo "No item name was recieved.";
 			else if ( !$type )echo "No item type was recieved.";
 		} else {
-			$file_check = mysqli_query( $connect, "select * from data.files where name = '$name'" );
+			$file_check = mysqli_query( $connect, "select * from data.files where name = '$name' or name = '$oname'" );
 			if ( mysqli_num_rows( $file_check ) === 0 ) {
 				$file_id = randString( 20 );
 				if ( mysqli_query( $connect, "insert into data.files (id,name,type,author) values ('" . $file_id . "','" . $name . "','$type','$id')" ) ) {

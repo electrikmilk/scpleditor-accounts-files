@@ -219,17 +219,20 @@ function copy_dir( $src, $dst ) {
 		if ( ( $file != '.' ) && ( $file != '..' ) ) {
 			$name = $file;
 			$itemdata = dataArray("files",$name,"name");
-			$file = $itemdata['name']." copy";
 			if ( is_dir( $src . '/' . $file ) ) {
-				copy_dir( $src . '/' . $file, $dst . '/' . $file );
+				$file = $itemdata[ 'name' ] . " copy";
+				copy_dir( $src . '/' . $name, $dst . '/' . $file );
 				$itemtype = "folder";
 			} else {
-				copy( $src . '/' . $file, $dst . '/' . $file );
+				$file = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
+				copy( $src . '/' . $name, $dst . '/' . $file );
 				$itemtype = "file";
 			}
-			$db_path = $dst;
+			$db_path = "'".str_replace("../","",str_replace("files/$id",$dst))."'";
 			$file_id = randString( 20 );
-			mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $newitem . "','$itemtype'," . $db_path . ",'$id')" );
+			if(mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $file . "','$itemtype'," . $db_path . ",'$id')" )) {
+
+			} else return false;
 		}
 	}
 	closedir( $dir );
