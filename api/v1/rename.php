@@ -25,6 +25,9 @@ if ( $auth === true ) {
 				if ( file_exists( $path ) ) {
 					if ( mysqli_query( $connect, "update data.files set name = '$new_name' where id = '$item_id'" ) ) {
 						if ( rename( $path, $newpath ) ) {
+							if($itemtype === "folder") {
+								fixPaths($name,$new_name);
+							}
 							$response = array( "name" => $new_name );
 							echo json_encode( $response );
 							http_response_code( 200 );

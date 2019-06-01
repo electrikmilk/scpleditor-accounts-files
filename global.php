@@ -226,6 +226,21 @@ function copy_dir( $src, $dst ) {
 	return true;
 }
 
+function fixPaths($name,$new) {
+	global $connect;
+	$files = mysqli_query($connect,"select * from data.files");
+	while($file = mysqli_fetch_array($files)) {
+		if(stripos($file['path'],$name) !== false) {
+			$file_id = $file['id'];
+			$newpath = str_replace($name,$new,$file['path']);
+			if(mysqli_query($connect,"update data.files set path = '$newpath' where id = '$file_id'")) {
+				if($result !== false)$result = true;
+			} else $result = false;
+		}
+	}
+	return $result;
+}
+
 // Global array function
 function array_push_key( $array, $key, $value ) {
 	return $array[ $key ] = $value;

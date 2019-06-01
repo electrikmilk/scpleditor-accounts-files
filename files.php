@@ -43,21 +43,6 @@ function getFiles( $path, $query = null ) {
 	return $files;
 }
 
-function fixPaths($name,$new) {
-	global $connect;
-	$files = mysqli_query($connect,"select * from data.files");
-	while($file = mysqli_fetch_array($files)) {
-		if(stripos($file['path'],$name) !== false) {
-			$file_id = $file['id'];
-			$newpath = str_replace($name,$new,$file['path']);
-			if(mysqli_query($connect,"update data.files set path = '$newpath' where id = '$file_id'")) {
-				if($result !== false)$result = true;
-			} else $result = false;
-		}
-	}
-	return $result;
-}
-
 // Account files backend
 if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 	$this->output->set_status_header( 400, 'No Remote Access Allowed' );
