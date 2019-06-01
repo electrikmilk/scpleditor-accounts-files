@@ -50,8 +50,9 @@ function fixPaths($name,$new) {
 		if(stripos($file['path'],$name) !== false) {
 			$file_id = $file['id'];
 			$newpath = str_replace($name,$new,$file['path']);
-			if(setValue("files",$newpath,"path","where id = '$file_id'"))if($result !== false)$result = true;
-			else $result = false;
+			if(mysqli_query($connect,"update data.files set path = '$newpath' where id = '$file_id'")) {
+				if($result !== false)$result = true;
+			} else $result = false;
 		}
 	}
 	return $result;
