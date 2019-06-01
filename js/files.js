@@ -93,9 +93,10 @@ function newFile() {
 			success: function (response) {
 				$(":input, :button").prop('disabled', false);
 				console.log(response);
-				if (response.includes(".scpl")) {
+				if (response.includes("created")) {
 					listFiles();
-					showMessage("files-message", true, "Created file " + filename + ".", "success");
+					response = response.replace("created","");
+					showMessage("files-message", true, "Created file " + response + ".", "success");
 				} else {
 					showMessage("files-message", true, response, "error");
 				}

@@ -88,11 +88,11 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				if ( mysqli_query( $connect, "insert into data.files (id,name,type,author) values ('" . $file_id . "','" . $name . "','$type','$id')" ) ) {
 					if ( $type === "file" ) {
 						if ( file_put_contents( "files/$id/$name", $contents ) !== false ) {
-							echo $name;
+							echo "created$name";
 						} else echo "Internal file system error creating file $name.";
 					} else {
 						if ( makeFolder( "files/$id/$name" ) ) {
-							echo $name;
+							echo "created$name";
 						} else echo "Internal file system error creating folder $name.";
 					}
 				} else echo "Internal database error creating file $name.";

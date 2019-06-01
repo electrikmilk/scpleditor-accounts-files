@@ -211,15 +211,25 @@ function count_dir( $path ) {
 }
 
 function copy_dir( $src, $dst ) {
+	global $connect;
+	global $id;
 	$dir = opendir( $src );
 	@mkdir( $dst );
 	while ( false !== ( $file = readdir( $dir ) ) ) {
 		if ( ( $file != '.' ) && ( $file != '..' ) ) {
+			$name = $file;
+			$itemdata = dataArray("files",$name,"name");
+			$file = $itemdata['name']." copy";
 			if ( is_dir( $src . '/' . $file ) ) {
 				copy_dir( $src . '/' . $file, $dst . '/' . $file );
+				$itemtype = "folder";
 			} else {
 				copy( $src . '/' . $file, $dst . '/' . $file );
+				$itemtype = "file";
 			}
+			$db_path = $dst;
+			$file_id = randString( 20 );
+			mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $newitem . "','$itemtype'," . $db_path . ",'$id')" );
 		}
 	}
 	closedir( $dir );
