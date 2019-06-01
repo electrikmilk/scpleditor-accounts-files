@@ -60,7 +60,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				<ul>
 					<li id='rename-action' onclick='rename();'>Rename</li>
 					<li id='copy-action' onclick='copy();'>Copy</li>
-					<li id='move-action' onclick='move();'>Move to</li>
+					<!--<li id='move-action' onclick='move();'>Move to</li>-->
 					<li id='share-action' onclick='share();'>Manage collaborators</li>
 					<li id='delete-action' onclick='deleteItem();'>Delete</li>
 				</div>

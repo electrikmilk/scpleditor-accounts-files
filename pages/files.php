@@ -24,7 +24,7 @@ if ( $count[ 'folders' ] !== 1 )$fs = "s";
 <div class="files-nav">
 	<div class="nav-btns">
 		<button type="submit" class="file-btn new-btn" onclick="newFile();"></button>
-		<button type="submit" class="file-btn newf-btn" onclick="newFolder();"></button>
+		<!-- <button type="submit" class="file-btn newf-btn" onclick="newFolder();"></button> -->
 	</div>
 	<div class="nav-search"><input type="search" class="search-input" id="files-search" placeholder="Search Files" onblur="listFiles();" onchange="listFiles();" onkeyup="listFiles();"/>
 	</div>
