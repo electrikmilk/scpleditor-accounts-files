@@ -20,9 +20,13 @@ $(document).ready(function () {
 		var type = split[0];
 		var id = split[1];
 		if (type === "folder") {
-			$("#share-action").html("Can't share folders yet").addClass("disabled");
+			//$("#share-action").html("Can't share folders yet").addClass("disabled");
+			$("#share-action").hide();
+			$("#download-action").hide();
 		} else {
-			$("#share-action").html("Manage collaborators").removeClass("disabled");
+			//$("#share-action").html("Manage collaborators").removeClass("disabled");
+			$("#share-action").show();
+			$("#download-action").show();
 		}
 		$(".context-menu").slideDown({
 			duration: 500,
@@ -485,4 +489,37 @@ function drop(ev, target) {
 					$(":input, :button").prop('disabled', false);
 				}
 			});
+}
+
+function exportShortcut(preview) {
+if(itemid) {
+	var split = itemid.split("-");
+	var type = split[0];
+	var id = split[1].replace("file-","");
+			$("li#file-" + id).addClass("loading");
+			var name = $("li#file-" + id).attr("data-name").replace(".scpl",".shortcut");
+			$(":input, :button").prop('disabled', true);
+			$.ajax({
+				type: "POST",
+				url: "generate.php",
+				data: {
+					file_id: id
+				},
+				success: function (response) {
+					$(":input, :button").prop('disabled', false);
+if(response === "gen") {
+	$(":input, :button").prop('disabled', false);
+	$("li#file-" + id).removeClass("loading");
+	var win = window.open('/preview/dist/index.html', '_blank');
+	win.focus();
+} else {
+	showMessage("files-message", true, response, "error");
+}
+				},
+				error: function (data) {
+					showMessage("files-message", true, "Error moving item.", "error");
+					$(":input, :button").prop('disabled', false);
+				}
+			});
+}
 }

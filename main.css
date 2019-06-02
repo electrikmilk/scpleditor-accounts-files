@@ -1029,6 +1029,9 @@ div.spinner div.bar12 {
 #rename-action {
 	background-image: url(img/rename.svg);
 }
+#download-action {
+	background-image: url(img/download.svg);
+}
 #share-action {
 	background-image: url(img/share.svg);
 }
