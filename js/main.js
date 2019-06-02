@@ -243,7 +243,7 @@ function modal(id) {
 			duration: 200
 		});
 	}
-	$(".modal:not(#" + id + ")").hide();
+	$(".modal").hide();
 	$(".modal#" + id).fadeToggle({
 		duration: 200
 	});
