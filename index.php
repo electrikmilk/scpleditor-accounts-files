@@ -58,6 +58,15 @@
 			</div>
 		</div>
 
+		<div class="modal" id="preview-dialog">
+			<div class="shortcut-preview">
+				<iframe src="" frameborder="0" allowtransparency></iframe>
+			</div>
+			<div class="btn-group">
+				<button type="submit" class="modal-btn primary-btn width-stretch" onclick="modal('preview-dialog');">Done</button>
+			</div>
+		</div>
+
 		<div class="modal" id="move-dialog">
 			<h2>Move to...</h2>
 			<p>Choose a folder below to move this item to.</p>

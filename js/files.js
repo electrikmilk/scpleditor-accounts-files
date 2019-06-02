@@ -7,7 +7,6 @@ $(document).ready(function () {
 		}, false);
 	} else { // IE < 9
 		document.attachEvent('oncontextmenu', function () {
-			alert("You've tried to open context menu");
 			window.event.returnValue = false;
 		});
 	}
@@ -491,8 +490,11 @@ function drop(ev, target) {
 			});
 }
 
-function exportShortcut(preview) {
+function exportShortcut(preview = false) {
 if(itemid) {
+	if(preview === true) {
+		var preview = "1";
+	}
 	var split = itemid.split("-");
 	var type = split[0];
 	var id = split[1].replace("file-","");
@@ -503,15 +505,21 @@ if(itemid) {
 				type: "POST",
 				url: "generate.php",
 				data: {
-					file_id: id
+					file_id: id,
+					preview: preview
 				},
 				success: function (response) {
 					$(":input, :button").prop('disabled', false);
 if(response === "gen") {
 	$(":input, :button").prop('disabled', false);
 	$("li#file-" + id).removeClass("loading");
-	var win = window.open('/preview/dist/index.html', '_blank');
-	win.focus();
+	if(preview === "1") {
+		$(".shortcut-preview iframe").attr("src","/preview/dist/index.html");
+		modal("preview-dialog");
+	} else {
+		var win = window.open("/preview/dist/index.html", "_blank");
+		win.focus();
+	}
 } else {
 	showMessage("files-message", true, response, "error");
 }

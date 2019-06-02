@@ -4,6 +4,7 @@ $file_id = $_POST['file_id'];
 $file = dataArray("files",$file_id,"id");
 if($file) {
   $name = $file['name'];
+  $preview = $_POST['preview'];
   if($file['path'])$filepath = $file['path']."/";
   $code = file_get_contents("files/$id/$itempath$name");
   $html = "<!doctype html>
@@ -13,6 +14,7 @@ if($file) {
     </head>
     <body>
       <input type='hidden' id='scpl-name' value='$name'/>
+      <input type='hidden' id='preview' value='$preview'/>
       <textarea id='scpl-code' style='display: none;'>$code</textarea>
       <script src='main.js'></script>
     </body>

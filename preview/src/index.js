@@ -7,15 +7,18 @@
   // render shortcut
   const code = document.getElementById("scpl-code").value;
   const {shortcutjson, shortcutplist} = parse(code, {make: ["shortcutjson", "shortcutplist"]});
-  // let el = document.createElement("div");
-  // ReactDOM.render(React.createElement(ShortcutPreview, {data: shortcutjson}), el);
-  // el.setAttribute("class","container");
-  // document.body.appendChild(el);
+  var showpreview = document.getElementById("preview").value;
+
+  if(showpreview === "1") {
+    let el = document.createElement("div");
+    ReactDOM.render(React.createElement(ShortcutPreview, {data: shortcutjson}), el);
+    document.body.appendChild(el);
+  }
 
   // send plist
   var blob = new Blob([shortcutplist], { type: "application/x-octet-stream" });
   var url = (window.URL || window.webkitURL).createObjectURL(blob);
-  var filename = document.getElementById("scpl-name").value;;
+  var filename = document.getElementById("scpl-name").value;
   var data = new FormData();
   data.append('file', blob);
   data.append('name', filename);
@@ -26,8 +29,10 @@
     contentType: false,
     processData: false,
     success: function (response) {
-      window.location.href = response;
-      setTimeout(function(){ window.close(); }, 5000);
+      if(showpreview !== "1") {
+        window.location.href = response;
+        setTimeout(function(){ window.close(); }, 5000);
+      }
     },
     error: function (data) {
       console.log(data);
