@@ -63,7 +63,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					<!--<li id='move-action' onclick='move();'>Move to</li>-->
 					<li id='share-action' onclick='share();'>Manage collaborators</li>
 					<!--<li id='preview-action' onclick='exportShortcut(true);'>Preview Shortcut</li>-->
-					<li id='download-action' onclick='exportShortcut();'>Download Shortcut</li>
+					<li id='download-action' onclick='exportShortcut();'>Export Shortcut</li>
 					<li id='delete-action' onclick='deleteItem();'>Delete</li>
 				</div>
 			</div>";
