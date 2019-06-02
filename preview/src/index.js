@@ -3,7 +3,7 @@
   const {parse} = require("scpl");
   const React = require("react");
   const ReactDOM = require("react-dom");
-  
+
   // render shortcut
   const code = document.getElementById("scpl-code").value;
   const {shortcutjson, shortcutplist} = parse(code, {make: ["shortcutjson", "shortcutplist"]});
@@ -15,6 +15,7 @@
     ReactDOM.render(React.createElement(ShortcutPreview, {data: shortcutjson}), el);
   }
 
+  if(showpreview !== "1") {
   // send plist
   var blob = new Blob([shortcutplist], { type: "application/x-octet-stream" });
   var url = (window.URL || window.webkitURL).createObjectURL(blob);
@@ -29,12 +30,12 @@
     contentType: false,
     processData: false,
     success: function (response) {
-      if(showpreview !== "1") {
+
         window.location.href = response;
         setTimeout(function(){ window.close(); }, 5000);
-      }
     },
     error: function (data) {
       console.log(data);
     }
   });
+        }
