@@ -23,14 +23,14 @@
   var data = new FormData();
   data.append('file', blob);
   data.append('name', filename);
+  data.append('action', 'upload');
   $.ajax({
-    url: "../../create-shortcut.php",
+    url: "../../files.php",
     type: "POST",
     data: data,
     contentType: false,
     processData: false,
     success: function (response) {
-
         window.location.href = response;
         setTimeout(function(){ window.close(); }, 5000);
     },

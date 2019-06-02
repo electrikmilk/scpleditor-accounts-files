@@ -323,4 +323,13 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			echo "<ul>$files</ul>";
 		}
 	}
+	if($action === "upload") {
+		makeFolder("shortcuts/$id");
+		$name = str_replace(".scpl","",$_POST['name']);
+		$target = "shortcuts/$id/$name.shortcut";
+		if(isset($_FILES["file"]) and !$_FILES["file"]["error"]){
+		  if(move_uploaded_file($_FILES["file"]["tmp_name"], $target))echo "/$target";
+		  else echo "Error creating shortcut file.";
+		}
+	}
 } else echo "Logged out";

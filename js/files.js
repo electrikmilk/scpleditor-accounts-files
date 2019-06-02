@@ -498,39 +498,17 @@ if(itemid) {
 	var split = itemid.split("-");
 	var type = split[0];
 	var id = split[1].replace("file-","");
-			$("li#file-" + id).addClass("loading");
 			var name = $("li#file-" + id).attr("data-name").replace(".scpl",".shortcut");
-			$(":input, :button").prop('disabled', true);
-			$.ajax({
-				type: "POST",
-				url: "generate.php",
-				data: {
-					file_id: id,
-					preview: preview
-				},
-				success: function (response) {
-					$(":input, :button").prop('disabled', false);
-					$("li#file-" + id).removeClass("loading");
-if(response === "gen") {
-	if(preview === "1") {
-		$(".preview-load").css('display','flex');
-		$(".shortcut-preview iframe").attr("src","/preview/dist/index.html");
-		$(".shortcut-preview iframe").on('load', function () {
-			$(".preview-load").hide();
-		});
-		modal("preview-dialog");
-	} else {
-		var win = window.open("/preview/dist/index.html", "_blank");
-		win.focus();
-	}
+if(preview === "1") {
+$(".preview-load").css('display','flex');
+$(".shortcut-preview iframe").attr("src","/preview/dist/export?id="+id+"&preview=1");
+$(".shortcut-preview iframe").on('load', function () {
+	$(".preview-load").hide();
+});
+modal("preview-dialog");
 } else {
-	showMessage("files-message", true, response, "error");
+	var win = window.open("/preview/dist/export?id="+id, "_blank");
+	win.focus();
 }
-				},
-				error: function (data) {
-					showMessage("files-message", true, "Error moving item.", "error");
-					$(":input, :button").prop('disabled', false);
-				}
-			});
 }
 }
