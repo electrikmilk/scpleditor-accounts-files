@@ -513,7 +513,11 @@ if(itemid) {
 					$("li#file-" + id).removeClass("loading");
 if(response === "gen") {
 	if(preview === "1") {
+		$(".preview-load").css('display','flex');
 		$(".shortcut-preview iframe").attr("src","/preview/dist/index.html");
+		$(".shortcut-preview iframe").on('load', function () {
+			$(".preview-load").hide();
+		});
 		modal("preview-dialog");
 	} else {
 		var win = window.open("/preview/dist/index.html", "_blank");

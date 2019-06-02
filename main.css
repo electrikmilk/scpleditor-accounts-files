@@ -1051,10 +1051,22 @@ div.spinner div.bar12 {
 	background-color: #d74c3910 !important;
 }
 /* Preview */
+.shortcut-preview {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
 .shortcut-preview iframe {
 	background-color: #eee;
 	border: 1px solid #c7c7cc;
 	border-radius: 5px;
 	width: 100%;
 	height: 500px;
+}
+.preview-load {
+	position: absolute;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	opacity: .5;
 }

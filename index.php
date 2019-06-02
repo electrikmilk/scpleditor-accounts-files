@@ -60,6 +60,9 @@
 
 		<div class="modal" id="preview-dialog">
 			<div class="shortcut-preview">
+				<div class="preview-load">
+					<?php echo $load; ?>
+				</div>
 				<iframe src="" frameborder="0" allowtransparency></iframe>
 			</div>
 			<div class="btn-group">
