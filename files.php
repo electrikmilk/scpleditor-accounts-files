@@ -60,10 +60,10 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				<ul>
 					<li id='rename-action' onclick='rename();'>Rename</li>
 					<li id='copy-action' onclick='copy();'>Copy</li>
-					<!--<li id='move-action' onclick='move();'>Move to</li>-->
-					<li id='share-action' onclick='share();'>Manage collaborators</li>
-					<li id='preview-action' onclick='exportShortcut(true);'>Preview Shortcut</li>
-					<li id='export-action' onclick='exportShortcut();'>Export Shortcut</li>
+					<!--<li id='move-action' onclick='move();'>Move to...</li>-->
+					<li id='share-action' onclick='share();'>Manage Collaborators</li>
+					<li id='preview-action' onclick='exportShortcut(true);'>Preview</li>
+					<li id='export-action' onclick='exportShortcut();'>Export .shortcut</li>
 					<li id='delete-action' onclick='deleteItem();'>Delete</li>
 				</div>
 			</div>";
@@ -193,20 +193,19 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 						$db_path = "'$folderpath" . $folderdata[ 'name' ] . "'";
 					} else {
 						$folder_name = "root";
-						if ( $itemtype === "file" )$newitem = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
-						else $newitem = $itemdata[ 'name' ] . " copy";
+						if ( $itemtype === "file" )$newitem = e(special(str_replace( ".scpl", "", $itemdata[ 'name' ] ))) . " copy.scpl";
+						else $newitem = e(special($itemdata[ 'name' ])) . " copy";
 						$path = "files/$id/$newitem";
 						$db_path = "NULL";
 					}
-					$newitem = e(special($newitem));
 					if ( file_exists( $oldpath ) ) {
 						if ( $itemtype === "file" )$copy_function = copy( $oldpath, $path );
 						else $copy_function = copy_dir( $oldpath, $path );
-						if ( $copy_function || $copy_function === true ) {
+						if ( $copy_function ) {
 							$file_id = randString( 20 );
 							if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $file_id . "','" . $newitem . "','$itemtype'," . $db_path . ",'$id')" ) )echo "$type $item has been copied to $folder_name.";
 							else echo "Internal database error creating a copy of $item.";
-						} else echo "Internal file system error copying $item to $folder_name from $oldpath to $path.";
+						} else echo "Internal file system error copying $item to $folder_name.";
 					} else echo "$type $item does not appear to exist.";
 				} else echo "You do not appear to own that $itemtype.";
 			} else echo "Invalid $itemtype ID.";

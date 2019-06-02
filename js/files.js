@@ -509,6 +509,7 @@ if(itemid) {
 					preview: preview
 				},
 				success: function (response) {
+					console.log(response);
 					$(":input, :button").prop('disabled', false);
 if(response === "gen") {
 	$(":input, :button").prop('disabled', false);

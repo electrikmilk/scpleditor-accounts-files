@@ -994,7 +994,6 @@ div.spinner div.bar12 {
 .context-menu {
 	position: absolute;
 	padding: 10px 0;
-	padding-left: 1px;
 	background-color: #fff;
 	border-radius: 5px;
 	box-shadow: 0 3px 10px rgba(100, 100, 100, 0.3);
@@ -1009,7 +1008,7 @@ div.spinner div.bar12 {
 }
 .context-menu ul li {
 	display: block;
-	padding: 10px 15px;
+	padding: 10px 14px;
 	font-size: 14px;
 	text-decoration: none;
 	transition: 0.2s all;
@@ -1053,8 +1052,9 @@ div.spinner div.bar12 {
 }
 /* Preview */
 .shortcut-preview iframe {
-	border: 2px solid #c7c7cc;
-	border-radius: 3px;
+	background-color: #eee;
+	border: 1px solid #c7c7cc;
+	border-radius: 5px;
 	width: 100%;
 	height: 500px;
 }

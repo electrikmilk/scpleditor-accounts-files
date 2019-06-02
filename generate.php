@@ -10,17 +10,18 @@ if($file) {
   $html = "<!doctype html>
    <html>
     <head>
-      <title>Preview</title>
+      <title>Loading...</title>
     </head>
     <body>
       <input type='hidden' id='scpl-name' value='$name'/>
       <input type='hidden' id='preview' value='$preview'/>
       <textarea id='scpl-code' style='display: none;'>$code</textarea>
+      <div id='scpl-render'></div>
       <script src='main.js'></script>
     </body>
    </html>";
   if($file['author'] === $id) {
-    if(file_put_contents("preview/dist/index.html",$html))echo "gen";
+    if(file_put_contents("preview/dist/index.html",$html) === true)echo "gen";
     else echo "Error converting ScPL.";
   } else echo "You do not appear to own that file.";
 } else  echo "Invalid file ID.";

@@ -1,18 +1,18 @@
-  const $ = require("jquery")
-  const preview = require("shortcut-preview");
+  const $ = require("jquery");
   import ShortcutPreview from 'shortcut-preview';
   const {parse} = require("scpl");
   const React = require("react");
   const ReactDOM = require("react-dom");
+  
   // render shortcut
   const code = document.getElementById("scpl-code").value;
   const {shortcutjson, shortcutplist} = parse(code, {make: ["shortcutjson", "shortcutplist"]});
   var showpreview = document.getElementById("preview").value;
 
+  // render preview
   if(showpreview === "1") {
-    let el = document.createElement("div");
+    let el = document.getElementById("scpl-render");
     ReactDOM.render(React.createElement(ShortcutPreview, {data: shortcutjson}), el);
-    document.body.appendChild(el);
   }
 
   // send plist
