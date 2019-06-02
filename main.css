@@ -14,6 +14,13 @@
 	.external-form {
 		background-size: cover !important;
 		background-position: left center !important;
+		position: static !important;
+		display: block !important;
+	}
+	.external-form > div {
+		width: auto !important;
+		padding: 0 30px !important;
+		padding-top: 50px !important;
 	}
 	.action-btns {
 		display: block !important;
@@ -535,6 +542,7 @@ div.spinner div.bar12 {
 	border-right: 0.5px solid #c7c7cc;
 	transition: 0.3s all;
 	width: 300px;
+	z-index: 100;
 }
 .page-container {
 	overflow-y: auto;

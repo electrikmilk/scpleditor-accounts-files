@@ -38,7 +38,7 @@ $(function () {
 			$(":input, :button").prop('disabled', true);
 			$.ajax({
 				type: "POST",
-				url: "auth.php",
+				url: "/auth.php",
 				data: formdata,
 				success: function (response) {
 					console.log(response);
@@ -76,7 +76,7 @@ $(function () {
 			$(":input, :button").prop('disabled', true);
 			$.ajax({
 				type: "POST",
-				url: "auth.php",
+				url: "/auth.php",
 				data: formdata,
 				success: function (response) {
 					$(":input, :button").prop('disabled', false);
@@ -111,7 +111,7 @@ $(function () {
 			$(":input, :button").prop('disabled', true);
 			$.ajax({
 				type: "POST",
-				url: "auth.php",
+				url: "/auth.php",
 				data: formdata,
 				success: function (response) {
 					$(":input, :button").prop('disabled', false);
@@ -151,7 +151,7 @@ $(function () {
 			$(":input, :button").prop('disabled', true);
 			$.ajax({
 				type: "POST",
-				url: "auth.php",
+				url: "/auth.php",
 				data: formdata,
 				success: function (response) {
 					$(":input, :button").prop('disabled', false);
