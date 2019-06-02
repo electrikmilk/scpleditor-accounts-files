@@ -21,7 +21,7 @@ if($file) {
     </body>
    </html>";
   if($file['author'] === $id) {
-    if(file_put_contents("preview/dist/index.html",$html) === true)echo "gen";
+    if(file_put_contents("preview/dist/index.html",$html) !== false)echo "gen";
     else echo "Error converting ScPL.";
   } else echo "You do not appear to own that file.";
 } else  echo "Invalid file ID.";

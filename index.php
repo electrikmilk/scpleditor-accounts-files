@@ -63,7 +63,8 @@
 				<iframe src="" frameborder="0" allowtransparency></iframe>
 			</div>
 			<div class="btn-group">
-				<button type="submit" class="modal-btn primary-btn width-stretch" onclick="modal('preview-dialog');">Done</button>
+				<button type="submit" class="modal-btn" onclick="modal('preview-dialog'),exportShortcut();">Export</button>
+				<button type="submit" class="modal-btn primary-btn" onclick="modal('preview-dialog');">Close</button>
 			</div>
 		</div>
 

@@ -509,11 +509,9 @@ if(itemid) {
 					preview: preview
 				},
 				success: function (response) {
-					console.log(response);
 					$(":input, :button").prop('disabled', false);
+					$("li#file-" + id).removeClass("loading");
 if(response === "gen") {
-	$(":input, :button").prop('disabled', false);
-	$("li#file-" + id).removeClass("loading");
 	if(preview === "1") {
 		$(".shortcut-preview iframe").attr("src","/preview/dist/index.html");
 		modal("preview-dialog");
