@@ -1,4 +1,4 @@
-**Import Shortcut from iCloud URL**
+**Upload Shortcut via iCloud URL**
 ----
 Upload shortcut to the server via an iCloud URL, returns path to uploaded shortcut.
 

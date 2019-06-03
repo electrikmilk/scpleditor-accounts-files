@@ -1,6 +1,6 @@
 **Create .shortcut file**
 ----
-Create shortcut file on the server using binary shortcut data.
+Create shortcut file on the server with binary shortcut data.
 
 * **URL**
 
