@@ -51,6 +51,6 @@ Upload shortcut to the server via an iCloud URL, returns path to uploaded shortc
        });
 ```
 
-   * **Notes:**
+* **Notes:**
 
-     _No notes._
+     URL returned is a **temporary** file URL. Created files are deleted after a day.
