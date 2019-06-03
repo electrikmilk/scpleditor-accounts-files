@@ -39,7 +39,7 @@ Upload shortcut to the server via an iCloud URL, returns path to uploaded shortc
 
 ```javascript
        $.ajax({
-         url: "https://account.scpl.dev/api/v1/upload",
+         url: "https://account.scpl.dev/api/v1/import",
          dataType: "json",
          type: "POST",
          date: {
