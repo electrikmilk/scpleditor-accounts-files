@@ -10,7 +10,7 @@ if($auth === true) {
     $url = $import['fields']['shortcut']['value'];
     $target = "shortcuts/temp/$name.shortcut";
     if( file_put_contents( $target, base64_encode( fopen( $url, 'r' ) ) ) ) {
-      $location_array = array("location"=>"https://account.scpl.dev/$target");
+      $location_array = array("url"=>"https://account.scpl.dev/$target");
       echo json_encode($location_array);
       http_response_code( 200 );
     } else echo json_response( "error", "Internal file system error creating shortcut file." );

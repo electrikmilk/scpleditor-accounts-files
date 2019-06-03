@@ -19,7 +19,7 @@ Upload shortcut to the server via an iCloud URL, returns path to uploaded shortc
 * **Success Response:**
 
      * **Code:** 200 OK <br />
-       **Content:** `{ "location":"https://account.scpl.dev/.../Example.shortcut" }`
+       **Content:** `{ "url":"https://account.scpl.dev/.../Example.shortcut" }`
 
 * **Error Response:**
 

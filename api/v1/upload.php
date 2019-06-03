@@ -12,7 +12,7 @@ if($auth === true) {
     $target = "shortcuts/temp/$name.shortcut";
     if(isset($_FILES["data"]) and !$_FILES["data"]["error"]){
       if(move_uploaded_file($_FILES["data"]["tmp_name"], $target)) {
-        $location_array = array("location"=>"https://account.scpl.dev/$target");
+        $location_array = array("url"=>"https://account.scpl.dev/$target");
         echo json_encode($location_array);
         http_response_code( 200 );
       } else echo json_response( "error", "Internal file system error creating shortcut file." );

@@ -20,7 +20,7 @@ Create shortcut file on the server with binary shortcut data.
 * **Success Response:**
 
      * **Code:** 200 OK <br />
-       **Content:** `{ "location":"https://account.scpl.dev/.../Example.shortcut" }`
+       **Content:** `{ "url":"https://account.scpl.dev/.../Example.shortcut" }`
 
 * **Error Response:**
 
