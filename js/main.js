@@ -43,7 +43,7 @@ $(function () {
 				success: function (response) {
 					console.log(response);
 					if (response.includes("key") === true) {
-						window.location = response;
+						window.location = "https://editor.scpl.dev/?login_key="+response;
 					} else {
 						$(":input, :button").prop('disabled', false);
 						$("#login-error").html(response);
@@ -81,7 +81,7 @@ $(function () {
 				success: function (response) {
 					$(":input, :button").prop('disabled', false);
 					if (response.includes("editor")) {
-						window.location = response;
+						window.location = "https://editor.scpl.dev/?login_key="+response;
 					} else {
 						$("#signup-error").html(response);
 						$("#signup-error").fadeIn();

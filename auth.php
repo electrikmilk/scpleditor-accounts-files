@@ -3,10 +3,10 @@ require( "global.php" );
 $session_token = randString( 10 );
 
 // Account management backend
-if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
-	$this->output->set_status_header( 400, 'No Remote Access Allowed' );
-	exit; //just for good measure
-} else {
+// if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
+// 	$this->output->set_status_header( 400, 'No Remote Access Allowed' );
+// 	exit; //just for good measure
+// } else {
 	if ( $action === "createuser" ) {
 		$username = e( clean( $_POST[ 'username' ] ) );
 		$email = e( $_POST[ 'email' ] );
@@ -24,7 +24,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					if ( sendEmail( $_POST[ 'email' ], "donotreply@scpl.dev", "Activate Your Account", "Account activation", "Here's the link to confirm your email and activate your account:<br/><br/>$link<br/><br/>Don't share this with anyone." ) ) {
 						$_SESSION[ 'user_id' ] = $user_id;
 						$token_id = mysqli_insert_id( $connect );
-						echo "https://editor.scpl.dev/?login_key=$token_id";
+						echo $token_id;
 					} else echo "Error sending confirmation email.";
 				} else echo "Error creating user token.";
 			} else echo "Error creating account.";
@@ -42,7 +42,7 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 				if ( mysqli_query( $connect, "insert into data.tokens (user_id,token) values ('" . $user_id . "','" . $session_token . "')" ) ) {
 					$_SESSION[ 'user_id' ] = $user_id;
 					$token_id = mysqli_insert_id( $connect );
-					echo "https://editor.scpl.dev/?login_key=$token_id";
+					echo $token_id;
 				} else echo "Error creating user token";
 			} else echo "Incorrect Password";
 		} else echo "No account for that email address";
@@ -91,4 +91,4 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 			} else echo "Error updating your account." . mysqli_error( $connect );
 		} else echo "Invalid reset token.";
 	}
-}
+//}

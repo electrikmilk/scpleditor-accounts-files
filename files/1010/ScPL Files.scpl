@@ -1,0 +1,44 @@
+@Color darkpurple
+@Icon folder
+
+GetCurrentIPAddress
+count Items
+if input=Equals value=0
+    showalert "No Connection" "An internet conection is required to access your ScPL files." false
+otherwise
+    getfile "iCloud Drive" false "scpl-files/" false
+    count Items
+    if input=Equals value=0
+        createfolder "iCloud Drive" "scpl-files"
+    end
+    getfile "iCloud Drive" false "scpl-files/config.json" false -> mv:config
+    count Items
+    if input=Equals value=0
+        # not logged in
+        choosefrommenu "ScPL Files" items=["Login","Sign up"]
+            case "Login"
+                askforinput "Enter email address:" ""
+                setvariable email
+                askforinput "Enter password:" ""
+                setvariable password
+                url "http://192.168.0.8:8888/auth"
+                GetContentsofURL advanced=true method="POST" headers=false requestBody="Form" formValues={"action":"startsession","email":"\(v:email)","password":"\(v:password)"} -> mv:loginresult
+                showresult mv:loginresult
+            case "Sign up"
+                url "https://account.scpl.dev/sign-up"
+                openurls
+                exitshortcut
+        end
+        url "http://192.168.0.8:8888/api/v1/token"
+        GetContentsofURL advanced=true method="POST" headers=false requestBody="Form" formValues={"key":"\(mv:loginresult)"} -> mv:logintoken
+        showresult mv:logintoken
+        text '{"token":"\(mv:logintoken)"}'
+        savefile "iCloud Drive" false "scpl-files/config.json" true
+        runshortcut "ScPL Files" false
+    otherwise
+        # is logged in
+        getvariable mv:config
+        getdictionaryvalue "Value" "token" -> mv:token
+        showresult mv:token
+    end
+end
