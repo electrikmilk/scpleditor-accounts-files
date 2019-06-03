@@ -1,19 +1,15 @@
 <?php
 // Create .shortcut file for user download
 require( "../request.php" );
-header( "Access-Control-Allow-Origin: *" );
-header( "Content-Type: application/json; charset=UTF-8" );
-header( "Access-Control-Allow-Methods: POST" );
 header( "Access-Control-Max-Age: 3600" );
 header( "Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With" );
-if ( $auth === true ) {
+if($auth === true) {
   $name = str_replace(".scpl","",$_POST['filename']);
-  makeFolder("shortcuts/$id");
   if(!$_FILES || !$_POST['filename']) {
-    if(!$_FILES) else echo json_response( "error", "No file data was recieved." );
-    else if(!$_POST['filename']) echo json_response( "error", "No filename was recieved." );
+    if(!$_FILES) else echo json_response( "error", "No file data was received." );
+    else if(!$_POST['filename']) echo json_response( "error", "No filename was received." );
   } else {
-    $target = "shortcuts/$id/$name.shortcut";
+    $target = "shortcuts/temp/$name.shortcut";
     if(isset($_FILES["data"]) and !$_FILES["data"]["error"]){
       if(move_uploaded_file($_FILES["data"]["tmp_name"], $target)) {
         $location_array = array("location"=>"https://account.scpl.dev/$target");

@@ -24,7 +24,7 @@ function json_response( $status, $message ) {
 	return json_encode( $json );
 }
 
-if ( $_POST[ 'key' ] ) {
+if ( $_POST[ 'key' ] || $_FILES || $_POST['url'] ) {
 	$auth = true;
 } else if ( !$token ) {
 	echo json_response( "error", "No authentication token was received." );
