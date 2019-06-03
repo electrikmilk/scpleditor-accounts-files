@@ -55,6 +55,6 @@ Create shortcut file on the server with binary shortcut data.
        });
 ```
 
-   * **Notes:**
+* **Notes:**
 
-     _No notes._
+     URL returned is a **temporary** file URL. Created files are deleted after a day.
