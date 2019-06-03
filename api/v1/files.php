@@ -58,8 +58,9 @@ function getFiles( $path ) {
 }
 
 if ( $auth === true ) {
+	$files = getFiles( "../../files/$id" );
 	if ( $files ) {
-		json_encode( getFiles( "../../files/$id" ) ); // return json from function
+		echo json_encode( $files ); // return json from function
 		http_response_code( 200 );
 	} else {
 		echo json_response( "error", "This user has added no files to their account." );
