@@ -45,3 +45,14 @@ if ( $count[ 'folders' ] !== 1 )$fs = "s";
 		<div class='bar12'></div>
 	</div>
 </div>
+<div class='context-menu'>
+	<ul>
+		<li id='rename-action' onclick='rename();'>Rename</li>
+		<li id='copy-action' onclick='copy();'>Copy</li>
+		<!--<li id='move-action' onclick='move();'>Move to...</li>-->
+		<li id='share-action' onclick='share();'>Manage Collaborators</li>
+		<li id='preview-action' onclick='exportShortcut(true);'>Preview</li>
+		<li id='export-action' onclick='exportShortcut();'>Export .shortcut</li>
+		<li id='delete-action' onclick='deleteItem();'>Delete</li>
+	</div>
+</div>

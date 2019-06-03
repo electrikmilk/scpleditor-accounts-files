@@ -113,15 +113,15 @@
 				<div class="menu-container">
 					<ul>
 						<a href="/settings">
-							<li class="profile-icon">
+							<li class="profile-icon <?php echo $account_active; ?>">
 								<div>Account</div>
 							</li>
 						</a>
 						<?php
-						if ( !$ismobile && $_SESSION[ 'user_id' ] === "1010" ) {
+						if ( !$ismobile ) {
 							?>
 						<a href="/filebrowser">
-							<li class="file-icon">
+							<li class="file-icon <?php echo $files_active; ?>">
 								<div>Files</div>
 							</li>
 						</a>
@@ -129,7 +129,7 @@
 						}
 						?>
 						<a href="/shared">
-							<li class="shared-icon">
+							<li class="shared-icon <?php echo $shared_active; ?>">
 								<div>Shared with me</div>
 							</li>
 						</a>
