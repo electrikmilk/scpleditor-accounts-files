@@ -14,7 +14,6 @@ Create shortcut file on the server using binary shortcut data.
 
    **Required:**
 
-   `token=[alphanumeric]`<br/>
    `filename=[string]`<br/>
    `data=[binary]`
 
@@ -47,7 +46,6 @@ Create shortcut file on the server using binary shortcut data.
          dataType: "json",
          type: "POST",
          date: {
-            token: "AUTH_TOKEN",
             filename: "Example",
             data: blob
          },
