@@ -15,27 +15,29 @@ function getFiles( $path, $query = null ) {
 		unset( $updated );
 		unset( $relative_updated );
 		$itemdata = dataArray( "files", $file, "name" );
-		$fid = $itemdata[ 'id' ];
-		$timestamp = $itemdata[ 'timestamp' ];
-		$collab = $itemdata[ 'collab' ];
-		$itemtype = $itemdata[ 'type' ];
-		$relative = timeago( $timestamp );
-		if ( $itemdata[ 'updated' ] ) {
-			$updated = $itemdata[ 'updated' ];
-			$relative_updated = timeago( $updated );
-		}
-		$name = $file;
-		if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
-		$path = "files/$id/$filepath$file";
-		$size = formatSize( filesize( $path ) );
-		if ( $_POST[ 'moveid' ] && $fid === $_POST[ 'moveid' ] )$disabled = " disabled";
-		//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
-		if ( !$query || stripos( $name, $query ) !== false ) {
-			if ( is_dir( $path ) === false ) {
-				if ( !$_POST[ 'movelist' ] )$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid' draggable='true' ondragstart='drag(event);'>$load $name</div><span class='file-size'>$size</span></div></li>";
-			} else {
-				$contents = getFiles( $path );
-				$files .= "<li class='list-item-folder$disabled' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid' draggable='true' ondragstart='drag(event);' ondrop='drop(event, this);' ondragover='allowDrop(event);'>$load $name</div><span class='file-size'>$size</span></div></div><ul id='dir-$fid'>$contents</ul></li>";
+		if($itemdata) {
+			$fid = $itemdata[ 'id' ];
+			$timestamp = $itemdata[ 'timestamp' ];
+			$collab = $itemdata[ 'collab' ];
+			$itemtype = $itemdata[ 'type' ];
+			$relative = timeago( $timestamp );
+			if ( $itemdata[ 'updated' ] ) {
+				$updated = $itemdata[ 'updated' ];
+				$relative_updated = timeago( $updated );
+			}
+			$name = $file;
+			if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
+			$path = "files/$id/$filepath$file";
+			$size = formatSize( filesize( $path ) );
+			if ( $_POST[ 'moveid' ] && $fid === $_POST[ 'moveid' ] )$disabled = " disabled";
+			//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
+			if ( !$query || stripos( $name, $query ) !== false ) {
+				if ( is_dir( $path ) === false ) {
+					if ( !$_POST[ 'movelist' ] )$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid' draggable='true' ondragstart='drag(event);'>$load $name</div><span class='file-size'>$size</span></div></li>";
+				} else {
+					$contents = getFiles( $path );
+					$files .= "<li class='list-item-folder$disabled' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid' draggable='true' ondragstart='drag(event);' ondrop='drop(event, this);' ondragover='allowDrop(event);'>$load $name</div><span class='file-size'>$size</span></div></div><ul id='dir-$fid'>$contents</ul></li>";
+				}
 			}
 		}
 	}
