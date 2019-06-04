@@ -184,7 +184,7 @@ function folderArray( $folder ) {
 	$folder_array = array();
 	if ( $handle = opendir( $folder ) ) {
 		while ( false !== ( $entry = readdir( $handle ) ) ) {
-			if ( $entry != "." && $entry != ".." )array_push( $folder_array, $entry );
+			if ( $entry != "." && $entry != ".." && $entry !== ".DS_STORE" )array_push( $folder_array, $entry );
 		}
 		closedir( $handle );
 	}
