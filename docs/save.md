@@ -34,7 +34,7 @@ Save new contents for a file specified by 'id'. Endpoint is restricted to the ow
 
     * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:**<br/>
-       `{ "status":"error", "message":"Your account limit has been reached (0.5 GB)." }`<br/>
+       `{ "status":"error", "message":"Your account limit has been reached (500 MB)." }`<br/>
        `{ "status":"error", "message":"There was an internal file system error saving file.scpl." }`<br/>
        `{ "status":"error", "message":"File does not appear to exist." }`<br/>
        `{ "status":"error", "message":"You do not appear to own that file." }`<br/>
