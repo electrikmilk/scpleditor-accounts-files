@@ -1,2 +1,190 @@
-@Color lightpurple
-@Icon wand
+@Icon alarm
+@Color green
+Comment "Made by @electricmilk.\n@brandon on RoutineHub Discord.\n\nThis shortcut will store backups of your shortcuts inside the folder in iCloud Drive you chose. Do not delete any text files inside that folder."
+Text "time-machine/" -> mv:Text
+SetVariable path
+GetFile showDocumentPicker=false filePath=v:path errorIfNotFound=false -> mv:"Get File"
+Count Items -> mv:Count
+If input=Equals number=1 value=0
+	CreateFolder path=v:path
+	Text "Time Machine" -> mv:Text1
+	SetVariable lastbackup
+Otherwise
+	GetVariable mv:"Get File"
+	FilterFiles sortby="Last Modified Date" order="Newest First" limit=true getItems=1 -> mv:"Filter Files"
+	Text mv:"Filter Files"{get: name,as:file} -> mv:Text2
+	ReplaceText findText="Backup from " replaceWith="" caseSensitive=false -> mv:"Replace Text"
+	FormatDate timeFormat=Relative -> mv:"Format Date"
+	Text "Last Backup: \(mv:"Format Date")" -> mv:Text3
+	SetVariable lastbackup
+End -> mv:If
+ChoosefromMenu prompt=v:lastbackup items=["Create New Backup", "View Backups", "Get backups for...", "Check for Updates"]
+Case
+	Date
+	FormatDate dateFormat="ISO 8601" timeFormat=None
+	SetVariable date
+	Date -> mv:Date
+	FormatDate dateFormat=None timeFormat=Short -> mv:"Format Date1"
+	SetVariable time
+	Text "\(v:date)_\(v:time)" -> mv:Text4
+	ReplaceText findText=":" replaceWith="-" caseSensitive=false -> mv:"Replace Text1"
+	ReplaceText findText=" " replaceWith="-" caseSensitive=false -> mv:"Replace Text2"
+	SetVariable datetime
+	Date -> mv:Date1
+	SetVariable backupdate
+	GetVariable mv:"Get File"
+	Count Items -> mv:Count1
+	If input="Is Less Than" number=1
+	Otherwise
+		ChoosefromMenu prompt="When Creating New Backup" items=["Delete all previous backups", "Keep all previous backups"]
+		Case
+			GetVariable mv:"Get File"
+			RepeatwithEach
+				GetFile showDocumentPicker=false filePath="\(v:path)\(v:"Repeat Item")/" -> mv:"Get File1"
+				DeleteFiles true
+			End -> mv:"Repeat with Each"
+			GetVariable mv:"Get File"
+			DeleteFiles true
+		Case
+		End -> mv:"Choose from Menu"
+	End -> mv:If1
+	CreateFolder path="\(v:path)\(v:datetime)/"
+	ChoosefromMenu prompt="New Backup Selection" items=["All shortcuts", "Selected shortcuts"]
+	Case
+		ShowNotification title="New Shortcuts Backup" body="Creating a new backup of all of your shortcuts..." playSound=false
+		GetMyShortcuts -> mv:"Get My Shortcuts"
+		SaveFile askWheretoSave=false destinationPath="\(v:path)\(v:datetime)/" -> mv:"Save File"
+		GetVariable mv:"Get My Shortcuts"
+		Count Items -> mv:Count2
+	Case
+		GetMyShortcuts -> mv:"Get My Shortcuts1"
+		ChoosefromList prompt="Select shortcuts to backup" selectMultiple=true -> mv:"Choose from List"
+		SaveFile askWheretoSave=false destinationPath="\(v:path)\(v:datetime)/" -> mv:"Save File1"
+		Nothing
+		ShowNotification title="New Shortcuts Backup" body="Creating a backup of the selected shortcuts..." playSound=false
+		GetVariable mv:"Choose from List"
+		Count Items -> mv:Count3
+	End -> mv:"Choose from Menu1"
+	Text v:datetime -> mv:Text5
+	SaveFile askWheretoSave=false destinationPath="\(v:path)Backup from \(v:backupdate).txt" -> mv:"Save File2"
+	URL "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Yes_Check_Circle.svg/1024px-Yes_Check_Circle.svg.png" -> mv:URL
+	GetImagesfromInput -> mv:"Get Images from Input"
+	ShowNotification title="Backup Successful" body="\(mv:Count3) shortcuts backed up to \(v:path) on \(v:backupdate)." playSound=true
+	RunShortcut shortcut="Time Machine" showWhileRunning=false -> mv:"Run Shortcut"
+Case
+	GetFile showDocumentPicker=false filePath=v:path errorIfNotFound=false -> mv:"Get File2"
+	Count Items -> mv:Count4
+	If input=Equals number=1 value=0
+		ShowAlert title="No Shortcut Backups" message="You haven't created any backups of your shortcuts." showCancelButton=false
+		RunShortcut shortcut="Time Machine" showWhileRunning=false -> mv:"Run Shortcut1"
+	Otherwise
+		GetVariable mv:"Get File2"
+		FilterFiles sortby="Creation Date" order="Newest First" -> mv:"Filter Files1"
+		RepeatwithEach
+			GetFile showDocumentPicker=false filePath="\(v:path)\(v:"Repeat Item")/" errorIfNotFound=true -> mv:"Get File3"
+			Count Items -> mv:Count5
+			GetVariable v:"Repeat Item"{get: name,as:file}
+			ReplaceText findText="Backup from " caseSensitive=false -> mv:"Replace Text3"
+			Text "BEGIN:VCARD\nVERSION:3.0\nN;CHARSET=utf-8:\(mv:"Replace Text3");;;;\nORG:\(mv:Count5) shortcuts;\nEND:VCARD" -> mv:Text6
+			AddtoVariable list
+		End -> mv:"Repeat with Each1"
+		Text v:list -> mv:Text7
+		SetName name="list.vcf" advanced=false -> mv:"Set Name"
+		GetVariable mv:"Set Name"{as: contact}
+		ChoosefromList prompt="Shortcut Backups" selectMultiple=false -> mv:"Choose from List1"
+		FormatDate dateFormat="ISO 8601" includeISO8601Time=false
+		SetVariable d
+		GetVariable mv:"Choose from List1"
+		FormatDate dateFormat=None -> mv:"Format Date2"
+		SetVariable t
+		Text "\(v:d)_\(v:t)" -> mv:Text8
+		ReplaceText findText=":" replaceWith="-" caseSensitive=false -> mv:"Replace Text4"
+		ReplaceText findText=" " replaceWith="-" caseSensitive=false -> mv:"Replace Text5"
+		SetVariable folder
+		GetFile showDocumentPicker=false filePath="\(v:path)\(v:folder)" -> mv:"Get File4"
+		ChoosefromMenu prompt=mv:"Choose from List1" items=["View backup", "Delete backup"]
+		Case
+			ChoosefromList prompt=mv:"Choose from List1" selectMultiple=true -> mv:"Choose from List2"
+			RepeatwithEach
+				ChoosefromMenu prompt=v:"Repeat Item" items=["Add to Library", "Download File", "Share iCloud Link"]
+				Case
+					OpenIn showOpenInMenu=false app="is.workflow.my.app"
+				Case
+					GetLinktoFile -> mv:"Get Link to File"
+					OpenURLs
+				Case
+					GetLinktoFile -> mv:"Get Link to File1"
+					Share
+				End -> mv:"Choose from Menu2"
+			End -> mv:"Repeat with Each2"
+		Case
+			DeleteFiles
+			GetFile showDocumentPicker=false filePath="\(v:path)Backup from \(mv:"Choose from List2").txt" -> mv:"Get File5"
+			DeleteFiles false
+			ShowAlert title="Backup Deleted" message="Shortcuts backup from \(mv:"Choose from List2") was deleted from \(v:path)." showCancelButton=false
+		End -> mv:"Choose from Menu3"
+		RunShortcut shortcut="Time Machine" showWhileRunning=false
+	End -> mv:If2
+Case
+	GetMyShortcuts -> mv:"Get My Shortcuts2"
+	ChoosefromList prompt="Choose a shortcut" -> mv:"Choose from List3"
+	GetFile showDocumentPicker=false filePath=v:path errorIfNotFound=false
+	RepeatwithEach
+		GetFile showDocumentPicker=false filePath="\(v:path)/\(v:"Repeat Item")/\(mv:"Choose from List3").shortcut" errorIfNotFound=false -> mv:"Get File6"
+		AddtoVariable versions
+	End -> mv:"Repeat with Each3"
+	Count Items -> mv:Count6
+	If input=Equals number=1 value=0
+		ShowAlert title="No backups found" message="'\(mv:"Choose from List3")' doesn't exist in any of your shortcut backups." showCancelButton=false
+		RunShortcut shortcut="Time Machine" showWhileRunning=false -> mv:"Run Shortcut2"
+	Otherwise
+		GetVariable v:versions
+		FilterFiles sortby="Last Modified Date" order="Newest First" -> mv:"Filter Files2"
+		RepeatwithEach
+			Text "BEGIN:VCARD\nVERSION:3.0\nN;CHARSET=utf-8:\(v:"Repeat Item"{get: name,as:file}).\(v:"Repeat Item"{get: fileextension,as:file});;;;\nORG:From \(v:"Repeat Item"{as: file, get: creationdate});\nEND:VCARD" -> mv:Text9
+			AddtoVariable versionlist
+		End -> mv:"Repeat with Each4"
+		Text v:versionlist -> mv:Text10
+		SetName name="versions.vcf" -> mv:"Set Name1"
+		GetVariable mv:"Set Name1"{as: contact}
+		ChoosefromList prompt="Previous Versions of \(mv:"Choose from List3")" -> mv:"Choose from List4"
+		GetVariable mv:"Choose from List4"{get: company,as:contact}
+		FormatDate dateFormat="ISO 8601" timeFormat=None
+		SetVariable vd
+		GetVariable mv:"Choose from List4"{get: company,as:contact}
+		FormatDate dateFormat=None -> mv:"Format Date3"
+		SetVariable vt
+		Text "\(v:vd)_\(v:vt)" -> mv:Text11
+		ReplaceText findText=" " replaceWith="-" caseSensitive=false -> mv:"Replace Text6"
+		ReplaceText findText=":" replaceWith="-" caseSensitive=false -> mv:"Replace Text7"
+		SetVariable vdt
+		GetFile showDocumentPicker=false filePath="\(v:path)\(v:vdt)/\(mv:"Choose from List3").shortcut" -> mv:"Get File7"
+		ChoosefromMenu prompt="  \(mv:"Choose from List3"{get: name,as:file}) (\(mv:"Choose from List4"{as: contact, get: company}))" items=["Add to Library", "Download File", "Share iCloud Link"]
+		Case
+			OpenIn showOpenInMenu=false app="is.workflow.my.app"
+		Case
+			GetLinktoFile -> mv:"Get Link to File2"
+			OpenURLs
+		Case
+			GetLinktoFile -> mv:"Get Link to File3"
+			Share
+		End
+		RunShortcut shortcut="Time Machine" showWhileRunning=false -> mv:"Run Shortcut3"
+	End -> mv:If3
+Case
+	GetMyShortcuts -> mv:"Get My Shortcuts3"
+	If value=UpdateKit
+		Dictionary {"Shortcut Name": "Time Machine", "Current Version": "2.7.5", "RoutineHub ID": "2154"} -> mv:Dictionary
+		RunShortcut shortcut=UpdateKit showWhileRunning=false -> mv:"Run Shortcut4"
+		GetDictionaryfromInput -> mv:"Get Dictionary from Input"
+		GetDictionaryValue key="Exit Mode" -> mv:"Get Dictionary Value"
+		If input=Equals value="Up To Date"
+			ShowAlert title="Up-to-date" message="No worries, you're already using the latest and greatest version of Time Machine." showCancelButton=false
+			RunShortcut shortcut="Time Machine" showWhileRunning=false -> mv:"Run Shortcut5"
+		End -> mv:If4
+	Otherwise
+		ShowAlert title="UpdateKit Not Installed" message="This shortcut uses UpdateKit to keep it up to date." showCancelButton=false
+		URL "http://www.mikebeas.com/updatekit/" -> mv:URL1
+		OpenURLs
+	End -> mv:If5
+End -> mv:"Choose from Menu4"

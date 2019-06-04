@@ -13,6 +13,8 @@ if ( $auth === true ) {
 		if ( !$name )echo json_response( "error", "No item name was recieved." );
 		else if ( !$type )echo json_response( "error", "No item type was recieved." );
 	} else {
+		if($account_limit === true) echo json_response( "error", "Your account limit of 500 MB has been reached." );
+		else {
 		$file_check = mysqli_query( $connect, "select * from data.files where name = '$name' or name = '$oname'" );
 		if ( mysqli_num_rows( $file_check ) === 0 ) {
 			$file_id = randString( 20 );
@@ -32,5 +34,6 @@ if ( $auth === true ) {
 				}
 			} else echo json_response( "error", "Internal database error creating file $name." );
 		} else echo json_response( "error", "File with name $name already exists." );
+	}
 	}
 }

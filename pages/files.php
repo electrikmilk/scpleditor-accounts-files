@@ -7,7 +7,8 @@ if ( $count[ 'folders' ] !== 1 )$fs = "s";
 <div class="messages-container">
 	<div class="message" id="files-message" style="display: none;"></div>
 </div>
-<?php if($account['status'] === "0") echo "<div class='message warning'>Your account has not yet been activated. Please check your email. Be sure to check your junk/spam folder.</div>"; ?>
+<?php if($account['status'] === "0") echo "<div class='message warning width-stretch'>Your account has not yet been activated. Please check your email. Be sure to check your junk/spam folder.</div>"; ?>
+<?php if($account_limit === true) echo "<div class='message warning width-stretch'>Your account limit has been reached (500 MB). You can clear up space by exporting some of your ScPL files as shortcuts to your device. To export an ScPL file, right click on the file and click 'Export as .shortcut'</div>"; ?>
 
 <script>
 	$( function () {
@@ -52,7 +53,7 @@ if ( $count[ 'folders' ] !== 1 )$fs = "s";
 		<!--<li id='move-action' onclick='move();'>Move to...</li>-->
 		<li id='share-action' onclick='share();'>Manage Collaborators</li>
 		<li id='preview-action' onclick='exportShortcut(true);'>Preview</li>
-		<li id='export-action' onclick='exportShortcut();'>Export .shortcut</li>
+		<li id='export-action' onclick='exportShortcut();'>Export as .shortcut</li>
 		<li id='delete-action' onclick='deleteItem();'>Delete</li>
 	</div>
 </div>

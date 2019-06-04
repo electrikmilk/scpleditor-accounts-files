@@ -6,7 +6,8 @@
 // ini_set('display_errors', 1);
 
 if ( $api !== true ) {
-	// ini_set( 'session.save_path', realpath( dirname( $_SERVER[ 'DOCUMENT_ROOT' ] ) . '/../session' ) ); // Start sessions, specify path because this caused an issue in the past
+	// ini_set( 'session.save_path', realpath( dirname( $_SERVER[ 'DOCUMENT_ROOT' ] ) . '/../session' ) );
+	// Keep around in case sessions on the server are messed up
 	session_start();
 	if ( $_SESSION )$id = $_SESSION[ 'user_id' ];
 	else $id = null;
@@ -18,7 +19,15 @@ require( "database.php" );
 // Global variables
 $action = $_POST[ 'action' ];
 $page = $_GET[ 'page' ];
+
 $load = "<div class='spinner'><div class='bar1'></div><div class='bar2'></div><div class='bar3'></div><div class='bar4'></div><div class='bar5'></div><div class='bar6'></div><div class='bar7'></div><div class='bar8'></div><div class='bar9'></div><div class='bar10'></div><div class='bar11'></div><div class='bar12'></div></div>";
+
+$ainfo = explode(" ",formatSize("/files/$id"));
+// $account_unit = $ainfo[1];
+// $account_size = intval($ainfo[0]);
+// if($account_unit = "MB" && $account_size >= 500)$account_limit = true;
+// else $account_limit = false;
+$account_limit = true;
 
 // Mobile Detection
 $useragent = $_SERVER[ 'HTTP_USER_AGENT' ];
