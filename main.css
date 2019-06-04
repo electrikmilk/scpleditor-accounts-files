@@ -811,7 +811,12 @@ div.spinner div.bar12 {
 }
 .file-list li > div {
 	display: grid;
-	grid-template-columns: 1fr 0fr;
+	grid-template-columns: 1fr 1fr 0fr;
+}
+.file-timestamp {
+	font-size: 13px;
+	color: #555;
+	line-height: 22px;
 }
 .file-size {
 	font-size: 13px;

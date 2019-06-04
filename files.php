@@ -20,10 +20,10 @@ function getFiles( $path, $query = null ) {
 			$timestamp = $itemdata[ 'timestamp' ];
 			$collab = $itemdata[ 'collab' ];
 			$itemtype = $itemdata[ 'type' ];
-			$relative = timeago( $timestamp );
+			$relative = "Created ".timeago( $timestamp );
 			if ( $itemdata[ 'updated' ] ) {
-				$updated = $itemdata[ 'updated' ];
-				$relative_updated = timeago( $updated );
+				$timestamp = "Edited ".$itemdata[ 'updated' ];
+				$relative = "Edited ".timeago( $itemdata[ 'updated' ] );
 			}
 			$name = $file;
 			if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
@@ -33,10 +33,10 @@ function getFiles( $path, $query = null ) {
 			//$actions = "<div class='action-btns' onclick='setID(&quot;$itemtype-$fid&quot;);'><div class='delete-btn' id='delete-action'></div><div class='rename-btn' id='rename-action'></div></div>";
 			if ( !$query || stripos( $name, $query ) !== false ) {
 				if ( is_dir( $path ) === false ) {
-					if ( !$_POST[ 'movelist' ] )$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid' draggable='true' ondragstart='drag(event);'>$load $name</div><span class='file-size'>$size</span></div></li>";
+					if ( !$_POST[ 'movelist' ] )$files .= "<li class='list-item-file$disabled' id='file-$fid' data-name='$name' data-collab='$collab'><div><div class='item-name' id='file-$fid' draggable='true' ondragstart='drag(event);'>$load $name</div><span class='file-timestamp'>$relative</span><span class='file-size'>$size</span></div></li>";
 				} else {
 					$contents = getFiles( $path );
-					$files .= "<li class='list-item-folder$disabled' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid' draggable='true' ondragstart='drag(event);' ondrop='drop(event, this);' ondragover='allowDrop(event);'>$load $name</div><span class='file-size'>$size</span></div></div><ul id='dir-$fid'>$contents</ul></li>";
+					$files .= "<li class='list-item-folder$disabled' id='folder-$fid' data-name='$name'><div><div class='item-name' id='folder-$fid' draggable='true' ondragstart='drag(event);' ondrop='drop(event, this);' ondragover='allowDrop(event);'>$load $name</div><span class='file-timestamp'>$relative</span><span class='file-size'>$size</span></div></div><ul id='dir-$fid'>$contents</ul></li>";
 				}
 			}
 		}
@@ -325,17 +325,17 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 	}
 	if($action === "download") {
 		$filedata = dataArray("files",$_POST['id'],"id");
-	  $owner = $filedata['author'];
-	  $collab = $filedata['collab'];
 	  if($filedata) {
+			$file = $filedata['name'];
+		  $owner = $filedata['author'];
+		  $collab = $filedata['collab'];
 	    if ( $owner === $id || in_array( $id, $collab ) === true ) {
 	    $name = $filedata['name'];
 	    if ( $filedata[ 'path' ] )$filepath = $filedata[ 'path' ] . "/";
-	    $path = "/files/$id/$filepath$file";
-	    if(file_exists("../..$path")) {
-	      echo $path;
-	    } else echo "File $name does not appear to exist locally.";
-	    } else echo "You do not appear to own this file or it has not been shared with you.";
-	  } echo "Invalid file ID.";
+	    	$path = "files/$id/$filepath$file";
+	    	if(file_exists($path)) echo file_get_contents($path);
+	      else echo "Error: File $name does not appear to exist locally.";
+	    } else echo "Error: You do not appear to own this file or it has not been shared with you.";
+	  } else echo "Error: Invalid file ID.";
 	}
 } else echo "Logged out";
