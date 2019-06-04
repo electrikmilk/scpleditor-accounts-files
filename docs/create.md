@@ -42,6 +42,7 @@ No need to send 'name' with '.scpl' at the end, this endpoint will add it for yo
 
      * **Code:** 503 SERVICE UNAVAILABLE <br />
        **Content:**<br/>
+       `{ "status":"error", "message":"Your account limit has been reached (0.5 GB)." }`<br/>
        `{ "status":"error", "message":"Internal file system error creating file file.scpl." }`<br/>
        `{ "status":"error", "message":"Internal file system error creating folder foldername." }`<br/>
        `{ "status":"error", "message":"Internal database error creating file file.scpl. " }`<br/>
