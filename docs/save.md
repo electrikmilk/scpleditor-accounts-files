@@ -44,7 +44,7 @@ Save new contents for a file specified by 'id'. Endpoint is restricted to the ow
 
 ```javascript
        $.ajax({
-         url: "https://account.scpl.dev/api/v1/access",
+         url: "https://account.scpl.dev/api/v1/save",
          dataType: "json",
          type: "POST",
          date: {
