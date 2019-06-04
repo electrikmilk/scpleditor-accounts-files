@@ -49,12 +49,12 @@ if ( $count[ 'folders' ] !== 1 )$fs = "s";
 <div class='context-menu'>
 	<ul>
 		<li id='rename-action' onclick='rename();'>Rename</li>
-		<li id='copy-action' onclick='copy();'>Copy</li>
+		<!-- <li id='copy-action' onclick='copy();'>Copy</li> -->
 		<!--<li id='move-action' onclick='move();'>Move to...</li>-->
-		<li id='share-action' onclick='share();'>Manage Collaborators</li>
-		<li id='preview-action' onclick='exportShortcut(true);'>Preview</li>
-		<li id='download-action' onclick='download();'>Download File</li>
-		<li id='export-action' onclick='exportShortcut();'>Export Shortcut</li>
+		<!-- <li id='share-action' onclick='share();'>Manage Collaborators</li> -->
+		<!-- <li id='preview-action' onclick='exportShortcut(true);'>Preview</li> -->
+		<!-- <li id='download-action' onclick='download();'>Download File</li> -->
+		<!-- <li id='export-action' onclick='exportShortcut();'>Export Shortcut</li> -->
 		<li id='delete-action' onclick='deleteItem();'>Delete</li>
 	</div>
 </div>

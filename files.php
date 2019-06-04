@@ -171,16 +171,12 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					$oldpath = "files/$id/$filepath$item";
 					if ( $folder_id ) {
 						$folderdata = dataArray( "files", $folder_id, "id" );
-						if ( stripos( $filepath, $folderdata[ 'name' ] ) ) {
-							if ( $itemtype === "file" )$item = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
-							else $item = $itemdata[ 'name' ] . " copy";
-						}
 						if ( $itemtype === "file" )$item = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
 						else $item = $itemdata[ 'name' ] . " copy";
 						if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
-						$path = "files/$id/$folderpath" . $folderdata[ 'name' ] . "/$item";
 						$folder_name = $folderdata[ 'name' ];
-						$db_path = "'$folderpath" . $folderdata[ 'name' ] . "'";
+						$path = "files/$id/$folderpath$folder_name/$item";
+						$db_path = "'$folderpath" . $folderdata[ 'name' ] . "/'";
 					} else {
 						$folder_name = "root";
 						if ( $itemtype === "file" )$newitem = e(special(str_replace( ".scpl", "", $itemdata[ 'name' ] ))) . " copy.scpl";
