@@ -363,6 +363,13 @@ button.primary-btn {
 	font-weight: 500;
 	margin-bottom: 10px;
 }
+.message h3 {
+	margin: 0;
+	margin-bottom: 5px;
+}
+.message p {
+	margin: 5px 0;
+}
 .message.help {
 	background-image: url(img/help.svg);
 }

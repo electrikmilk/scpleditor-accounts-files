@@ -8,7 +8,7 @@ if ( $count[ 'folders' ] !== 1 )$fs = "s";
 	<div class="message" id="files-message" style="display: none;"></div>
 </div>
 <?php if($account['status'] === "0") echo "<div class='message warning width-stretch'>Your account has not yet been activated. Please check your email. Be sure to check your junk/spam folder.</div>"; ?>
-<?php if($account_limit === true) echo "<div class='message warning width-stretch'>Your account limit has been reached (500 MB). You can clear up space by exporting some of your ScPL files as shortcuts to your device. To export an ScPL file, right click on the file and click 'Export as .shortcut'</div>"; ?>
+<?php if($account_limit === true) echo "<div class='message warning width-stretch'><h3>Your account limit as been reached (500 MB).</h3><p>You can clear up space by exporting some your ScPL files as shortcuts or you can download them instead, then delete the ScPL files to clear up space in your account. To export an ScPL file, right click on the file and click 'Export as .shortcut'. You can convert the shortcut back to ScPL later once you've made space in your account for it.</p></div>"; ?>
 
 <script>
 	$( function () {
