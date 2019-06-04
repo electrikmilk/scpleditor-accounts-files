@@ -512,3 +512,30 @@ modal("preview-dialog");
 }
 }
 }
+
+function download() {
+	if(itemid) {
+		var split = itemid.split("-");
+		var type = split[0];
+		var id = split[1].replace("file-","");
+	$.ajax({
+		type: "POST",
+		url: "files.php",
+		data: {
+			action: "download",
+			id: id,
+		},
+		success: function (response) {
+			if(response.includes("/shortcuts/")) {
+				goPage(response,true);
+			} else {
+				console.log(response);
+			}
+		},
+		error: function (data) {
+			showMessage("files-message", true, "Error moving item.", "error");
+			$(":input, :button").prop('disabled', false);
+		}
+	});
+}
+}

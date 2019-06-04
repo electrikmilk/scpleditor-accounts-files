@@ -20,9 +20,8 @@ if ( $auth === true ) {
 				$path = "../../files/$id/$itempath$name";
 				if ( file_exists( $path ) ) {
 					$contents = file_get_contents( $path );
-					$file = array( "contents" => $contents );
-					echo json_encode( $file );
-				} else echo json_response( "error", "$type $name does not appear to exist." );
+					echo json_encode( array( "contents" => $contents ) );
+				} else echo json_response( "error", "$type $name does not appear to exist locally." );
 			} else echo json_response( "error", "You do not appear to own this $itemtype or it has not been shared with you." );
 		} else echo json_response( "error", "Invalid $itemtype ID." );
 	}

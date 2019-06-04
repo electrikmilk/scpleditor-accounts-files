@@ -1065,6 +1065,9 @@ div.spinner div.bar12 {
 #preview-action {
 	background-image: url(img/preview.svg);
 }
+#download-action {
+	background-image: url(img/download.svg);
+}
 #export-action {
 	background-image: url(img/export.svg);
 }

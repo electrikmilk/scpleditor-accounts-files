@@ -20,11 +20,13 @@ if ( $auth === true ) {
 			if ( $owner === $id ) {
 				echo json_response( "error", "You are the owner of this file. No need to fork it." );
 			} else if ( in_array( $id, $collab ) === true ) {
-				if ( copy( $path, "../../files/$id/$item" ) === true ) {
-					$file_id = randString( 20 );
-					if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $item_id . "','" . $item . "','$itemtype',NULL,'$id')" ) )echo json_response( "success", "$type $item has been forked to your files." );
-					else echo json_response( "error", "Internal database error forking $item." );
-				} else echo json_response( "error", "Internal file system error forking $item." );
+				if(file_exists($path)) {
+					if ( copy( $path, "../../files/$id/$item" ) === true ) {
+						$file_id = randString( 20 );
+						if ( mysqli_query( $connect, "insert into data.files (id,name,type,path,author) values ('" . $item_id . "','" . $item . "','$itemtype',NULL,'$id')" ) )echo json_response( "success", "$type $item has been forked to your files." );
+						else echo json_response( "error", "Internal database error forking $item." );
+					} else echo json_response( "error", "Internal file system error forking $item." );
+				} else echo json_response( "error", "$type $name does not appear to exist locally." );
 			} else {
 				echo json_response( "error", "This $itemtype has not been shared with you." );
 			}

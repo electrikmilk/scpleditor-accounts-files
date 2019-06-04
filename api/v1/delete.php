@@ -27,7 +27,7 @@ if ( $auth === true ) {
 							else echo json_response( "error", "There was an internal file system error deleting folder $name." );
 						}
 					} else echo json_response( "error", "There was a internal database error deleting $itemtype $name." );
-				} else echo json_response( "error", "$type does not appear to exist." );
+				} else echo json_response( "error", "$type does not appear to exist locally." );
 			} else echo json_response( "error", "You do not appear to own that $itemtype." );
 		} else echo json_response( "error", "Invalid $itemtype ID." );
 	}

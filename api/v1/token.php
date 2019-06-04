@@ -9,11 +9,10 @@ if ( $auth === true ) {
 		echo json_response( "error", "No key was received." );
 	} else {
 		$token = dataArray( "tokens", $key, "id" );
-		if ( !$token ) {
-			echo json_response( "error", "Invalid token key." );
-		} else {
-			$token_json = array( "token" => $token[ 'token' ] );
-			echo json_encode( $token_json );
+		if ( !$token ) echo json_response( "error", "Invalid token key." );
+		else {
+			echo json_encode( array( "token" => $token[ 'token' ] ) );
+			http_response_code( 200 );
 		}
 	}
 }

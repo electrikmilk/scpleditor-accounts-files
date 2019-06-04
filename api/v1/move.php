@@ -34,7 +34,7 @@ if ( $auth === true ) {
 						if ( mysqli_query( $connect, "update data.files set path = $db_path where id = '$item_id'" ) )echo json_response( "success", "$type $item has been moved to $folder_name." );
 						else echo json_response( "error", "Internal database error moving $itemtype $item." );
 					} else echo json_response( "error", "Internal file system error moving $item to $folder_name." );
-				} else echo json_response( "error", "$type $item does not appear to exist." );
+				} else echo json_response( "error", "$type $item does not appear to exist locally." );
 			} else echo json_response( "error", "You do not appear to own that $itemtype." );
 		} else echo json_response( "error", "Invalid $itemtype ID." );
 	}

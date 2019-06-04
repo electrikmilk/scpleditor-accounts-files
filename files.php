@@ -323,4 +323,19 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 		  else echo "Error creating shortcut file.";
 		}
 	}
+	if($action === "download") {
+		$filedata = dataArray("files",$_POST['id'],"id");
+	  $owner = $filedata['author'];
+	  $collab = $filedata['collab'];
+	  if($filedata) {
+	    if ( $owner === $id || in_array( $id, $collab ) === true ) {
+	    $name = $filedata['name'];
+	    if ( $filedata[ 'path' ] )$filepath = $filedata[ 'path' ] . "/";
+	    $path = "/files/$id/$filepath$file";
+	    if(file_exists("../..$path")) {
+	      echo $path;
+	    } else echo "File $name does not appear to exist locally.";
+	    } else echo "You do not appear to own this file or it has not been shared with you.";
+	  } echo "Invalid file ID.";
+	}
 } else echo "Logged out";

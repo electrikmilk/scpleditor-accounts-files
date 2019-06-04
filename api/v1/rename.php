@@ -25,13 +25,9 @@ if ( $auth === true ) {
 				if ( file_exists( $path ) ) {
 					if ( mysqli_query( $connect, "update data.files set name = '$new_name' where id = '$item_id'" ) ) {
 						if ( rename( $path, $newpath ) ) {
-							if($itemtype === "folder") {
-								fixPaths($name,$new_name);
-							}
-							$response = array( "name" => $new_name );
-							echo json_encode( $response );
+							if($itemtype === "folder")fixPaths($name,$new_name);
+							echo json_encode( array( "name" => $new_name ) );
 							http_response_code( 200 );
-							//echo json_response( "success", "$name has been renamed to $new_name." );
 						} else echo json_response( "error", "There was an internal file system error renaming $name." );
 					} else echo json_response( "error", "There was an internal file system error renaming $name." );
 				} else echo json_response( "error", "$type does not appear to exist." );

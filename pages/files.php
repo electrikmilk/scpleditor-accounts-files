@@ -1,4 +1,4 @@
-<?php
+m<?php
 $account = dataArray( "users", $id, "id" );
 $count = count_dir( "files/$id" );
 if ( $count[ 'files' ] !== 1 )$s = "s";
@@ -53,7 +53,8 @@ if ( $count[ 'folders' ] !== 1 )$fs = "s";
 		<!--<li id='move-action' onclick='move();'>Move to...</li>-->
 		<li id='share-action' onclick='share();'>Manage Collaborators</li>
 		<li id='preview-action' onclick='exportShortcut(true);'>Preview</li>
-		<li id='export-action' onclick='exportShortcut();'>Export as .shortcut</li>
+		<li id='download-action' onclick='download();'>Download File</li>
+		<li id='export-action' onclick='exportShortcut();'>Export as Shortcut</li>
 		<li id='delete-action' onclick='deleteItem();'>Delete</li>
 	</div>
 </div>
