@@ -176,8 +176,13 @@
 			</div>
 			<div class="page-container">
 				<?php
-				if ( $page === "login" || $page === "sign-up" )header( "Location: /settings" );
-				else require( "pages/$page.php" );
+				if ( $page === "login" || $page === "sign-up" ) {
+				?>
+				<script>
+				window.location = '/settings';
+				</script>
+				<?php
+				} else require( "pages/$page.php" );
 				?>
 			</div>
 		</div>

@@ -42,7 +42,7 @@ $(function () {
 				data: formdata,
 				success: function (response) {
 					console.log(response);
-					if (response.includes("key") === true) {
+					if (response.match(/^[0-9]+$/) != null) {
 						window.location = "https://editor.scpl.dev/?login_key="+response;
 					} else {
 						$(":input, :button").prop('disabled', false);
@@ -80,7 +80,7 @@ $(function () {
 				data: formdata,
 				success: function (response) {
 					$(":input, :button").prop('disabled', false);
-					if (response.includes("editor")) {
+					if (response.match(/^[0-9]+$/) != null) {
 						window.location = "https://editor.scpl.dev/?login_key="+response;
 					} else {
 						$("#signup-error").html(response);

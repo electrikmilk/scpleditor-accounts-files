@@ -15,14 +15,18 @@ if($file) {
   $code = file_get_contents("../../files/$id/$itempath$name");
   if($file['author'] === $id) {
     if($name) {
-    ?>
-          <input type='hidden' id='scpl-name' value='<?php echo $name; ?>'/>
-          <input type='hidden' id='preview' value='<?php echo $preview; ?>'/>
-          <textarea id='scpl-code' style='display: none;'><?php echo $code; ?></textarea>
-          <div id='scpl-render'></div>
-          <script src='main.js'></script>
-    <?php
-    } else echo "Error converting ScPL.";
+      if($code) {
+        ?>
+        <input type='hidden' id='scpl-name' value='<?php echo $name; ?>'/>
+        <input type='hidden' id='preview' value='<?php echo $preview; ?>'/>
+        <textarea id='scpl-code' style='display: none;'><?php echo $code; ?></textarea>
+        <div id='scpl-render'></div>
+        <script src='main.js'></script>
+        <?php
+      } else {
+        echo "<div class='empty-list'>No ScPL code to convert.</div>";
+      }
+    } else echo "No name was recieved.";
   } else echo "You do not appear to own that file.";
 } else  echo "Invalid file ID.";
 ?>
