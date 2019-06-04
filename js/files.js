@@ -498,7 +498,8 @@ if(itemid) {
 	var split = itemid.split("-");
 	var type = split[0];
 	var id = split[1].replace("file-","");
-			var name = $("li#file-" + id).attr("data-name").replace(".scpl",".shortcut");
+			var name = $("li#file-" + id).attr("data-name");//.replace(".scpl",".shortcut");
+			$("#preview-name").html(name);
 if(preview === "1") {
 $(".preview-load").css('display','flex');
 $(".shortcut-preview iframe").attr("src","/preview/dist/export?id="+id+"&preview=1");
@@ -513,11 +514,34 @@ modal("preview-dialog");
 }
 }
 
+function downloadFile(data, fileName, type="text/plain") {
+  // Create an invisible A element
+  const a = document.createElement("a");
+  a.style.display = "none";
+  document.body.appendChild(a);
+
+  // Set the HREF to a Blob representation of the data to be downloaded
+  a.href = window.URL.createObjectURL(
+    new Blob([data], { type })
+  );
+
+  // Use download attribute to set set desired file name
+  a.setAttribute("download", fileName);
+
+  // Trigger the download by simulating click
+  a.click();
+
+  // Cleanup
+  window.URL.revokeObjectURL(a.href);
+  document.body.removeChild(a);
+}
+
 function download() {
 	if(itemid) {
 		var split = itemid.split("-");
 		var type = split[0];
 		var id = split[1].replace("file-","");
+		var name = $("li#"+itemid).attr("data-name");
 	$.ajax({
 		type: "POST",
 		url: "files.php",
@@ -526,10 +550,10 @@ function download() {
 			id: id,
 		},
 		success: function (response) {
-			if(response.includes("/shortcuts/")) {
-				goPage(response,true);
+			if(response.includes("Error:")) {
+				alert(response.replace("Error:",""));
 			} else {
-				console.log(response);
+				downloadFile(response,name,"text/scpl");
 			}
 		},
 		error: function (data) {
