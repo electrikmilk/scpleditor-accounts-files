@@ -169,18 +169,16 @@ if ( $_SERVER[ 'SERVER_ADDR' ] != $_SERVER[ 'REMOTE_ADDR' ] ) {
 					$type = ucfirst( $itemdata[ 'type' ] );
 					if ( $itemdata[ 'path' ] )$filepath = $itemdata[ 'path' ] . "/";
 					$oldpath = "files/$id/$filepath$item";
+					if ( $itemtype === "file" )$newitem = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
+					else $newitem = $itemdata[ 'name' ] . " copy";
 					if ( $folder_id ) {
 						$folderdata = dataArray( "files", $folder_id, "id" );
-						if ( $itemtype === "file" )$item = str_replace( ".scpl", "", $itemdata[ 'name' ] ) . " copy.scpl";
-						else $item = $itemdata[ 'name' ] . " copy";
 						if ( $folderdata[ 'path' ] )$folderpath = $folderdata[ 'path' ] . "/";
 						$folder_name = $folderdata[ 'name' ];
-						$path = "files/$id/$folderpath$folder_name/$item";
+						$path = "files/$id/$folderpath$folder_name/$newitem";
 						$db_path = "'$folderpath" . $folderdata[ 'name' ] . "/'";
 					} else {
 						$folder_name = "root";
-						if ( $itemtype === "file" )$newitem = e(special(str_replace( ".scpl", "", $itemdata[ 'name' ] ))) . " copy.scpl";
-						else $newitem = e(special($itemdata[ 'name' ])) . " copy";
 						$path = "files/$id/$newitem";
 						$db_path = "NULL";
 					}
