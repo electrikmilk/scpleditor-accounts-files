@@ -159,17 +159,22 @@
 						</a>
 						<a href="https://docs.scpl.dev/" target="_blank" rel="noopener">
 							<li class="web-icon">
-								<div>ScPL Documentation</div>
+								<div>Documentation</div>
 							</li>
 						</a>
-						<a href="https://github.com/internetgho5t/scpleditor-accounts-files" target="_blank" rel="noopener">
+						<a href="https://github.com/pfgithub/scpl" target="_blank" rel="noopener">
 							<li class="web-icon">
 								<div>Github</div>
 							</li>
 						</a>
 						<a href="https://discord.gg/2qqfFKc" target="_blank" rel="noopener">
 							<li class="web-icon">
-								<div>ScPL Discord</div>
+								<div>Discord</div>
+							</li>
+						</a>
+						<a href="https://www.reddit.com/r/scpl" target="_blank" rel="noopener">
+							<li class="web-icon">
+								<div>Subreddit</div>
 							</li>
 						</a>
 					</ul>
